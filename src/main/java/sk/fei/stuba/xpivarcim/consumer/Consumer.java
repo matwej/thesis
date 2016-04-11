@@ -10,11 +10,11 @@ import org.springframework.stereotype.Component;
 public class Consumer {
 
     @RabbitListener(bindings = @QueueBinding(
-            value = @Queue(value = "TO_TEST", durable = "true"),
+            value = @Queue(value = "solution", durable = "true"),
             exchange = @Exchange(value = "auto.exch"),
             key = "orderRoutingKey")
     )
-    public void processRequest(InboundMessage inboundMessage) {
+    public void processSolution(InboundMessage inboundMessage) {
         System.out.println(inboundMessage.getSolutionId());
     }
 
