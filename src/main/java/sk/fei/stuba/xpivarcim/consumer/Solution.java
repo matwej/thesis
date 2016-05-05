@@ -18,16 +18,16 @@ package sk.fei.stuba.xpivarcim.consumer;
 
 import sk.fei.stuba.xpivarcim.files.SourceFile;
 
-public class InboundMessage {
+public class Solution {
 
     private long solutionId;
     private long assignmentId;
     private SourceFile[] sourceFiles;
 
-    public InboundMessage() {
+    public Solution() {
     }
 
-    public InboundMessage(long solutionId, long assignmentId, SourceFile[] sourceFiles) {
+    public Solution(long solutionId, long assignmentId, SourceFile[] sourceFiles) {
         this.solutionId = solutionId;
         this.assignmentId = assignmentId;
         this.sourceFiles = sourceFiles;
