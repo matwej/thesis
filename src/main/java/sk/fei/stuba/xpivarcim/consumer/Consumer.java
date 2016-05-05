@@ -10,7 +10,7 @@ import sk.fei.stuba.xpivarcim.files.SourceFile;
 import sk.fei.stuba.xpivarcim.producer.Producer;
 import sk.fei.stuba.xpivarcim.producer.ProducerConfig;
 
-import java.io.*;
+import java.io.IOException;
 
 @Component
 public class Consumer {
