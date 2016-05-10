@@ -12,7 +12,8 @@ public class SourceFile extends ModuleFile<byte[]> implements Serializable {
     @Column
     private String name;
 
-    public SourceFile() {}
+    public SourceFile() {
+    }
 
     public SourceFile(String name, byte[] content) {
         this.name = name;

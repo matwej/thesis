@@ -29,7 +29,8 @@ public class Assignment implements Serializable {
 
     private int status;
 
-    public Assignment() {}
+    public Assignment() {
+    }
 
     public Assignment(long id) {
         this.id = id;
@@ -45,10 +46,10 @@ public class Assignment implements Serializable {
     }
 
     public void setFiles() {
-        for(ModuleFile f : sourceFiles) {
+        for (ModuleFile f : sourceFiles) {
             f.setAssignment(this);
         }
-        for(ModuleFile f : testFiles) {
+        for (ModuleFile f : testFiles) {
             f.setAssignment(this);
         }
     }

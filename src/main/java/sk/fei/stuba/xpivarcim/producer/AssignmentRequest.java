@@ -10,7 +10,8 @@ public class AssignmentRequest implements Serializable {
     private long id;
     private Date lastUpdated;
 
-    public AssignmentRequest() {}
+    public AssignmentRequest() {
+    }
 
     public AssignmentRequest(Date lastUpdated, long id) {
         this.lastUpdated = lastUpdated;

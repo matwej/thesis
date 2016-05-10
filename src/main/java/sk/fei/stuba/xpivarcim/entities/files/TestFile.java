@@ -16,7 +16,8 @@ public class TestFile extends ModuleFile<String> implements Serializable {
     @Column
     private String output;
 
-    public TestFile() {}
+    public TestFile() {
+    }
 
     public TestFile(int index, String content, String input, String output) {
         this.index = index;

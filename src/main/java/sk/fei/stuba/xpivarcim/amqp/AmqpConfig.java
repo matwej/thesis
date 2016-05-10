@@ -11,8 +11,7 @@ import org.springframework.context.annotation.Configuration;
 public class AmqpConfig {
 
     @Bean
-    public ConnectionFactory connectionFactory()
-    {
+    public ConnectionFactory connectionFactory() {
         CachingConnectionFactory connectionFactory = new CachingConnectionFactory("localhost");
         connectionFactory.setUsername("guest");
         connectionFactory.setPassword("guest");
@@ -20,9 +19,8 @@ public class AmqpConfig {
     }
 
     @Bean
-    public AmqpAdmin amqpAdmin()
-    {
+    public AmqpAdmin amqpAdmin() {
         return new RabbitAdmin(connectionFactory());
     }
-    
+
 }
