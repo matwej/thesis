@@ -29,7 +29,7 @@ public class Producer {
         Assignment assignment = (Assignment) sendAndReceive("Assignment", request);
         if (assignment.getStatus() != StatusCode.OK.getValue())
             throw new AssignmentResponseException(assignment.getStatus());
-        assignment.setFiles(); // kvoli persistencii
+        assignment.setFiles();
         assignment.setLastUpdated(new Date());
         return assignment;
     }
@@ -42,6 +42,8 @@ public class Producer {
             throw new AssignmentResponseException(response.getStatus());
         if (response.getStatus() == StatusCode.NOT_MODIFIED.getValue())
             return assignment;
+        response.setFiles();
+        response.setLastUpdated(new Date());
         return response;
     }
 

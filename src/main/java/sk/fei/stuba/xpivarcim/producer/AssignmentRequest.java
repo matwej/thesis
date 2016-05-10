@@ -10,9 +10,6 @@ public class AssignmentRequest implements Serializable {
     private long id;
     private Date lastUpdated;
 
-    public AssignmentRequest() {
-    }
-
     public AssignmentRequest(Date lastUpdated, long id) {
         this.lastUpdated = lastUpdated;
         this.id = id;
@@ -21,16 +18,7 @@ public class AssignmentRequest implements Serializable {
     public Date getLastUpdated() {
         return lastUpdated;
     }
-
-    public void setLastUpdated(Date lastUpdated) {
-        this.lastUpdated = lastUpdated;
-    }
-
     public long getId() {
         return id;
-    }
-
-    public void setId(long id) {
-        this.id = id;
     }
 }

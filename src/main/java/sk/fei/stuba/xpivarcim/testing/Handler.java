@@ -21,7 +21,16 @@ public class Handler {
         this.producer = producer;
     }
 
-    public void prepareAssignment() throws ParseException, AssignmentResponseException {
+    public void test() {
+        try {
+            prepareAssignment();
+            assemble();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void prepareAssignment() throws ParseException, AssignmentResponseException {
         assignment = assignmentRepository.findOne(solution.getAssignmentId());
         if (assignment == null)
             assignment = producer.downloadAssignment(solution.getAssignmentId());
@@ -30,17 +39,9 @@ public class Handler {
         assignmentRepository.save(assignment);
     }
 
-    public void prepareSolution() {
-
+    private void assemble() {
+        
     }
 
-    public void test() {
-        try {
-            prepareAssignment();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        prepareSolution();
-    }
 
 }
