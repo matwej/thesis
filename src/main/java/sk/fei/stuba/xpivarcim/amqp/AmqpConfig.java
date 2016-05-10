@@ -24,9 +24,5 @@ public class AmqpConfig {
     {
         return new RabbitAdmin(connectionFactory());
     }
-
-//    @Bean
-//    public Exchange autoExchange() {
-//        return new DirectExchange("auto.exch");
-//    }
+    
 }

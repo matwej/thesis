@@ -10,8 +10,12 @@ public class Producer {
     @Autowired
     RabbitTemplate producerTemplate;
 
-    public void send(String queueName, String msg) {
-        producerTemplate.convertAndSend(queueName, msg);
+    public void send(String queueName, Object obj) {
+        producerTemplate.convertAndSend(queueName, obj);
+    }
+
+    public Object sendAndReceive(String queueName, Object obj) {
+        return producerTemplate.convertSendAndReceive(queueName, obj);
     }
 
 

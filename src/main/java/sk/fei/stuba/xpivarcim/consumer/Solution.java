@@ -2,46 +2,46 @@ package sk.fei.stuba.xpivarcim.consumer;
 
 /*
 {
-    "solutionId":15,
+    "id":15,
     "assignmentId":3,
     "sourceFiles":[
         {
             "name":"prve.java",
-            "content":"cHVibGljIGludCBzdW0oaW50IGEsaW50IGIpIHsgcmV0dXJuIGErYjsgfQ=="
+            "content":"public class Main{\n\npublic static int powTwo(int a) {\nreturn a*a;\n}\n}"
         },{
             "name":"druhe.java",
-            "content":"cHVibGljIGJvb2xlYW4gaXNfd293KFN0cmluZyBzKSB7IHJldHVybiBzID09ICJXT1ciIH0="
+            "content":"tralala"
         }
     ]
 }
 */
 
-import sk.fei.stuba.xpivarcim.files.SourceFile;
+import sk.fei.stuba.xpivarcim.entities.files.CodeFile;
 
 public class Solution {
 
-    private long solutionId;
+    private long id;
     private long assignmentId;
-    private SourceFile[] sourceFiles;
+    private CodeFile[] sourceFiles;
 
     public Solution() {
     }
 
-    public Solution(long solutionId, long assignmentId, SourceFile[] sourceFiles) {
-        this.solutionId = solutionId;
+    public Solution(long id, long assignmentId, CodeFile[] sourceFiles) {
+        this.id = id;
         this.assignmentId = assignmentId;
         this.sourceFiles = sourceFiles;
     }
 
-    public long getSolutionId() {
-        return solutionId;
+    public long getId() {
+        return id;
     }
 
     public long getAssignmentId() {
         return assignmentId;
     }
 
-    public SourceFile[] getSourceFiles() {
+    public CodeFile[] getSourceFiles() {
         return sourceFiles;
     }
 

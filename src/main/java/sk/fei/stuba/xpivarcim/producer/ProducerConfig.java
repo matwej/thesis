@@ -12,8 +12,8 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 public class ProducerConfig {
 
-    public static final String RESULTS_QUEUE = "results";
-    public static final String ASSIGNMENTS_QUEUE = "assignments";
+    public static final String RESULTS_QUEUE = "Result";
+    public static final String ASSIGNMENTS_QUEUE = "Assignment";
 
     @Bean
     public Queue resultsQueue() {
