@@ -13,6 +13,8 @@ public class Result implements Serializable {
     private String message;
     private Map tests;
 
+    public Result() {}
+
     public Result(long solutionId) {
         this.solutionId = solutionId;
         tests = new HashMap<Integer, Boolean>();
@@ -26,5 +28,21 @@ public class Result implements Serializable {
 
     public void setStatus(int status) {
         this.status = status;
+    }
+
+    public Map getTests() {
+        return tests;
+    }
+
+    public long getSolutionId() {
+        return solutionId;
+    }
+
+    public int getStatus() {
+        return status;
+    }
+
+    public String getMessage() {
+        return message;
     }
 }

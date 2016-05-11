@@ -50,6 +50,8 @@ public class Consumer {
 
     @RabbitListener(queues = "Assignment")
     public Assignment responseAssignment(AssignmentRequest req) {
+        if(req.getId() == 3)
+            return new Assignment(4,"C",new Date(),null, null, 404);
         Set<SourceFile> sf = new HashSet<>();
         sf.add(new SourceFile("vstup.txt", "1\n2\n3".getBytes()));
         Set<TestFile> tf = new HashSet<>();
