@@ -7,6 +7,7 @@ import sk.fei.stuba.xpivarcim.entities.files.TestFile;
 import sk.fei.stuba.xpivarcim.producer.AssignmentResponseException;
 import sk.fei.stuba.xpivarcim.producer.Producer;
 import sk.fei.stuba.xpivarcim.producer.Result;
+import sk.fei.stuba.xpivarcim.producer.StatusCode;
 
 import java.text.ParseException;
 
@@ -30,7 +31,7 @@ public class Handler {
             prepareAssignment();
             assemble();
         } catch (Exception e) {
-            result.setStatus(500);
+            result.setStatus(StatusCode.ERROR.getValue());
             result.appendMessage(e.getMessage());
         }
         producer.send("Result", result);
