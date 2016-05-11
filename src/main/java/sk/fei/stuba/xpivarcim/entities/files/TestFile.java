@@ -26,6 +26,10 @@ public class TestFile extends ModuleFile<String> implements Serializable {
         this.output = output;
     }
 
+    public boolean isRunTest() {
+        return output != null;
+    }
+
     public int getIndex() {
         return index;
     }
