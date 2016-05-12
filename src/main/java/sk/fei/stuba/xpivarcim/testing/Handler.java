@@ -18,6 +18,7 @@ public class Handler {
     private AssignmentRepository assignmentRepository;
     private Producer producer;
     private Result result;
+    private Engine engine;
 
     public Handler(Solution solution, AssignmentRepository assignmentRepository, Producer producer) {
         this.solution = solution;
@@ -30,8 +31,11 @@ public class Handler {
         try {
             prepareAssignment();
             assemble();
-        } catch (Exception e) {
+        } catch (ParseException | AssignmentResponseException | UnsupportedLanguageException e) {
             result.setStatus(StatusCode.ERROR.getValue());
+            result.appendMessage(e.getMessage());
+        } catch (Exception e) {
+            result.setStatus(StatusCode.UNEXPECTED_ERROR.getValue());
             result.appendMessage(e.getMessage());
         }
         producer.send("Result", result);
@@ -46,7 +50,8 @@ public class Handler {
         assignmentRepository.save(assignment);
     }
 
-    private void assemble() {
+    private void assemble() throws UnsupportedLanguageException {
+        engine = EngineFactory.getEngine(assignment.getCodeLanguage());
         for(TestFile f : assignment.getTestFiles()) {
             if(f.isRunTest()) {
 
