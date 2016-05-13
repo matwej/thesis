@@ -26,7 +26,7 @@ public class TestFile extends ModuleFile<String> implements Serializable {
         this.output = output;
     }
 
-    public String getSafeInput() {
+    public String safeInput() {
         return input.replace("&","").replace("|","");
     }
 

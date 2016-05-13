@@ -26,4 +26,13 @@ public class Settings {
     @Value("${operations.dir}")
     public String opDir;
 
+    @Value("${unit.prototypes.dir}")
+    public String unitProtoDir;
+
+    @Value("${unit.c.dir}")
+    public String cUnitDir;
+
+    @Value("${unit.java.dir}")
+    public String javaUnitDir;
+
 }

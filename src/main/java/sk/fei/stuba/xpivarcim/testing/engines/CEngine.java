@@ -43,4 +43,9 @@ public class CEngine implements Engine {
     public Map<String, String> getCommands() {
         return commandsMap;
     }
+
+    @Override
+    public String getUnitDirName() {
+        return settings.cUnitDir;
+    }
 }

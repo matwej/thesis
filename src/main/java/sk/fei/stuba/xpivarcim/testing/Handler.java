@@ -73,19 +73,13 @@ public class Handler {
                 result.addTest(f.getIndex(), engine.executeTest(f, new UnitTest()));
             }
         }
-        tearDownDir();
+//        tearDownDir();
         result.setStatus(StatusCode.OK.getValue());
     }
 
     private void setUpDir() throws IOException {
-        if (dir.toFile().exists())
-            tearDownDir();
+        if (dir.toFile().exists()) tearDownDir();
         Files.createDirectory(dir, Settings.ATTRS);
-//        UserPrincipalLookupService lookupService =
-//                FileSystems.getDefault().getUserPrincipalLookupService();
-//        UserPrincipal userPrincipal =
-//                lookupService.lookupPrincipalByName("tester");
-//        Files.setOwner(path, userPrincipal);
     }
 
     private void tearDownDir() throws IOException {

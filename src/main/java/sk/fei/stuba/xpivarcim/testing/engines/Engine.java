@@ -13,4 +13,5 @@ public interface Engine {
     Solution getSolution();
     Settings getSettings();
     Map<String, String> getCommands();
+    String getUnitDirName();
 }

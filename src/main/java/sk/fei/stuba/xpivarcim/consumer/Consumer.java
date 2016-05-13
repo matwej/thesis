@@ -48,9 +48,24 @@ public class Consumer {
 
     @RabbitListener(queues = "Assignment")
     public Assignment responseAssignment(AssignmentRequest req) {
-        if(req.getId() == 404)
-            return new Assignment(4,"C",new Date(),null, null, 404);
-        if(req.getId() == 3) {
+        if (req.getId() == 404) // chyba
+            return new Assignment(4, "C", new Date(), null, null, 404);
+        /*
+        {
+            "id":15,
+            "assignmentId":3,
+            "sourceFiles":[
+                {
+                    "name":"Unit.java",
+                    "content":"public class Unit{\n\npublic static int powTwo(int a) {\nreturn a*a;\n}\n}"
+                },{
+                    "name":"Main.java",
+                    "content":"public class Main{\npublic static void main(String args[]){\nint a = Integer.valueOf(args[0]);\nSystem.out.println(Unit.powTwo(a));\n}\n}"
+                }
+            ]
+        }
+         */
+        if (req.getId() == 3) {
             Set<SourceFile> sf = new HashSet<>();
             sf.add(new SourceFile("vstup.txt", "1\n2\n3".getBytes()));
             Set<TestFile> tf = new HashSet<>();
@@ -60,7 +75,38 @@ public class Consumer {
             a.setFiles();
             return a;
         }
-        if(req.getId() == 99) {
+        /*
+            to co vyssie, len assignmentId:5
+         */
+        if (req.getId() == 5) {
+            Set<SourceFile> sf = new HashSet<>();
+            sf.add(new SourceFile("vstup.txt", "1\n2\n3".getBytes()));
+            Set<TestFile> tf = new HashSet<>();
+            tf.add(new TestFile(10, "int out = Unit.powTwo(3);\nassertEquals(out,9);", null, null));
+            Assignment a =
+                    new Assignment(req.getId(), "JAVA", new Date(), sf, tf, 200);
+            a.setFiles();
+            return a;
+        }
+        /*
+        {
+            "id":247,
+            "assignmentId":99,
+            "sourceFiles":[
+                {
+                    "name":"Hop.cpp",
+                    "content":"#include \"Hop.h\"\n\nHop::Hop() {\nh = 4;\n}\nint Hop::hop() {\nreturn h;\n}"
+                },{
+                    "name":"Hop.h",
+                    "content":"class Hop {\nprivate:\nint h;\npublic:\nHop();\nint hop();\n};"
+                },{
+                    "name":"main.c",
+                    "content":"#include <stdio.h>\n#include <stdlib.h>\n#include \"Hop.h\"\n\nint main(int argc, char *argv[]) {\nint i;\nHop * h = new Hop();\nfor(i=0;i<atoi(argv[1]);i++)\nprintf(\"%d \",i+h->hop());\n\nreturn 0;\n}"
+                }
+            ]
+        }
+         */
+        if (req.getId() == 99) {
             Set<SourceFile> sf = new HashSet<>();
             sf.add(new SourceFile("vstup.txt", "1\n2\n3".getBytes()));
             Set<TestFile> tf = new HashSet<>();
@@ -70,7 +116,19 @@ public class Consumer {
             a.setFiles();
             return a;
         }
-        if(req.getId() == 999) {
+        /*
+        {
+            "id":247,
+            "assignmentId":999,
+            "sourceFiles":[
+                {
+                    "name":"main.c",
+                    "content":"#include <stdio.h>\n#include <stdlib.h>\nint main(int argc, char *argv[]) {\nint i,j;\nfor(i=1;i<=atoi(argv[1]);i++){\nfor(j=1;j<=i;j++)\nprintf(\"*\");printf(\"\\n\");}\nreturn 0;\n}"
+                }
+            ]
+        }
+        */
+        if (req.getId() == 999) {
             Set<SourceFile> sf = new HashSet<>();
             sf.add(new SourceFile("vstup.txt", "1\n2\n3".getBytes()));
             Set<TestFile> tf = new HashSet<>();

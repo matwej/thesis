@@ -40,6 +40,11 @@ public class JavaEngine implements Engine {
     }
 
     @Override
+    public String getUnitDirName() {
+        return settings.javaUnitDir;
+    }
+
+    @Override
     public Solution getSolution() {
         return solution;
     }
