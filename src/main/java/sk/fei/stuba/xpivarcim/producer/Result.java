@@ -26,6 +26,10 @@ public class Result implements Serializable {
         this.message += "|" + message;
     }
 
+    public void addTest(Integer key, Boolean result) {
+        tests.put(key, result);
+    }
+
     public void setStatus(int status) {
         this.status = status;
     }

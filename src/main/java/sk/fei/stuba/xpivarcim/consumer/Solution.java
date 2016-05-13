@@ -6,11 +6,11 @@ package sk.fei.stuba.xpivarcim.consumer;
     "assignmentId":3,
     "sourceFiles":[
         {
-            "name":"prve.java",
-            "content":"public class Main{\n\npublic static int powTwo(int a) {\nreturn a*a;\n}\n}"
+            "name":"Unit.java",
+            "content":"package com.example;\n\npublic class Unit{\n\npublic static int powTwo(int a) {\nreturn a*a;\n}\n}"
         },{
-            "name":"druhe.java",
-            "content":"tralala"
+            "name":"Main.java",
+            "content":"import com.example.Unit;\n\npublic class Main{\npublic static void main(String args[]){\nint a = Integer.valueOf(args[0]);\nSystem.out.println(Unit.powTwo(a));\n}\n}"
         }
     ]
 }

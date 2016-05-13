@@ -6,6 +6,7 @@ import org.springframework.amqp.rabbit.annotation.QueueBinding;
 import org.springframework.amqp.rabbit.annotation.RabbitListener;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import sk.fei.stuba.xpivarcim.Settings;
 import sk.fei.stuba.xpivarcim.db.repos.AssignmentRepository;
 import sk.fei.stuba.xpivarcim.entities.Assignment;
 import sk.fei.stuba.xpivarcim.entities.files.SourceFile;
@@ -28,6 +29,9 @@ public class Consumer {
     @Autowired
     AssignmentRepository assignmentRepository;
 
+    @Autowired
+    Settings settings;
+
     @RabbitListener(bindings = @QueueBinding(
             value = @Queue(value = "Solution", durable = "true"),
             exchange = @Exchange(value = "auto.exch"),
@@ -35,36 +39,23 @@ public class Consumer {
     )
     public void processSolution(Solution solution) throws IOException {
         System.out.println(solution.getId());
-        System.out.println(solution.getAssignmentId());
 
-        Handler handler = new Handler(solution, assignmentRepository, producer);
+        Handler handler = new Handler(solution, assignmentRepository, producer, settings);
         handler.test();
-
-//        FileOutputStream f = new FileOutputStream(file.getName());
-//        DataOutputStream dataOutputStream =  new DataOutputStream(f);
-//        String c = new String(file.getContent(), "UTF-8");
-//        dataOutputStream.writeUTF(c);
     }
 
     // TODO THIS SHIT JE LEN TESTOVACI A TEMPORARY, OK!!!
 
     @RabbitListener(queues = "Assignment")
     public Assignment responseAssignment(AssignmentRequest req) {
-        if(req.getId() == 3)
-            return new Assignment(4,"C",new Date(),null, null, 404);
+//        if(req.getId() == 3)
+//            return new Assignment(4,"C",new Date(),null, null, 404);
         Set<SourceFile> sf = new HashSet<>();
         sf.add(new SourceFile("vstup.txt", "1\n2\n3".getBytes()));
         Set<TestFile> tf = new HashSet<>();
-        tf.add(new TestFile(4, "omg nejake class {} () neriesim teraz", null, null));
+        tf.add(new TestFile(4, "omg nejake class {} () neriesim teraz", "2", "4"));
         Assignment a =
-                new Assignment(
-                        req.getId(),
-                        "JAVA",
-                        new Date(),
-                        sf,
-                        tf,
-                        200
-                );
+                new Assignment(req.getId(), "JAVA", new Date(), sf, tf, 200);
         a.setFiles();
         return a;
     }

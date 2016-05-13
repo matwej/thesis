@@ -1,10 +1,10 @@
 package sk.fei.stuba.xpivarcim.producer;
 
 public enum StatusCode {
-    OK(200), NOT_FOUND(404), NOT_MODIFIED(304), ERROR(950), UNEXPECTED_ERROR(500);
+    OK(200), NOT_FOUND(404), NOT_MODIFIED(304), ERROR(900), UNEXPECTED_ERROR(500);
     private final int value;
 
-    private StatusCode(int value) {
+    StatusCode(int value) {
         this.value = value;
     }
 

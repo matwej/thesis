@@ -4,21 +4,24 @@ buildscript {
 	}
 	repositories {
 		mavenCentral()
+        maven { url 'http://repo.spring.io/plugins-release' }
 	}
 	dependencies {
-		classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}") 
+		classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
+        classpath 'org.springframework.build.gradle:propdeps-plugin:0.0.7'
 	}
 }
 
 apply plugin: 'java'
 apply plugin: 'idea'
 apply plugin: 'spring-boot'
+apply plugin: 'propdeps'
+apply plugin: 'propdeps-idea'
 
 repositories {
 	mavenCentral()
 	mavenLocal()
 }
-
 
 dependencies {
 	compile('org.springframework.boot:spring-boot-starter-data-jpa')
@@ -26,9 +29,12 @@ dependencies {
     compile('org.springframework.boot:spring-boot-starter-web')
     compile("com.h2database:h2")
 
+    optional "org.springframework.boot:spring-boot-configuration-processor"
 
     testCompile('org.springframework.boot:spring-boot-starter-test')
 }
+
+compileJava.dependsOn(processResources)
 
 task wrapper(type: Wrapper) {
 	gradleVersion = '2.12'
