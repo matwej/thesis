@@ -32,6 +32,17 @@ C
         }
     ]
 }
+C horsie
+{
+    "id":247,
+    "assignmentId":999,
+    "sourceFiles":[
+        {
+            "name":"main.c",
+            "content":"#include <stdio.h>\n#include <stdlib.h>\nint main(int argc, char *argv[]) {\nint i,j;\nfor(i=1;i<=atoi(argv[1]);i++){\nfor(j=1;j<=i;j++)\nprintf(\"*\");printf(\"\\n\");}\nreturn 0;\n}"
+        }
+    ]
+}
 */
 
 import sk.fei.stuba.xpivarcim.entities.files.CodeFile;

@@ -70,6 +70,17 @@ public class Consumer {
             a.setFiles();
             return a;
         }
+        if(req.getId() == 999) {
+            Set<SourceFile> sf = new HashSet<>();
+            sf.add(new SourceFile("vstup.txt", "1\n2\n3".getBytes()));
+            Set<TestFile> tf = new HashSet<>();
+            tf.add(new TestFile(5, "omg nejake class {} () neriesim teraz", "5", "*\n**\n***\n****\n*****\n"));
+            tf.add(new TestFile(3, null, "3", "*\n**\n***\n"));
+            Assignment a =
+                    new Assignment(req.getId(), "C", new Date(), sf, tf, 200);
+            a.setFiles();
+            return a;
+        }
         return null;
     }
 
