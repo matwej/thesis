@@ -26,7 +26,7 @@ public class Assignment implements Serializable {
     private Set<SourceFile> sourceFiles;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "assignment")
     private Set<TestFile> testFiles;
-
+    @Transient
     private int status;
 
     public Assignment() {

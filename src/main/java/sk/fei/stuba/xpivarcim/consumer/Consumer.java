@@ -48,16 +48,29 @@ public class Consumer {
 
     @RabbitListener(queues = "Assignment")
     public Assignment responseAssignment(AssignmentRequest req) {
-//        if(req.getId() == 3)
-//            return new Assignment(4,"C",new Date(),null, null, 404);
-        Set<SourceFile> sf = new HashSet<>();
-        sf.add(new SourceFile("vstup.txt", "1\n2\n3".getBytes()));
-        Set<TestFile> tf = new HashSet<>();
-        tf.add(new TestFile(4, "omg nejake class {} () neriesim teraz", "2", "4"));
-        Assignment a =
-                new Assignment(req.getId(), "JAVA", new Date(), sf, tf, 200);
-        a.setFiles();
-        return a;
+        if(req.getId() == 404)
+            return new Assignment(4,"C",new Date(),null, null, 404);
+        if(req.getId() == 3) {
+            Set<SourceFile> sf = new HashSet<>();
+            sf.add(new SourceFile("vstup.txt", "1\n2\n3".getBytes()));
+            Set<TestFile> tf = new HashSet<>();
+            tf.add(new TestFile(4, "omg nejake class {} () neriesim teraz", "2", "4"));
+            Assignment a =
+                    new Assignment(req.getId(), "JAVA", new Date(), sf, tf, 200);
+            a.setFiles();
+            return a;
+        }
+        if(req.getId() == 99) {
+            Set<SourceFile> sf = new HashSet<>();
+            sf.add(new SourceFile("vstup.txt", "1\n2\n3".getBytes()));
+            Set<TestFile> tf = new HashSet<>();
+            tf.add(new TestFile(2, "omg nejake class {} () neriesim teraz", "4", "4 5 6 7 "));
+            Assignment a =
+                    new Assignment(req.getId(), "C", new Date(), sf, tf, 200);
+            a.setFiles();
+            return a;
+        }
+        return null;
     }
 
 }

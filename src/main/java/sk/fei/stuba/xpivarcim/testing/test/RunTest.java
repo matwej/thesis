@@ -42,10 +42,8 @@ public class RunTest implements TestStrategy {
     }
 
     private String executeCommands(Queue<String> commands) throws IOException {
-        StringBuffer output = new StringBuffer();
         ProcessBuilder builder = new ProcessBuilder("/bin/sh");
-        Process p = null;
-        p = builder.start();
+        Process p = builder.start();
         //get stdin of shell
         BufferedWriter p_stdin =
                 new BufferedWriter(new OutputStreamWriter(p.getOutputStream()));
@@ -60,10 +58,9 @@ public class RunTest implements TestStrategy {
         p_stdin.write("exit");
         p_stdin.newLine();
         p_stdin.flush();
-        Scanner s = new Scanner(p.getInputStream());
-        while (s.hasNext())
-            output.append(s.next());
+        Scanner s = new Scanner(p.getInputStream()).useDelimiter("\\A");
+        String output = "" + s.next();
         s.close();
-        return output.toString();
+        return output;
     }
 }

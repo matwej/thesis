@@ -20,12 +20,13 @@ public class CEngine implements Engine {
         this.solution = solution;
         this.settings = settings;
 
-        commandsMap.put("compile","g++ *.*");
+        commandsMap.put("compile","g++ *.* -o test");
+        commandsMap.put("run", "./test ");
     }
 
     @Override
     public boolean executeTest(TestFile testFile, TestStrategy testStrategy) throws IOException {
-        return false;
+        return testStrategy.executeTest(testFile, this);
     }
 
     @Override
