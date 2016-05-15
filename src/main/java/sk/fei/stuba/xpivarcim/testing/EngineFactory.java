@@ -1,20 +1,21 @@
 package sk.fei.stuba.xpivarcim.testing;
 
-import sk.fei.stuba.xpivarcim.Settings;
 import sk.fei.stuba.xpivarcim.consumer.Solution;
-import sk.fei.stuba.xpivarcim.testing.engines.CEngine;
-import sk.fei.stuba.xpivarcim.testing.engines.Engine;
-import sk.fei.stuba.xpivarcim.testing.engines.JavaEngine;
+import sk.fei.stuba.xpivarcim.testing.engines.*;
+import sk.fei.stuba.xpivarcim.testing.support.UnsupportedEngineType;
 
 public class EngineFactory {
 
-    public static Engine getEngine(String lang, Solution solution, Settings settings) throws UnsupportedLanguageException {
-        if (lang.equals("JAVA")) {
-            return new JavaEngine(solution, settings);
-        } else if (lang.equals("C")) {
-            return new CEngine(solution, settings);
-        } else {
-            throw new UnsupportedLanguageException(lang);
+    public enum EngineType {RUN, UNIT}
+
+    public static Engine getEngine(EngineType type, Solution solution) throws UnsupportedEngineType {
+        switch (type) {
+            case RUN:
+                return new RunEngine(solution);
+            case UNIT:
+                return new UnitEngine(solution);
+            default:
+                throw new UnsupportedEngineType();
         }
     }
 

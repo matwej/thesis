@@ -4,14 +4,14 @@ import sk.fei.stuba.xpivarcim.Settings;
 import sk.fei.stuba.xpivarcim.consumer.Solution;
 import sk.fei.stuba.xpivarcim.db.repos.AssignmentRepository;
 import sk.fei.stuba.xpivarcim.entities.Assignment;
-import sk.fei.stuba.xpivarcim.entities.files.TestFile;
 import sk.fei.stuba.xpivarcim.producer.AssignmentResponseException;
 import sk.fei.stuba.xpivarcim.producer.Producer;
 import sk.fei.stuba.xpivarcim.producer.Result;
 import sk.fei.stuba.xpivarcim.producer.StatusCode;
 import sk.fei.stuba.xpivarcim.testing.engines.Engine;
-import sk.fei.stuba.xpivarcim.testing.test.RunTest;
-import sk.fei.stuba.xpivarcim.testing.test.UnitTest;
+import sk.fei.stuba.xpivarcim.testing.support.UnsupportedEngineType;
+import sk.fei.stuba.xpivarcim.testing.support.UnsupportedLanguageException;
+import sk.fei.stuba.xpivarcim.testing.test.*;
 
 import java.io.IOException;
 import java.nio.file.*;
@@ -43,7 +43,7 @@ public class Handler {
     public void test() {
         try {
             prepareAssignment();
-            assemble();
+            assembleAndRun();
         } catch (ParseException | AssignmentResponseException | UnsupportedLanguageException e) {
             result.setStatus(StatusCode.ERROR.getValue());
             result.appendMessage(e.getMessage());
@@ -63,15 +63,23 @@ public class Handler {
         assignmentRepository.save(assignment);
     }
 
-    private void assemble() throws UnsupportedLanguageException, IOException {
-        engine = EngineFactory.getEngine(assignment.getCodeLanguage(), solution, settings);
+    private void assembleAndRun() throws IOException, UnsupportedEngineType, UnsupportedLanguageException {
         setUpDir();
-        for (TestFile f : assignment.getTestFiles()) {
-            if (f.isRunTest()) {
-                result.addTest(f.getIndex(), engine.executeTest(f, new RunTest()));
-            } else {
-                result.addTest(f.getIndex(), engine.executeTest(f, new UnitTest()));
-            }
+        Language lang;
+        if(assignment.getCodeLanguage() == "JAVA") {
+            lang = new Java(settings);
+        } else if(assignment.getCodeLanguage() == "C") {
+            lang = new C(settings);
+        } else {
+            throw new UnsupportedLanguageException(assignment.getCodeLanguage());
+        }
+        if(!assignment.runTestFiles().isEmpty()) {
+            engine = EngineFactory.getEngine(EngineFactory.EngineType.RUN, solution);
+            engine.executeTests(result, assignment.runTestFiles(), lang);
+        }
+        if(!assignment.unitTestFiles().isEmpty()) {
+            engine = EngineFactory.getEngine(EngineFactory.EngineType.UNIT, solution);
+            engine.executeTests(result, assignment.unitTestFiles(), lang);
         }
 //        tearDownDir();
         result.setStatus(StatusCode.OK.getValue());

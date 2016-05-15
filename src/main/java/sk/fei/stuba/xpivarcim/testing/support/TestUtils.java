@@ -1,4 +1,4 @@
-package sk.fei.stuba.xpivarcim.testing.test;
+package sk.fei.stuba.xpivarcim.testing.support;
 
 import java.io.BufferedWriter;
 import java.io.IOException;

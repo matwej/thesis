@@ -1,27 +1,33 @@
-package sk.fei.stuba.xpivarcim.testing.test;
+package sk.fei.stuba.xpivarcim.testing.engines;
 
+import sk.fei.stuba.xpivarcim.consumer.Solution;
 import sk.fei.stuba.xpivarcim.entities.files.TestFile;
-import sk.fei.stuba.xpivarcim.testing.engines.Engine;
+import sk.fei.stuba.xpivarcim.producer.Result;
+import sk.fei.stuba.xpivarcim.testing.test.Language;
+import sk.fei.stuba.xpivarcim.testing.support.TestUtils;
 
 import java.io.IOException;
 import java.nio.file.*;
 import java.nio.file.attribute.BasicFileAttributes;
-import java.util.LinkedList;
-import java.util.Queue;
+import java.util.Set;
 
-public class UnitTest implements TestStrategy {
+// TODO dokoncit
+public class UnitEngine implements Engine {
 
-    private Queue<String> commands;
+    private Solution solution;
 
-    public UnitTest() {
-        commands = new LinkedList<>();
+    public UnitEngine(Solution solution) {
+        this.solution = solution;
     }
 
     @Override
-    public boolean executeTest(TestFile testFile, Engine engine) throws IOException {
+    public void executeTests(Result result, Set<TestFile> testFiles, Language lang) throws IOException {
         String operationDir = engine.getSettings().opDir + engine.getSolution().getId();
         prepareUnitFiles(operationDir, engine.getSettings().unitProtoDir + engine.getUnitDirName());
-        return false;
+        createTestFiles(engine);
+        createSolutionFiles(engine);
+        prepareCommands();
+        TestUtils.executeCommands(commands);
     }
 
     private void prepareUnitFiles(String targetDir, String sourceDir) throws IOException {
@@ -45,5 +51,4 @@ public class UnitTest implements TestStrategy {
             }
         });
     }
-
 }

@@ -8,6 +8,7 @@ import sk.fei.stuba.xpivarcim.entities.files.TestFile;
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Date;
+import java.util.HashSet;
 import java.util.Set;
 
 @Entity
@@ -52,6 +53,20 @@ public class Assignment implements Serializable {
         for (ModuleFile f : testFiles) {
             f.setAssignment(this);
         }
+    }
+
+    public Set<TestFile> runTestFiles() {
+        Set<TestFile> output = new HashSet<>();
+        for(TestFile f: testFiles)
+            if(f.isRunTest()) output.add(f);
+        return output;
+    }
+
+    public Set<TestFile> unitTestFiles() {
+        Set<TestFile> output = new HashSet<>();
+        for(TestFile f: testFiles)
+            if(!f.isRunTest()) output.add(f);
+        return output;
     }
 
     public void setLastUpdated(Date lastUpdated) {
