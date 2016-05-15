@@ -11,7 +11,9 @@ import sk.fei.stuba.xpivarcim.producer.StatusCode;
 import sk.fei.stuba.xpivarcim.testing.engines.Engine;
 import sk.fei.stuba.xpivarcim.testing.support.UnsupportedEngineType;
 import sk.fei.stuba.xpivarcim.testing.support.UnsupportedLanguageException;
-import sk.fei.stuba.xpivarcim.testing.test.*;
+import sk.fei.stuba.xpivarcim.testing.test.C;
+import sk.fei.stuba.xpivarcim.testing.test.Java;
+import sk.fei.stuba.xpivarcim.testing.test.Language;
 
 import java.io.IOException;
 import java.nio.file.*;
