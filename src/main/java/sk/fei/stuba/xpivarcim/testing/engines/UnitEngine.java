@@ -1,12 +1,23 @@
 package sk.fei.stuba.xpivarcim.testing.engines;
 
+import org.w3c.dom.Document;
+import org.w3c.dom.Element;
+import org.w3c.dom.Node;
+import org.w3c.dom.NodeList;
+import org.xml.sax.SAXException;
 import sk.fei.stuba.xpivarcim.consumer.Solution;
+import sk.fei.stuba.xpivarcim.entities.files.CodeFile;
 import sk.fei.stuba.xpivarcim.entities.files.TestFile;
 import sk.fei.stuba.xpivarcim.producer.Result;
+import sk.fei.stuba.xpivarcim.testing.languages.Language;
 import sk.fei.stuba.xpivarcim.testing.support.TestUtils;
-import sk.fei.stuba.xpivarcim.testing.test.Language;
 
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.parsers.ParserConfigurationException;
+import java.io.FileInputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.nio.file.*;
 import java.nio.file.attribute.BasicFileAttributes;
 import java.util.LinkedList;
@@ -23,31 +34,42 @@ public class UnitEngine implements Engine {
     }
 
     @Override
-    public void executeTests(Result result, Set<TestFile> testFiles, Language lang) throws IOException {
-        String operationDir = lang.getSettings().opDir + solution.getId();
-        prepareUnitFiles(operationDir, lang.getSettings().unitProtoDir + lang.getUnitDirName());
-        createTestFiles();
-        createSolutionFiles();
-        TestUtils.executeCommands(prepareCommands());
-        mapResults(result, "");
+    public void executeTests(Result result, Set<TestFile> testFiles, Language language) throws IOException, ParserConfigurationException, SAXException {
+        String operationDir = language.getSettings().opDir + solution.getId();
+        prepareUnitFiles(operationDir, language.getSettings().unitProtoDir + language.getUnitDirName());
+        language.createUnitTestFile(solution, testFiles);
+        createSolutionFiles(language);
+        TestUtils.executeCommands(prepareCommands(language));
+        mapResults(result, language);
     }
 
-    private void createTestFiles() {
-
+    private void createSolutionFiles(Language language) throws IOException {
+        for (CodeFile file : solution.getSourceFiles()) {
+            file.create(language.getSettings().opDir + solution.getId() + language.getUnitSolDir() + "/");
+        }
     }
 
-    private void createSolutionFiles() {
-
-    }
-
-    private Queue<String> prepareCommands() {
+    private Queue<String> prepareCommands(Language language) {
         Queue<String> commands = new LinkedList<>();
-
+        commands.add("cd " + language.getSettings().opDir + solution.getId());
+        commands.add(language.getCommands().get("test_prep"));
+        commands.add(language.getCommands().get("test"));
         return commands;
     }
 
-    private void mapResults(Result result, String resultsXmlPath) {
-
+    private void mapResults(Result result, Language language) throws IOException, ParserConfigurationException, SAXException {
+        InputStream xml = new FileInputStream(language.getSettings().opDir + solution.getId() + "/report/TEST-MainTest.xml");
+        DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
+        DocumentBuilder documentBuilder = factory.newDocumentBuilder();
+        Document doc = documentBuilder.parse(xml);
+        Element root = doc.getDocumentElement();
+        NodeList testcases = root.getElementsByTagName("testcase");
+        for(int i=0;i<testcases.getLength();i++) {
+            Node item = testcases.item(i);
+            String testName = item.getAttributes().getNamedItem("name").getTextContent();
+            int index = Integer.parseInt(testName.replaceAll("[\\D]", ""));
+            result.addTest(index, !item.hasChildNodes());
+        }
     }
 
     private void prepareUnitFiles(String targetDir, String sourceDir) throws IOException {

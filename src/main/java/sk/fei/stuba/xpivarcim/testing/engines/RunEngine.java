@@ -4,8 +4,8 @@ import sk.fei.stuba.xpivarcim.consumer.Solution;
 import sk.fei.stuba.xpivarcim.entities.files.CodeFile;
 import sk.fei.stuba.xpivarcim.entities.files.TestFile;
 import sk.fei.stuba.xpivarcim.producer.Result;
+import sk.fei.stuba.xpivarcim.testing.languages.Language;
 import sk.fei.stuba.xpivarcim.testing.support.TestUtils;
-import sk.fei.stuba.xpivarcim.testing.test.Language;
 
 import java.io.IOException;
 import java.util.LinkedList;

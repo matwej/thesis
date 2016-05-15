@@ -23,7 +23,7 @@ public class Result implements Serializable {
     public void appendMessage(String message) {
         if(this.message == null)
             this.message = "";
-        this.message += "|" + message;
+        this.message += message + "|";
     }
 
     public void addTest(Integer key, Boolean result) {

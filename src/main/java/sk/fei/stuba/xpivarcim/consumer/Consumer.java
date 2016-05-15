@@ -76,13 +76,15 @@ public class Consumer {
             return a;
         }
         /*
+            unit test java
             to co vyssie, len assignmentId:5
          */
         if (req.getId() == 5) {
             Set<SourceFile> sf = new HashSet<>();
             sf.add(new SourceFile("vstup.txt", "1\n2\n3".getBytes()));
             Set<TestFile> tf = new HashSet<>();
-            tf.add(new TestFile(10, "int out = Unit.powTwo(3);\nassertEquals(out,9);", null, null));
+            tf.add(new TestFile(10, "int out = Unit.powTwo(3);\nassertEquals(9,out);", null, null));
+            tf.add(new TestFile(11, "int out = Unit.powTwo(10);\nassertEquals(1000,out);", null, null));
             Assignment a =
                     new Assignment(req.getId(), "JAVA", new Date(), sf, tf, 200);
             a.setFiles();

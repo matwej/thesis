@@ -1,5 +1,6 @@
 package sk.fei.stuba.xpivarcim.testing;
 
+import org.xml.sax.SAXException;
 import sk.fei.stuba.xpivarcim.Settings;
 import sk.fei.stuba.xpivarcim.consumer.Solution;
 import sk.fei.stuba.xpivarcim.db.repos.AssignmentRepository;
@@ -9,12 +10,13 @@ import sk.fei.stuba.xpivarcim.producer.Producer;
 import sk.fei.stuba.xpivarcim.producer.Result;
 import sk.fei.stuba.xpivarcim.producer.StatusCode;
 import sk.fei.stuba.xpivarcim.testing.engines.Engine;
+import sk.fei.stuba.xpivarcim.testing.languages.C;
+import sk.fei.stuba.xpivarcim.testing.languages.Java;
+import sk.fei.stuba.xpivarcim.testing.languages.Language;
 import sk.fei.stuba.xpivarcim.testing.support.UnsupportedEngineType;
 import sk.fei.stuba.xpivarcim.testing.support.UnsupportedLanguageException;
-import sk.fei.stuba.xpivarcim.testing.test.C;
-import sk.fei.stuba.xpivarcim.testing.test.Java;
-import sk.fei.stuba.xpivarcim.testing.test.Language;
 
+import javax.xml.parsers.ParserConfigurationException;
 import java.io.IOException;
 import java.nio.file.*;
 import java.nio.file.attribute.BasicFileAttributes;
@@ -65,12 +67,12 @@ public class Handler {
         assignmentRepository.save(assignment);
     }
 
-    private void assembleAndRun() throws IOException, UnsupportedEngineType, UnsupportedLanguageException {
+    private void assembleAndRun() throws IOException, UnsupportedEngineType, UnsupportedLanguageException, ParserConfigurationException, SAXException {
         setUpDir();
         Language lang;
-        if(assignment.getCodeLanguage() == "JAVA") {
+        if(assignment.getCodeLanguage().equals("JAVA")) {
             lang = new Java(settings);
-        } else if(assignment.getCodeLanguage() == "C") {
+        } else if(assignment.getCodeLanguage().equals("C")) {
             lang = new C(settings);
         } else {
             throw new UnsupportedLanguageException(assignment.getCodeLanguage());
