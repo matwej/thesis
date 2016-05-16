@@ -1,6 +1,7 @@
 package sk.fei.stuba.xpivarcim.testing.support;
 
 import java.io.BufferedWriter;
+import java.io.File;
 import java.io.IOException;
 import java.io.OutputStreamWriter;
 import java.util.Queue;
@@ -8,8 +9,9 @@ import java.util.Scanner;
 
 public class TestUtils {
 
-    public static String executeCommands(Queue<String> commands) throws IOException {
+    public static String executeCommands(String workingDir, Queue<String> commands) throws IOException {
         ProcessBuilder builder = new ProcessBuilder("/bin/sh");
+        builder.directory(new File(workingDir));
         Process p = builder.start();
         //get stdin of shell
         BufferedWriter p_stdin =

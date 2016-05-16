@@ -24,7 +24,6 @@ import java.util.LinkedList;
 import java.util.Queue;
 import java.util.Set;
 
-// TODO dokoncit
 public class UnitEngine implements Engine {
 
     private Solution solution;
@@ -39,8 +38,8 @@ public class UnitEngine implements Engine {
         prepareUnitFiles(operationDir, language.getSettings().unitProtoDir + language.getUnitDirName());
         language.createUnitTestFile(solution, testFiles);
         createSolutionFiles(language);
-        TestUtils.executeCommands(prepareCommands(language));
-        mapResults(result, language);
+        TestUtils.executeCommands(operationDir, prepareCommands(language));
+        language.mapUnitTestResults(solution, result);
     }
 
     private void createSolutionFiles(Language language) throws IOException {
@@ -51,25 +50,9 @@ public class UnitEngine implements Engine {
 
     private Queue<String> prepareCommands(Language language) {
         Queue<String> commands = new LinkedList<>();
-        commands.add("cd " + language.getSettings().opDir + solution.getId());
         commands.add(language.getCommands().get("test_prep"));
         commands.add(language.getCommands().get("test"));
         return commands;
-    }
-
-    private void mapResults(Result result, Language language) throws IOException, ParserConfigurationException, SAXException {
-        InputStream xml = new FileInputStream(language.getSettings().opDir + solution.getId() + "/report/TEST-MainTest.xml");
-        DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
-        DocumentBuilder documentBuilder = factory.newDocumentBuilder();
-        Document doc = documentBuilder.parse(xml);
-        Element root = doc.getDocumentElement();
-        NodeList testcases = root.getElementsByTagName("testcase");
-        for(int i=0;i<testcases.getLength();i++) {
-            Node item = testcases.item(i);
-            String testName = item.getAttributes().getNamedItem("name").getTextContent();
-            int index = Integer.parseInt(testName.replaceAll("[\\D]", ""));
-            result.addTest(index, !item.hasChildNodes());
-        }
     }
 
     private void prepareUnitFiles(String targetDir, String sourceDir) throws IOException {

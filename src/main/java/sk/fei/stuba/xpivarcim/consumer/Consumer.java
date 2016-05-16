@@ -119,6 +119,32 @@ public class Consumer {
             return a;
         }
         /*
+          {
+            "id":247,
+            "assignmentId":199,
+            "sourceFiles":[
+                {
+                    "name":"Hop.c",
+                    "content":"#include \"Hop.h\"\n\nint hop(int a, int b){\nreturn a*b;\n}"
+                },{
+                    "name":"Hop.h",
+                    "content":"#define _H_\nint hop(int a, int b);"
+                }
+            ]
+        }
+         */
+        if (req.getId() == 199) {
+            Set<SourceFile> sf = new HashSet<>();
+            sf.add(new SourceFile("vstup.txt", "1\n2\n3".getBytes()));
+            Set<TestFile> tf = new HashSet<>();
+            tf.add(new TestFile(20, "fail_unless(hop(2,10) == 20, \"failed\");", null, null));
+            tf.add(new TestFile(1500, "fail_unless(hop(500,3) == 2000, \"failed\");", null, null));
+            Assignment a =
+                    new Assignment(req.getId(), "C", new Date(), sf, tf, 200);
+            a.setFiles();
+            return a;
+        }
+        /*
         {
             "id":247,
             "assignmentId":999,

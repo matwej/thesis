@@ -24,14 +24,13 @@ public class RunEngine implements Engine {
     public void executeTests(Result result, Set<TestFile> testFiles, Language lang) throws IOException {
         createFiles(lang);
         for (TestFile f : testFiles) {
-            String output = TestUtils.executeCommands(prepareCommands(f, lang));
+            String output = TestUtils.executeCommands(lang.getSettings().opDir + solution.getId(), prepareCommands(f, lang));
             result.addTest(f.getIndex(),output.equals(f.getOutput()));
         }
     }
 
     private Queue<String> prepareCommands(TestFile testFile, Language language) {
         Queue<String> commands = new LinkedList<>();
-        commands.add("cd " + language.getSettings().opDir + solution.getId());
         commands.add(language.getCommands().get("compile"));
         commands.add(language.getCommands().get("run") + testFile.safeInput());
         return commands;

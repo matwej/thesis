@@ -2,6 +2,9 @@ package sk.fei.stuba.xpivarcim.consumer;
 
 import sk.fei.stuba.xpivarcim.entities.files.CodeFile;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class Solution {
 
     private long id;
@@ -15,6 +18,16 @@ public class Solution {
         this.id = id;
         this.assignmentId = assignmentId;
         this.sourceFiles = sourceFiles;
+    }
+
+    public List<String> filteredExtensionSourceFiles(String extension) {
+        List<String> out = new ArrayList<>();
+        for(CodeFile file : sourceFiles) {
+            if(file.getName().endsWith("."+extension)) {
+                out.add(file.getName());
+            }
+        }
+        return out;
     }
 
     public long getId() {
