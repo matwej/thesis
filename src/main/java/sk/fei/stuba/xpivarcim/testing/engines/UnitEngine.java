@@ -1,9 +1,5 @@
 package sk.fei.stuba.xpivarcim.testing.engines;
 
-import org.w3c.dom.Document;
-import org.w3c.dom.Element;
-import org.w3c.dom.Node;
-import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
 import sk.fei.stuba.xpivarcim.consumer.Solution;
 import sk.fei.stuba.xpivarcim.entities.files.CodeFile;
@@ -12,12 +8,8 @@ import sk.fei.stuba.xpivarcim.producer.Result;
 import sk.fei.stuba.xpivarcim.testing.languages.Language;
 import sk.fei.stuba.xpivarcim.testing.support.TestUtils;
 
-import javax.xml.parsers.DocumentBuilder;
-import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
-import java.io.FileInputStream;
 import java.io.IOException;
-import java.io.InputStream;
 import java.nio.file.*;
 import java.nio.file.attribute.BasicFileAttributes;
 import java.util.LinkedList;

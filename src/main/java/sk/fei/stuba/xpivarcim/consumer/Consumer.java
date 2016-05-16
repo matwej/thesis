@@ -69,7 +69,7 @@ public class Consumer {
             Set<SourceFile> sf = new HashSet<>();
             sf.add(new SourceFile("vstup.txt", "1\n2\n3".getBytes()));
             Set<TestFile> tf = new HashSet<>();
-            tf.add(new TestFile(4, "omg nejake class {} () neriesim teraz", "2", "4"));
+            tf.add(new TestFile(4, "omg nejake class {} () neriesim teraz", "2", "4\n"));
             Assignment a =
                     new Assignment(req.getId(), "JAVA", new Date(), sf, tf, 200);
             a.setFiles();
