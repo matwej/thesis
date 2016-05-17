@@ -5,6 +5,7 @@ import sk.fei.stuba.xpivarcim.Settings;
 import sk.fei.stuba.xpivarcim.consumer.Solution;
 import sk.fei.stuba.xpivarcim.db.repos.AssignmentRepository;
 import sk.fei.stuba.xpivarcim.entities.Assignment;
+import sk.fei.stuba.xpivarcim.entities.files.SourceFile;
 import sk.fei.stuba.xpivarcim.producer.AssignmentResponseException;
 import sk.fei.stuba.xpivarcim.producer.Producer;
 import sk.fei.stuba.xpivarcim.producer.Result;
@@ -48,7 +49,7 @@ public class Handler {
         try {
             prepareAssignment();
             assembleAndRun();
-        } catch (ParseException | AssignmentResponseException | UnsupportedLanguageException e) {
+        } catch (ParseException | AssignmentResponseException | UnsupportedLanguageException | UnsupportedEngineType e) {
             result.setStatus(StatusCode.ERROR.getValue());
             result.appendMessage(e.getMessage());
         } catch (Exception e) {
@@ -69,28 +70,36 @@ public class Handler {
 
     private void assembleAndRun() throws IOException, UnsupportedEngineType, UnsupportedLanguageException, ParserConfigurationException, SAXException {
         setUpDir();
+        createSourceFiles();
         Language lang;
-        if(assignment.getCodeLanguage().equals("JAVA")) {
+        if (assignment.getCodeLanguage().equals("JAVA")) {
             lang = new Java(settings);
-        } else if(assignment.getCodeLanguage().equals("C")) {
+        } else if (assignment.getCodeLanguage().equals("C")) {
             lang = new C(settings);
         } else {
             throw new UnsupportedLanguageException(assignment.getCodeLanguage());
         }
-        if(!assignment.runTestFiles().isEmpty()) {
+        if (!assignment.runTestFiles().isEmpty()) {
             engine = EngineFactory.getEngine(EngineFactory.EngineType.RUN, solution);
             engine.executeTests(result, assignment.runTestFiles(), lang);
         }
-        if(!assignment.unitTestFiles().isEmpty()) {
+        if (!assignment.unitTestFiles().isEmpty()) {
             engine = EngineFactory.getEngine(EngineFactory.EngineType.UNIT, solution);
             engine.executeTests(result, assignment.unitTestFiles(), lang);
         }
-//        tearDownDir();
+        tearDownDir();
         result.setStatus(StatusCode.OK.getValue());
     }
 
+    private void createSourceFiles() throws IOException {
+        for(SourceFile file : assignment.getSourceFiles()) {
+            file.create(dir.toString() + "/");
+        }
+    }
+
     private void setUpDir() throws IOException {
-        if (dir.toFile().exists()) tearDownDir();
+        if (dir.toFile().exists())
+            tearDownDir();
         Files.createDirectory(dir, Settings.ATTRS);
     }
 
@@ -101,6 +110,7 @@ public class Handler {
                 Files.delete(file);
                 return CONTINUE;
             }
+
             @Override
             public FileVisitResult postVisitDirectory(Path dir, IOException exc) throws IOException {
                 if (exc == null) {

@@ -38,7 +38,7 @@ public class Java implements Language {
     public void createUnitTestFile(Solution solution, Set<TestFile> testFiles) throws IOException {
         FileOutputStream ostream = new FileOutputStream(settings.opDir + solution.getId() + "/src/test/java/MainTest.java");
         ostream.write("import static org.junit.Assert.*;\n".getBytes("UTF-8"));
-        ostream.write("import org.junit.*;\n\n".getBytes("UTF-8"));
+        ostream.write("import org.junit.*;\n".getBytes("UTF-8"));
         ostream.write("public class MainTest {\n".getBytes("UTF-8"));
         for(TestFile testFile : testFiles) {
             ostream.write(("@Test(timeout="+String.valueOf(settings.unitTimeout)+")\n").getBytes("UTF-8"));
@@ -46,7 +46,7 @@ public class Java implements Language {
             ostream.write(testFile.getContent().getBytes("UTF-8"));
             ostream.write("\n}".getBytes("UTF-8"));
         }
-        ostream.write("\n}".getBytes("UTF-8"));
+        ostream.write("}".getBytes("UTF-8"));
         ostream.close();
     }
 

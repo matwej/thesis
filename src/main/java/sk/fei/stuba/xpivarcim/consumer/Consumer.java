@@ -16,6 +16,7 @@ import sk.fei.stuba.xpivarcim.producer.Producer;
 import sk.fei.stuba.xpivarcim.testing.Handler;
 
 import java.io.IOException;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
@@ -164,6 +165,29 @@ public class Consumer {
             tf.add(new TestFile(3, null, "3", "*\n**\n***\n"));
             Assignment a =
                     new Assignment(req.getId(), "C", new Date(), sf, tf, 200);
+            a.setFiles();
+            return a;
+        }
+        /* BUBBLE SORT java run aj unit test
+            {
+            "id":345,
+            "assignmentId":55,
+            "sourceFiles":[
+		{
+                    "name":"Main.java",
+                    "content":"import java.io.*;\nimport java.util.ArrayList;\nimport java.util.Scanner;\n \nclass Main {\n  public static void main(String []args) throws FileNotFoundException {\n        Scanner scanner = new Scanner(new FileReader(\"vstup.txt\"));\n        ArrayList<Integer> nums = new ArrayList<>();\n        while(scanner.hasNextLine()) {\n            nums.add(Integer.parseInt(scanner.nextLine()));\n        }\n        scanner.close();\n        Integer[] array = nums.toArray(new Integer[nums.size()]);\n\n\t\t\t\tsort(array);\n\n        for (int c = 0; c < array.length; c++)\n            System.out.println(array[c]);\n  }\n\n\tpublic static void sort(Integer[] array) {\n\t\tint swap;\n\t\tfor (int c = 0; c < ( array.length - 1 ); c++) {\n            for (int d = 0; d < array.length - c - 1; d++) {\n                if (array[d] > array[d+1])\n                {\n                    swap       = array[d];\n                    array[d]   = array[d+1];\n                    array[d+1] = swap;\n                }\n            }\n        }\t\t\n\t}\n}"
+                }
+            ]
+        }
+         */
+        if (req.getId() == 55) {
+            Set<SourceFile> sf = new HashSet<>();
+            sf.add(new SourceFile("vstup.txt", "15\n47\n1\n10\n36\n89\n22\n".getBytes()));
+            Set<TestFile> tf = new HashSet<>();
+            tf.add(new TestFile(1, null, null, "1\n10\n15\n22\n36\n47\n89\n"));
+            tf.add(new TestFile(2, "Integer[] a=new Integer[]{5,2,4,1,3};Main.sort(a);assertArrayEquals(a,new Integer[]{1,2,3,4,5});", null, null));
+            Assignment a =
+                    new Assignment(req.getId(), "JAVA", new Date(), sf, tf, 200);
             a.setFiles();
             return a;
         }

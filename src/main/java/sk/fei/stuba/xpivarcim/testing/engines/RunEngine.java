@@ -22,7 +22,7 @@ public class RunEngine implements Engine {
 
     @Override
     public void executeTests(Result result, Set<TestFile> testFiles, Language lang) throws IOException {
-        createFiles(lang);
+        createSolutionFiles(lang);
         for (TestFile f : testFiles) {
             String output = TestUtils.executeCommands(lang.getSettings().opDir + solution.getId(), prepareCommands(f, lang));
             result.addTest(f.getIndex(),output.equals(f.getOutput()));
@@ -36,7 +36,7 @@ public class RunEngine implements Engine {
         return commands;
     }
 
-    private void createFiles(Language language) throws IOException {
+    private void createSolutionFiles(Language language) throws IOException {
         for (CodeFile file : solution.getSourceFiles()) {
             file.create(language.getSettings().opDir + solution.getId() + "/");
         }
