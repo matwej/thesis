@@ -38,4 +38,10 @@ public class Settings {
     @Value("${unit.timeout}")
     public int unitTimeout;
 
+    public int getUnitTimeoutMilis() {
+        return unitTimeout*1000;
+    }
+
+    @Value("${run.timeout}")
+    public int runTimeout;
 }

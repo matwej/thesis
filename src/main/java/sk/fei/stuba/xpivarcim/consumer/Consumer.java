@@ -38,8 +38,6 @@ public class Consumer {
             key = "orderRoutingKey")
     )
     public void processSolution(Solution solution) throws IOException {
-        System.out.println(solution.getId());
-
         Handler handler = new Handler(solution, assignmentRepository, producer, settings);
         handler.test();
     }
@@ -138,7 +136,7 @@ public class Consumer {
             sf.add(new SourceFile("vstup.txt", "1\n2\n3".getBytes()));
             Set<TestFile> tf = new HashSet<>();
             tf.add(new TestFile(20, "fail_unless(hop(2,10) == 20, \"failed\");", null, null));
-            tf.add(new TestFile(1500, "fail_unless(hop(500,3) == 2000, \"failed\");", null, null));
+            tf.add(new TestFile(1500, "fail_unless(hop(500,3) == 1500, \"failed\");", null, null));
             Assignment a =
                     new Assignment(req.getId(), "C", new Date(), sf, tf, 200);
             a.setFiles();

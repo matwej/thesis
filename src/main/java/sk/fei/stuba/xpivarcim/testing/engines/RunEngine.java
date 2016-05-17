@@ -5,12 +5,16 @@ import sk.fei.stuba.xpivarcim.entities.files.CodeFile;
 import sk.fei.stuba.xpivarcim.entities.files.TestFile;
 import sk.fei.stuba.xpivarcim.producer.Result;
 import sk.fei.stuba.xpivarcim.testing.languages.Language;
+import sk.fei.stuba.xpivarcim.testing.support.TestTimedOutException;
 import sk.fei.stuba.xpivarcim.testing.support.TestUtils;
 
 import java.io.IOException;
 import java.util.LinkedList;
 import java.util.Queue;
 import java.util.Set;
+import java.util.concurrent.ExecutionException;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 public class RunEngine implements Engine {
 
@@ -21,12 +25,16 @@ public class RunEngine implements Engine {
     }
 
     @Override
-    public void executeTests(Result result, Set<TestFile> testFiles, Language lang) throws IOException {
-        createSolutionFiles(lang);
+    public void executeTests(Result result, Set<TestFile> testFiles, Language language) throws IOException, ExecutionException, InterruptedException, TestTimedOutException {
+        String workDir = language.getSettings().opDir + solution.getId();
+        createSolutionFiles(workDir);
+        ExecutorService service = Executors.newSingleThreadExecutor();
         for (TestFile f : testFiles) {
-            String output = TestUtils.executeCommands(lang.getSettings().opDir + solution.getId(), prepareCommands(f, lang));
-            result.addTest(f.getIndex(),output.equals(f.getOutput()));
+            Queue<String> commands = prepareCommands(f, language);
+            String output = TestUtils.runTimeoutableCommands(workDir, commands, language.getSettings().runTimeout, service);
+            result.addTest(f.getIndex(),f.getOutput().equals(output));
         }
+        service.shutdown();
     }
 
     private Queue<String> prepareCommands(TestFile testFile, Language language) {
@@ -36,9 +44,9 @@ public class RunEngine implements Engine {
         return commands;
     }
 
-    private void createSolutionFiles(Language language) throws IOException {
+    private void createSolutionFiles(String workDir) throws IOException {
         for (CodeFile file : solution.getSourceFiles()) {
-            file.create(language.getSettings().opDir + solution.getId() + "/");
+            file.create(workDir + "/");
         }
     }
 }

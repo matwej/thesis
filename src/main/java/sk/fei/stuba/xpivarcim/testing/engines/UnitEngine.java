@@ -25,12 +25,12 @@ public class UnitEngine implements Engine {
     }
 
     @Override
-    public void executeTests(Result result, Set<TestFile> testFiles, Language language) throws IOException, ParserConfigurationException, SAXException {
+    public void executeTests(Result result, Set<TestFile> testFiles, Language language) throws IOException, InterruptedException, ParserConfigurationException, SAXException {
         String operationDir = language.getSettings().opDir + solution.getId();
         prepareUnitFiles(operationDir, language.getSettings().unitProtoDir + language.getUnitDirName());
         language.createUnitTestFile(solution, testFiles);
         createSolutionFiles(language);
-        TestUtils.executeCommands(operationDir, prepareCommands(language));
+        TestUtils.runCommands(operationDir, prepareCommands(language));
         language.mapUnitTestResults(solution, result);
     }
 

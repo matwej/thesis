@@ -14,6 +14,7 @@ import sk.fei.stuba.xpivarcim.testing.engines.Engine;
 import sk.fei.stuba.xpivarcim.testing.languages.C;
 import sk.fei.stuba.xpivarcim.testing.languages.Java;
 import sk.fei.stuba.xpivarcim.testing.languages.Language;
+import sk.fei.stuba.xpivarcim.testing.support.TestTimedOutException;
 import sk.fei.stuba.xpivarcim.testing.support.UnsupportedEngineType;
 import sk.fei.stuba.xpivarcim.testing.support.UnsupportedLanguageException;
 
@@ -22,6 +23,7 @@ import java.io.IOException;
 import java.nio.file.*;
 import java.nio.file.attribute.BasicFileAttributes;
 import java.text.ParseException;
+import java.util.concurrent.ExecutionException;
 
 import static java.nio.file.FileVisitResult.CONTINUE;
 
@@ -49,10 +51,15 @@ public class Handler {
         try {
             prepareAssignment();
             assembleAndRun();
-        } catch (ParseException | AssignmentResponseException | UnsupportedLanguageException | UnsupportedEngineType e) {
+        } catch (ParseException |
+                AssignmentResponseException |
+                UnsupportedLanguageException |
+                UnsupportedEngineType |
+                TestTimedOutException e) {
             result.setStatus(StatusCode.ERROR.getValue());
             result.appendMessage(e.getMessage());
         } catch (Exception e) {
+            e.printStackTrace();
             result.setStatus(StatusCode.UNEXPECTED_ERROR.getValue());
             result.appendMessage(e.getMessage());
         }
@@ -68,7 +75,11 @@ public class Handler {
         assignmentRepository.save(assignment);
     }
 
-    private void assembleAndRun() throws IOException, UnsupportedEngineType, UnsupportedLanguageException, ParserConfigurationException, SAXException {
+    private void assembleAndRun()
+            throws IOException, UnsupportedEngineType, UnsupportedLanguageException,
+            ParserConfigurationException, SAXException, ExecutionException,
+            InterruptedException, TestTimedOutException
+    {
         setUpDir();
         createSourceFiles();
         Language lang;
@@ -87,7 +98,7 @@ public class Handler {
             engine = EngineFactory.getEngine(EngineFactory.EngineType.UNIT, solution);
             engine.executeTests(result, assignment.unitTestFiles(), lang);
         }
-        tearDownDir();
+//        tearDownDir();
         result.setStatus(StatusCode.OK.getValue());
     }
 

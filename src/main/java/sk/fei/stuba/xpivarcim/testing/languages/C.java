@@ -27,7 +27,7 @@ public class C implements Language {
 
     public C(Settings settings) {
         this.settings = settings;
-        commandsMap.put("compile","g++ *.* -o run");
+        commandsMap.put("compile","gcc *.c -I. -o run");
         commandsMap.put("run", "./run ");
         commandsMap.put("test_prep", ""); // no preparation needed
         commandsMap.put("test","make");
@@ -37,14 +37,15 @@ public class C implements Language {
     public void createUnitTestFile(Solution solution, Set<TestFile> testFiles) throws IOException {
         FileOutputStream ostream = new FileOutputStream(settings.opDir + solution.getId() + "/check_unit_test.check");
         for(String headerFile : solution.filteredExtensionSourceFiles("h")) {
-            ostream.write(("#include \""+headerFile+"\"\n").getBytes("UTF-8"));
+            ostream.write(("#include \""+headerFile+"\"\n").getBytes());
         }
         for(TestFile testFile : testFiles) {
-            ostream.write(("\n#test _" + testFile.getIndex() + "\n").getBytes("UTF-8"));
-            ostream.write(testFile.getContent().getBytes("UTF-8"));
+            ostream.write(("\n#test _" + testFile.getIndex() + "\n").getBytes());
+            ostream.write(testFile.getContent().getBytes());
             ostream.write("\n".getBytes());
         }
         ostream.write("\n#main-pre\nsrunner_set_xml(sr,\"report.xml\");\n".getBytes());
+        ostream.write(("tcase_set_timeout(tc1_1,"+settings.unitTimeout+");\n").getBytes());
         ostream.close();
     }
 
