@@ -59,7 +59,6 @@ public class Handler {
             result.setStatus(StatusCode.ERROR.getValue());
             result.appendMessage(e.getMessage());
         } catch (Exception e) {
-            e.printStackTrace();
             result.setStatus(StatusCode.UNEXPECTED_ERROR.getValue());
             result.appendMessage(e.getMessage());
         }
@@ -98,7 +97,7 @@ public class Handler {
             engine = EngineFactory.getEngine(EngineFactory.EngineType.UNIT, solution);
             engine.executeTests(result, assignment.unitTestFiles(), lang);
         }
-//        tearDownDir();
+        tearDownDir();
         result.setStatus(StatusCode.OK.getValue());
     }
 
