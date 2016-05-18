@@ -81,21 +81,21 @@ public class Handler {
     {
         setUpDir();
         createSourceFiles();
-        Language lang;
+        Language language;
         if (assignment.getCodeLanguage().equals("JAVA")) {
-            lang = new Java(settings);
+            language = new Java(settings);
         } else if (assignment.getCodeLanguage().equals("C")) {
-            lang = new C(settings);
+            language = new C(settings);
         } else {
             throw new UnsupportedLanguageException(assignment.getCodeLanguage());
         }
         if (!assignment.runTestFiles().isEmpty()) {
             Engine engine = EngineFactory.getEngine(EngineFactory.EngineType.RUN, solution);
-            engine.executeTests(result, assignment.runTestFiles(), lang);
+            engine.executeTests(result, assignment.runTestFiles(), language);
         }
         if (!assignment.unitTestFiles().isEmpty()) {
             Engine engine = EngineFactory.getEngine(EngineFactory.EngineType.UNIT, solution);
-            engine.executeTests(result, assignment.unitTestFiles(), lang);
+            engine.executeTests(result, assignment.unitTestFiles(), language);
         }
         tearDownDir();
     }
