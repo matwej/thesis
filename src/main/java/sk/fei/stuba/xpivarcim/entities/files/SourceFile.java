@@ -32,5 +32,4 @@ public class SourceFile extends ModuleFile<byte[]> implements Serializable {
         return name;
     }
 
-
 }
