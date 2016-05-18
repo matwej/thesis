@@ -1,7 +1,5 @@
 package sk.fei.stuba.xpivarcim.testing;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
 import org.xml.sax.SAXException;
 import sk.fei.stuba.xpivarcim.Settings;
 import sk.fei.stuba.xpivarcim.consumer.Solution;
@@ -29,27 +27,26 @@ import java.util.concurrent.ExecutionException;
 
 import static java.nio.file.FileVisitResult.CONTINUE;
 
-@Service
 public class Handler {
 
     private Solution solution;
     private Assignment assignment;
-    @Autowired
     private AssignmentRepository assignmentRepository;
-    @Autowired
     private Producer producer;
     private Result result;
-    @Autowired
     private Settings settings;
     private Path dir;
 
-    public void setSolution(Solution solution) {
+    public Handler(Solution solution, AssignmentRepository assignmentRepository, Producer producer, Settings settings) {
         this.solution = solution;
+        this.assignmentRepository = assignmentRepository;
+        this.producer = producer;
+        this.settings = settings;
+        result = new Result(solution.getId());
+        dir = Paths.get(settings.opDir + String.valueOf(solution.getId()));
     }
 
     public void test() {
-        result = new Result(solution.getId());
-        dir = Paths.get(settings.opDir + String.valueOf(solution.getId()));
         try {
             prepareAssignment();
             assembleAndRun();
@@ -62,7 +59,6 @@ public class Handler {
             result.setStatus(StatusCode.ERROR.getValue());
             result.appendMessage(e.getMessage());
         } catch (Exception e) {
-            e.printStackTrace();
             result.setStatus(StatusCode.UNEXPECTED_ERROR.getValue());
             result.appendMessage(e.getMessage());
         }

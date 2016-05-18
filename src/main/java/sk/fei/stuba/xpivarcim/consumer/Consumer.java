@@ -24,7 +24,13 @@ import java.util.Set;
 public class Consumer {
 
     @Autowired
-    Handler handler;
+    Producer producer;
+
+    @Autowired
+    AssignmentRepository assignmentRepository;
+
+    @Autowired
+    Settings settings;
 
     @RabbitListener(bindings = @QueueBinding(
             value = @Queue(value = "Solution", durable = "true"),
@@ -32,7 +38,7 @@ public class Consumer {
             key = "orderRoutingKey")
     )
     public void processSolution(Solution solution) throws IOException {
-        handler.setSolution(solution);
+        Handler handler = new Handler(solution, assignmentRepository, producer, settings);
         handler.test();
     }
 
