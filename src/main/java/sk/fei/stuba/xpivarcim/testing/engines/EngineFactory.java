@@ -1,4 +1,4 @@
-package sk.fei.stuba.xpivarcim.testing;
+package sk.fei.stuba.xpivarcim.testing.engines;
 
 import sk.fei.stuba.xpivarcim.consumer.Solution;
 import sk.fei.stuba.xpivarcim.testing.engines.Engine;

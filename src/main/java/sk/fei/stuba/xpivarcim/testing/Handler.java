@@ -11,9 +11,11 @@ import sk.fei.stuba.xpivarcim.producer.Producer;
 import sk.fei.stuba.xpivarcim.producer.Result;
 import sk.fei.stuba.xpivarcim.producer.StatusCode;
 import sk.fei.stuba.xpivarcim.testing.engines.Engine;
+import sk.fei.stuba.xpivarcim.testing.engines.EngineFactory;
 import sk.fei.stuba.xpivarcim.testing.languages.C;
 import sk.fei.stuba.xpivarcim.testing.languages.Java;
 import sk.fei.stuba.xpivarcim.testing.languages.Language;
+import sk.fei.stuba.xpivarcim.testing.languages.LanguageFactory;
 import sk.fei.stuba.xpivarcim.testing.support.TestTimedOutException;
 import sk.fei.stuba.xpivarcim.testing.support.UnsupportedEngineType;
 import sk.fei.stuba.xpivarcim.testing.support.UnsupportedLanguageException;
@@ -81,14 +83,7 @@ public class Handler {
     {
         setUpDir();
         createSourceFiles();
-        Language language;
-        if (assignment.getCodeLanguage().equals("JAVA")) {
-            language = new Java(settings);
-        } else if (assignment.getCodeLanguage().equals("C")) {
-            language = new C(settings);
-        } else {
-            throw new UnsupportedLanguageException(assignment.getCodeLanguage());
-        }
+        Language language = LanguageFactory.getLanguage(assignment.getCodeLanguage(), settings);
         if (!assignment.runTestFiles().isEmpty()) {
             Engine engine = EngineFactory.getEngine(EngineFactory.EngineType.RUN, solution);
             engine.executeTests(result, assignment.runTestFiles(), language);
