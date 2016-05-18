@@ -1,5 +1,7 @@
 package sk.fei.stuba.xpivarcim.testing;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 import org.xml.sax.SAXException;
 import sk.fei.stuba.xpivarcim.Settings;
 import sk.fei.stuba.xpivarcim.consumer.Solution;
@@ -27,30 +29,31 @@ import java.util.concurrent.ExecutionException;
 
 import static java.nio.file.FileVisitResult.CONTINUE;
 
+@Service
 public class Handler {
 
     private Solution solution;
     private Assignment assignment;
+    @Autowired
     private AssignmentRepository assignmentRepository;
+    @Autowired
     private Producer producer;
     private Result result;
-    private Engine engine;
+    @Autowired
     private Settings settings;
     private Path dir;
 
-    public Handler(Solution solution, AssignmentRepository assignmentRepository, Producer producer, Settings settings) {
+    public void setSolution(Solution solution) {
         this.solution = solution;
-        this.assignmentRepository = assignmentRepository;
-        this.producer = producer;
-        this.settings = settings;
-        result = new Result(solution.getId());
-        dir = Paths.get(settings.opDir + String.valueOf(solution.getId()));
     }
 
     public void test() {
+        result = new Result(solution.getId());
+        dir = Paths.get(settings.opDir + String.valueOf(solution.getId()));
         try {
             prepareAssignment();
             assembleAndRun();
+            result.setStatus(StatusCode.OK.getValue());
         } catch (ParseException |
                 AssignmentResponseException |
                 UnsupportedLanguageException |
@@ -59,6 +62,7 @@ public class Handler {
             result.setStatus(StatusCode.ERROR.getValue());
             result.appendMessage(e.getMessage());
         } catch (Exception e) {
+            e.printStackTrace();
             result.setStatus(StatusCode.UNEXPECTED_ERROR.getValue());
             result.appendMessage(e.getMessage());
         }
@@ -90,15 +94,14 @@ public class Handler {
             throw new UnsupportedLanguageException(assignment.getCodeLanguage());
         }
         if (!assignment.runTestFiles().isEmpty()) {
-            engine = EngineFactory.getEngine(EngineFactory.EngineType.RUN, solution);
+            Engine engine = EngineFactory.getEngine(EngineFactory.EngineType.RUN, solution);
             engine.executeTests(result, assignment.runTestFiles(), lang);
         }
         if (!assignment.unitTestFiles().isEmpty()) {
-            engine = EngineFactory.getEngine(EngineFactory.EngineType.UNIT, solution);
+            Engine engine = EngineFactory.getEngine(EngineFactory.EngineType.UNIT, solution);
             engine.executeTests(result, assignment.unitTestFiles(), lang);
         }
         tearDownDir();
-        result.setStatus(StatusCode.OK.getValue());
     }
 
     private void createSourceFiles() throws IOException {
