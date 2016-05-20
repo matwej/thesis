@@ -1,9 +1,9 @@
 package sk.fei.stuba.xpivarcim.db.entities;
 
 
-import sk.fei.stuba.xpivarcim.db.entities.files.ModuleFile;
-import sk.fei.stuba.xpivarcim.db.entities.files.SourceFile;
-import sk.fei.stuba.xpivarcim.db.entities.files.TestFile;
+import sk.fei.stuba.xpivarcim.db.entities.assignment.AssignmentFile;
+import sk.fei.stuba.xpivarcim.db.entities.assignment.SourceFile;
+import sk.fei.stuba.xpivarcim.db.entities.assignment.TestFile;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -48,11 +48,11 @@ public class Assignment implements Serializable {
 
     public void setFiles() {
         if (!(sourceFiles == null))
-            for (ModuleFile f : sourceFiles) {
+            for (AssignmentFile f : sourceFiles) {
                 f.setAssignment(this);
             }
         if (!(testFiles == null))
-        for (ModuleFile f : testFiles) {
+        for (AssignmentFile f : testFiles) {
             f.setAssignment(this);
         }
     }

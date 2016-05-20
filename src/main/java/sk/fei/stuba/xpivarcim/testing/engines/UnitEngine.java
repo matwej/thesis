@@ -2,10 +2,10 @@ package sk.fei.stuba.xpivarcim.testing.engines;
 
 import org.xml.sax.SAXException;
 import sk.fei.stuba.xpivarcim.consumer.Solution;
-import sk.fei.stuba.xpivarcim.db.entities.files.TestFile;
+import sk.fei.stuba.xpivarcim.db.entities.assignment.TestFile;
 import sk.fei.stuba.xpivarcim.producer.Result;
 import sk.fei.stuba.xpivarcim.testing.languages.Language;
-import sk.fei.stuba.xpivarcim.testing.support.TestUtils;
+import sk.fei.stuba.xpivarcim.support.Utils;
 
 import javax.xml.parsers.ParserConfigurationException;
 import java.io.IOException;
@@ -26,7 +26,7 @@ class UnitEngine implements Engine {
     @Override
     public void executeTests(String workDir, Result result, Set<TestFile> testFiles) throws IOException, InterruptedException, ParserConfigurationException, SAXException {
         language.createUnitTestFile(solution, testFiles);
-        TestUtils.runCommands(workDir, prepareCommands(language));
+        Utils.runCommands(workDir, prepareCommands(language));
         language.mapUnitTestResults(workDir, result);
     }
 

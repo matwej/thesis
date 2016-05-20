@@ -1,7 +1,5 @@
 package sk.fei.stuba.xpivarcim.consumer;
 
-import sk.fei.stuba.xpivarcim.db.entities.files.CodeFile;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -41,5 +39,4 @@ public class Solution {
     public CodeFile[] getSourceFiles() {
         return sourceFiles;
     }
-
 }

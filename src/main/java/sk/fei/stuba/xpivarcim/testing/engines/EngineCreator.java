@@ -2,7 +2,7 @@ package sk.fei.stuba.xpivarcim.testing.engines;
 
 import org.xml.sax.SAXException;
 import sk.fei.stuba.xpivarcim.consumer.Solution;
-import sk.fei.stuba.xpivarcim.db.entities.files.TestFile;
+import sk.fei.stuba.xpivarcim.db.entities.assignment.TestFile;
 import sk.fei.stuba.xpivarcim.producer.Result;
 import sk.fei.stuba.xpivarcim.testing.languages.Language;
 

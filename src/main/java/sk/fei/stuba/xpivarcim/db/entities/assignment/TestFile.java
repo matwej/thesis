@@ -1,10 +1,10 @@
-package sk.fei.stuba.xpivarcim.db.entities.files;
+package sk.fei.stuba.xpivarcim.db.entities.assignment;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 
 @Entity
-public class TestFile extends ModuleFile<String> {
+public class TestFile extends AssignmentFile<String> {
 
     @Column
     private int index;

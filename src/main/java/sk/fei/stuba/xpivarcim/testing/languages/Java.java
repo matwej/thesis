@@ -5,9 +5,9 @@ import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
-import sk.fei.stuba.xpivarcim.Settings;
+import sk.fei.stuba.xpivarcim.support.Settings;
 import sk.fei.stuba.xpivarcim.consumer.Solution;
-import sk.fei.stuba.xpivarcim.db.entities.files.TestFile;
+import sk.fei.stuba.xpivarcim.db.entities.assignment.TestFile;
 import sk.fei.stuba.xpivarcim.producer.Result;
 
 import javax.xml.parsers.DocumentBuilder;

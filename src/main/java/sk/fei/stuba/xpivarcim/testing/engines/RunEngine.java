@@ -1,9 +1,9 @@
 package sk.fei.stuba.xpivarcim.testing.engines;
 
-import sk.fei.stuba.xpivarcim.db.entities.files.TestFile;
+import sk.fei.stuba.xpivarcim.db.entities.assignment.TestFile;
 import sk.fei.stuba.xpivarcim.producer.Result;
 import sk.fei.stuba.xpivarcim.testing.languages.Language;
-import sk.fei.stuba.xpivarcim.testing.support.TestUtils;
+import sk.fei.stuba.xpivarcim.support.Utils;
 
 import java.io.IOException;
 import java.util.LinkedList;
@@ -29,7 +29,7 @@ class RunEngine implements Engine {
             Queue<String> commands = prepareCommands(f, language);
             try {
                 int timeout = f.getTimeout() == 0 ? language.getSettings().runTimeout : f.getTimeout();
-                String output = TestUtils.runTimeoutableCommands(workDir, commands, timeout, service);
+                String output = Utils.runTimeoutableCommands(workDir, commands, timeout, service);
                 result.addTest(f.getIndex(),f.getOutput().equals(output));
             } catch (TimeoutException e) {
                 result.addTest(f.getIndex(),false);

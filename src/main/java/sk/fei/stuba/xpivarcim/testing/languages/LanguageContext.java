@@ -1,7 +1,6 @@
 package sk.fei.stuba.xpivarcim.testing.languages;
 
-import sk.fei.stuba.xpivarcim.Settings;
-import sk.fei.stuba.xpivarcim.testing.support.UnsupportedLanguageException;
+import sk.fei.stuba.xpivarcim.support.Settings;
 
 public class LanguageContext {
 

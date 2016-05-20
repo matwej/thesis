@@ -1,13 +1,11 @@
-package sk.fei.stuba.xpivarcim.testing.support;
+package sk.fei.stuba.xpivarcim.support;
 
-import java.io.File;
-import java.io.FileWriter;
-import java.io.IOException;
+import java.io.*;
 import java.util.Queue;
 import java.util.Scanner;
 import java.util.concurrent.*;
 
-public class TestUtils {
+public class Utils {
 
     public static String runTimeoutableCommands(final String workDir, final Queue<String> commands, int timeout, ExecutorService service)
             throws ExecutionException, InterruptedException, TimeoutException {
@@ -41,6 +39,12 @@ public class TestUtils {
             output = s.next();
         s.close();
         return output;
+    }
+
+    public static void createFile(String targetDir, String name, byte[] content) throws IOException {
+        FileOutputStream outputStream = new FileOutputStream(targetDir + name);
+        outputStream.write(content);
+        outputStream.close();
     }
 
     private static void createScriptFile(String name, Queue<String> commands) throws IOException {

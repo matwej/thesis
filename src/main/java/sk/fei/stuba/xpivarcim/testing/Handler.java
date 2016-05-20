@@ -1,10 +1,10 @@
 package sk.fei.stuba.xpivarcim.testing;
 
 import org.xml.sax.SAXException;
-import sk.fei.stuba.xpivarcim.Settings;
+import sk.fei.stuba.xpivarcim.support.Settings;
 import sk.fei.stuba.xpivarcim.consumer.Solution;
 import sk.fei.stuba.xpivarcim.db.entities.Assignment;
-import sk.fei.stuba.xpivarcim.db.entities.files.SourceFile;
+import sk.fei.stuba.xpivarcim.db.entities.assignment.SourceFile;
 import sk.fei.stuba.xpivarcim.db.repos.AssignmentRepository;
 import sk.fei.stuba.xpivarcim.producer.AssignmentResponseException;
 import sk.fei.stuba.xpivarcim.producer.Producer;
@@ -15,7 +15,8 @@ import sk.fei.stuba.xpivarcim.testing.engines.RunEngineCreator;
 import sk.fei.stuba.xpivarcim.testing.engines.UnitEngineCreator;
 import sk.fei.stuba.xpivarcim.testing.languages.Language;
 import sk.fei.stuba.xpivarcim.testing.languages.LanguageContext;
-import sk.fei.stuba.xpivarcim.testing.support.UnsupportedLanguageException;
+import sk.fei.stuba.xpivarcim.support.Utils;
+import sk.fei.stuba.xpivarcim.testing.languages.UnsupportedLanguageException;
 
 import javax.xml.parsers.ParserConfigurationException;
 import java.io.IOException;
@@ -92,7 +93,7 @@ public class Handler {
     private void createSourceFiles() throws IOException {
         if (assignment.getSourceFiles() != null)
             for (SourceFile file : assignment.getSourceFiles()) {
-                file.create(dir.toString() + "/");
+                Utils.createFile(dir.toString() + "/", file.getName(), file.getContent());
             }
     }
 
