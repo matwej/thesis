@@ -1,9 +1,9 @@
-package sk.fei.stuba.xpivarcim.entities;
+package sk.fei.stuba.xpivarcim.db.entities;
 
 
-import sk.fei.stuba.xpivarcim.entities.files.ModuleFile;
-import sk.fei.stuba.xpivarcim.entities.files.SourceFile;
-import sk.fei.stuba.xpivarcim.entities.files.TestFile;
+import sk.fei.stuba.xpivarcim.db.entities.files.ModuleFile;
+import sk.fei.stuba.xpivarcim.db.entities.files.SourceFile;
+import sk.fei.stuba.xpivarcim.db.entities.files.TestFile;
 
 import javax.persistence.*;
 import java.io.Serializable;

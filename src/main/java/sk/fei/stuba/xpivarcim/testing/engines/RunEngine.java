@@ -1,6 +1,6 @@
 package sk.fei.stuba.xpivarcim.testing.engines;
 
-import sk.fei.stuba.xpivarcim.entities.files.TestFile;
+import sk.fei.stuba.xpivarcim.db.entities.files.TestFile;
 import sk.fei.stuba.xpivarcim.producer.Result;
 import sk.fei.stuba.xpivarcim.testing.languages.Language;
 import sk.fei.stuba.xpivarcim.testing.support.TestUtils;

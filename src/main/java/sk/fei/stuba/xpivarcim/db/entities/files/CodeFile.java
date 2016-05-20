@@ -1,4 +1,4 @@
-package sk.fei.stuba.xpivarcim.entities.files;
+package sk.fei.stuba.xpivarcim.db.entities.files;
 
 import java.io.FileOutputStream;
 import java.io.IOException;

@@ -3,7 +3,7 @@ package sk.fei.stuba.xpivarcim.testing.languages;
 import org.xml.sax.SAXException;
 import sk.fei.stuba.xpivarcim.Settings;
 import sk.fei.stuba.xpivarcim.consumer.Solution;
-import sk.fei.stuba.xpivarcim.entities.files.TestFile;
+import sk.fei.stuba.xpivarcim.db.entities.files.TestFile;
 import sk.fei.stuba.xpivarcim.producer.Result;
 
 import javax.xml.parsers.ParserConfigurationException;

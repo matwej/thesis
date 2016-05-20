@@ -1,7 +1,7 @@
-package sk.fei.stuba.xpivarcim.entities.files;
+package sk.fei.stuba.xpivarcim.db.entities.files;
 
 import org.springframework.data.jpa.domain.AbstractPersistable;
-import sk.fei.stuba.xpivarcim.entities.Assignment;
+import sk.fei.stuba.xpivarcim.db.entities.Assignment;
 
 import javax.persistence.Column;
 import javax.persistence.JoinColumn;
