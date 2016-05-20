@@ -1,5 +1,6 @@
 package sk.fei.stuba.xpivarcim.db.entities.assignment;
 
+import org.springframework.data.jpa.domain.AbstractPersistable;
 import sk.fei.stuba.xpivarcim.db.entities.Assignment;
 
 import javax.persistence.*;
@@ -7,9 +8,8 @@ import javax.persistence.*;
 @MappedSuperclass
 public class AssignmentFile<T> {
 
-    @Id
-    @Column
-    private long id;
+    @Id @GeneratedValue private int id;
+
     @ManyToOne
     @JoinColumn(name = "assignment_id", nullable = false)
     protected Assignment assignment;
@@ -18,6 +18,10 @@ public class AssignmentFile<T> {
 
     public T getContent() {
         return content;
+    }
+
+    public int getId() {
+        return id;
     }
 
     public void setAssignment(Assignment assignment) {

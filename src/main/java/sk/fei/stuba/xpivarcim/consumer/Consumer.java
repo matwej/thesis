@@ -6,14 +6,14 @@ import org.springframework.amqp.rabbit.annotation.QueueBinding;
 import org.springframework.amqp.rabbit.annotation.RabbitListener;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-import sk.fei.stuba.xpivarcim.support.Settings;
 import sk.fei.stuba.xpivarcim.db.entities.Assignment;
 import sk.fei.stuba.xpivarcim.db.entities.assignment.SourceFile;
 import sk.fei.stuba.xpivarcim.db.entities.assignment.TestFile;
 import sk.fei.stuba.xpivarcim.db.repos.AssignmentRepository;
 import sk.fei.stuba.xpivarcim.producer.AssignmentRequest;
 import sk.fei.stuba.xpivarcim.producer.Producer;
-import sk.fei.stuba.xpivarcim.testing.Handler;
+import sk.fei.stuba.xpivarcim.support.Settings;
+import sk.fei.stuba.xpivarcim.test.Handler;
 
 import java.io.IOException;
 import java.util.Date;

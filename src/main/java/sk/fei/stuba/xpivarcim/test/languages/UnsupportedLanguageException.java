@@ -1,4 +1,4 @@
-package sk.fei.stuba.xpivarcim.testing.languages;
+package sk.fei.stuba.xpivarcim.test.languages;
 
 public class UnsupportedLanguageException extends Exception {
 

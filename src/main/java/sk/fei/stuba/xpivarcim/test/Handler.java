@@ -1,7 +1,6 @@
-package sk.fei.stuba.xpivarcim.testing;
+package sk.fei.stuba.xpivarcim.test;
 
 import org.xml.sax.SAXException;
-import sk.fei.stuba.xpivarcim.support.Settings;
 import sk.fei.stuba.xpivarcim.consumer.Solution;
 import sk.fei.stuba.xpivarcim.db.entities.Assignment;
 import sk.fei.stuba.xpivarcim.db.entities.assignment.SourceFile;
@@ -10,13 +9,14 @@ import sk.fei.stuba.xpivarcim.producer.AssignmentResponseException;
 import sk.fei.stuba.xpivarcim.producer.Producer;
 import sk.fei.stuba.xpivarcim.producer.Result;
 import sk.fei.stuba.xpivarcim.producer.StatusCode;
-import sk.fei.stuba.xpivarcim.testing.engines.EngineCreator;
-import sk.fei.stuba.xpivarcim.testing.engines.RunEngineCreator;
-import sk.fei.stuba.xpivarcim.testing.engines.UnitEngineCreator;
-import sk.fei.stuba.xpivarcim.testing.languages.Language;
-import sk.fei.stuba.xpivarcim.testing.languages.LanguageContext;
+import sk.fei.stuba.xpivarcim.support.Settings;
 import sk.fei.stuba.xpivarcim.support.Utils;
-import sk.fei.stuba.xpivarcim.testing.languages.UnsupportedLanguageException;
+import sk.fei.stuba.xpivarcim.test.engines.EngineCreator;
+import sk.fei.stuba.xpivarcim.test.engines.RunEngineCreator;
+import sk.fei.stuba.xpivarcim.test.engines.UnitEngineCreator;
+import sk.fei.stuba.xpivarcim.test.languages.Language;
+import sk.fei.stuba.xpivarcim.test.languages.LanguageContext;
+import sk.fei.stuba.xpivarcim.test.languages.UnsupportedLanguageException;
 
 import javax.xml.parsers.ParserConfigurationException;
 import java.io.IOException;
@@ -52,11 +52,9 @@ public class Handler {
             result.setStatus(StatusCode.OK.getValue());
         } catch (AssignmentResponseException |
                 UnsupportedLanguageException e) {
-            e.printStackTrace();
             result.setStatus(StatusCode.ERROR.getValue());
             result.appendMessage(e.getMessage());
         } catch (Exception e) {
-            e.printStackTrace();
             result.setStatus(StatusCode.UNEXPECTED_ERROR.getValue());
             result.appendMessage(e.getMessage());
         }

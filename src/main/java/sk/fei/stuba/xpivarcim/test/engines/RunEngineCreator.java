@@ -1,9 +1,7 @@
-package sk.fei.stuba.xpivarcim.testing.engines;
+package sk.fei.stuba.xpivarcim.test.engines;
 
 import sk.fei.stuba.xpivarcim.consumer.Solution;
-import sk.fei.stuba.xpivarcim.consumer.CodeFile;
-import sk.fei.stuba.xpivarcim.testing.languages.Language;
-import sk.fei.stuba.xpivarcim.support.Utils;
+import sk.fei.stuba.xpivarcim.test.languages.Language;
 
 import java.io.IOException;
 

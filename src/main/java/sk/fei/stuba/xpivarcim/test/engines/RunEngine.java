@@ -1,9 +1,9 @@
-package sk.fei.stuba.xpivarcim.testing.engines;
+package sk.fei.stuba.xpivarcim.test.engines;
 
 import sk.fei.stuba.xpivarcim.db.entities.assignment.TestFile;
 import sk.fei.stuba.xpivarcim.producer.Result;
-import sk.fei.stuba.xpivarcim.testing.languages.Language;
 import sk.fei.stuba.xpivarcim.support.Utils;
+import sk.fei.stuba.xpivarcim.test.languages.Language;
 
 import java.io.IOException;
 import java.util.LinkedList;

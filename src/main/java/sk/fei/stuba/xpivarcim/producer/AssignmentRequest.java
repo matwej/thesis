@@ -1,6 +1,5 @@
 package sk.fei.stuba.xpivarcim.producer;
 
-import java.io.Serializable;
 import java.util.Date;
 
 public class AssignmentRequest {

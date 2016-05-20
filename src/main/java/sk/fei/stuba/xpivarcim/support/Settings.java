@@ -35,6 +35,9 @@ public class Settings {
     @Value("${unit.java.dir}")
     public String javaUnitDir;
 
+    @Value("${static.java.dir}")
+    public String javaStaticDir;
+
     @Value("${unit.timeout}")
     public int unitTimeout;
 

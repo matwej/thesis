@@ -1,4 +1,4 @@
-package sk.fei.stuba.xpivarcim.testing.engines;
+package sk.fei.stuba.xpivarcim.test.engines;
 
 import org.xml.sax.SAXException;
 import sk.fei.stuba.xpivarcim.db.entities.assignment.TestFile;

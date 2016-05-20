@@ -1,4 +1,4 @@
-package sk.fei.stuba.xpivarcim.testing.languages;
+package sk.fei.stuba.xpivarcim.test.languages;
 
 import sk.fei.stuba.xpivarcim.support.Settings;
 

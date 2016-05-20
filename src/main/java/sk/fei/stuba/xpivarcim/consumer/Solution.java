@@ -3,7 +3,6 @@ package sk.fei.stuba.xpivarcim.consumer;
 import sk.fei.stuba.xpivarcim.support.Utils;
 
 import java.io.IOException;
-import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.List;
 

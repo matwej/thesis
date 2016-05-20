@@ -6,7 +6,6 @@ import sk.fei.stuba.xpivarcim.db.entities.assignment.SourceFile;
 import sk.fei.stuba.xpivarcim.db.entities.assignment.TestFile;
 
 import javax.persistence.*;
-import java.io.Serializable;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;

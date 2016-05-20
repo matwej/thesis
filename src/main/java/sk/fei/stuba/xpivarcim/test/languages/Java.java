@@ -1,14 +1,14 @@
-package sk.fei.stuba.xpivarcim.testing.languages;
+package sk.fei.stuba.xpivarcim.test.languages;
 
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
-import sk.fei.stuba.xpivarcim.support.Settings;
 import sk.fei.stuba.xpivarcim.consumer.Solution;
 import sk.fei.stuba.xpivarcim.db.entities.assignment.TestFile;
 import sk.fei.stuba.xpivarcim.producer.Result;
+import sk.fei.stuba.xpivarcim.support.Settings;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
