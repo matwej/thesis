@@ -2,7 +2,6 @@ package sk.fei.stuba.xpivarcim.testing.engines;
 
 import org.xml.sax.SAXException;
 import sk.fei.stuba.xpivarcim.consumer.Solution;
-import sk.fei.stuba.xpivarcim.entities.files.CodeFile;
 import sk.fei.stuba.xpivarcim.entities.files.TestFile;
 import sk.fei.stuba.xpivarcim.producer.Result;
 import sk.fei.stuba.xpivarcim.testing.languages.Language;
@@ -16,34 +15,28 @@ import java.util.LinkedList;
 import java.util.Queue;
 import java.util.Set;
 
-public class UnitEngine implements Engine {
+class UnitEngine implements Engine {
 
     private Solution solution;
+    private Language language;
 
-    public UnitEngine(Solution solution) {
+    UnitEngine(Solution solution, Language language) {
+        this.language = language;
         this.solution = solution;
     }
 
     @Override
-    public void executeTests(Result result, Set<TestFile> testFiles, Language language) throws IOException, InterruptedException, ParserConfigurationException, SAXException {
-        String operationDir = language.getSettings().opDir + solution.getId();
-        prepareUnitFiles(operationDir, language.getSettings().unitProtoDir + language.getUnitDirName());
+    public void executeTests(String workDir, Result result, Set<TestFile> testFiles) throws IOException, InterruptedException, ParserConfigurationException, SAXException {
+        prepareUnitFiles(workDir, language.getSettings().unitProtoDir + language.getUnitDirName());
         language.createUnitTestFile(solution, testFiles);
-        createSolutionFiles(language);
-        TestUtils.runCommands(operationDir, prepareCommands(language));
+        TestUtils.runCommands(workDir, prepareCommands(language));
         language.mapUnitTestResults(solution, result);
-    }
-
-    private void createSolutionFiles(Language language) throws IOException {
-        for (CodeFile file : solution.getSourceFiles()) {
-            file.create(language.getSettings().opDir + solution.getId() + language.getUnitSolDir() + "/");
-        }
     }
 
     private Queue<String> prepareCommands(Language language) {
         Queue<String> commands = new LinkedList<>();
-        commands.add(language.getCommands().get("test_prep"));
-        commands.add(language.getCommands().get("test"));
+        commands.add(language.getCommand("test_prep"));
+        commands.add(language.getCommand("test"));
         return commands;
     }
 

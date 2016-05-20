@@ -17,16 +17,13 @@ import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.util.HashMap;
-import java.util.Map;
 import java.util.Set;
 
-public class Java implements Language {
+class Java implements Language {
 
-    private final Map<String, String> commandsMap = new HashMap<>();
     private Settings settings;
 
-    public Java(Settings settings) {
+    Java(Settings settings) {
         this.settings = settings;
         commandsMap.put("compile","javac *.java");
         commandsMap.put("run", "java Main ");
@@ -67,8 +64,8 @@ public class Java implements Language {
     }
 
     @Override
-    public Map<String, String> getCommands() {
-        return commandsMap;
+    public String getCommand(String key) {
+        return commandsMap.get(key);
     }
 
     @Override
@@ -77,12 +74,12 @@ public class Java implements Language {
     }
 
     @Override
-    public Settings getSettings() {
-        return settings;
+    public String getUnitSolDir() {
+        return "/src/main/java";
     }
 
     @Override
-    public String getUnitSolDir() {
-        return "/src/main/java";
+    public Settings getSettings() {
+        return settings;
     }
 }

@@ -8,14 +8,17 @@ import sk.fei.stuba.xpivarcim.producer.Result;
 
 import javax.xml.parsers.ParserConfigurationException;
 import java.io.IOException;
+import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
 
 public interface Language {
+    Map<String, String> commandsMap = new HashMap<>();
+
     void createUnitTestFile(Solution solution, Set<TestFile> testFiles) throws IOException;
     void mapUnitTestResults(Solution solution, Result result) throws IOException, ParserConfigurationException, SAXException;
-    Map<String, String> getCommands();
+    String getCommand(String key);
     String getUnitDirName();
-    Settings getSettings();
     String getUnitSolDir();
+    Settings getSettings();
 }

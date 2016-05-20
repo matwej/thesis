@@ -3,7 +3,7 @@ package sk.fei.stuba.xpivarcim.testing.languages;
 import sk.fei.stuba.xpivarcim.Settings;
 import sk.fei.stuba.xpivarcim.testing.support.UnsupportedLanguageException;
 
-public class LanguageFactory {
+public class LanguageContext {
 
     public static Language getLanguage(String languageCode, Settings settings) throws UnsupportedLanguageException {
         switch (languageCode) {

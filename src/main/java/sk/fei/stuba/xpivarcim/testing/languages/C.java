@@ -16,16 +16,13 @@ import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.util.HashMap;
-import java.util.Map;
 import java.util.Set;
 
-public class C implements Language {
+class C implements Language {
 
     private Settings settings;
-    private final Map<String, String> commandsMap = new HashMap<>();
 
-    public C(Settings settings) {
+    C(Settings settings) {
         this.settings = settings;
         commandsMap.put("compile","gcc *.c -I. -o run");
         commandsMap.put("run", "./run ");
@@ -67,8 +64,8 @@ public class C implements Language {
 
 
     @Override
-    public Map<String, String> getCommands() {
-        return commandsMap;
+    public String getCommand(String key) {
+        return commandsMap.get(key);
     }
 
     @Override
@@ -77,12 +74,13 @@ public class C implements Language {
     }
 
     @Override
+    public String getUnitSolDir() {
+        return "";
+    }
+
+    @Override
     public Settings getSettings() {
         return settings;
     }
 
-    @Override
-    public String getUnitSolDir() {
-        return "";
-    }
 }

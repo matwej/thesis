@@ -10,12 +10,12 @@ import sk.fei.stuba.xpivarcim.producer.AssignmentResponseException;
 import sk.fei.stuba.xpivarcim.producer.Producer;
 import sk.fei.stuba.xpivarcim.producer.Result;
 import sk.fei.stuba.xpivarcim.producer.StatusCode;
-import sk.fei.stuba.xpivarcim.testing.engines.Engine;
-import sk.fei.stuba.xpivarcim.testing.engines.EngineFactory;
+import sk.fei.stuba.xpivarcim.testing.engines.EngineCreator;
+import sk.fei.stuba.xpivarcim.testing.engines.RunEngineCreator;
+import sk.fei.stuba.xpivarcim.testing.engines.UnitEngineCreator;
 import sk.fei.stuba.xpivarcim.testing.languages.Language;
-import sk.fei.stuba.xpivarcim.testing.languages.LanguageFactory;
+import sk.fei.stuba.xpivarcim.testing.languages.LanguageContext;
 import sk.fei.stuba.xpivarcim.testing.support.TestTimedOutException;
-import sk.fei.stuba.xpivarcim.testing.support.UnsupportedEngineType;
 import sk.fei.stuba.xpivarcim.testing.support.UnsupportedLanguageException;
 
 import javax.xml.parsers.ParserConfigurationException;
@@ -54,7 +54,6 @@ public class Handler {
         } catch (ParseException |
                 AssignmentResponseException |
                 UnsupportedLanguageException |
-                UnsupportedEngineType |
                 TestTimedOutException e) {
             result.setStatus(StatusCode.ERROR.getValue());
             result.appendMessage(e.getMessage());
@@ -75,20 +74,20 @@ public class Handler {
     }
 
     private void assembleAndRun()
-            throws IOException, UnsupportedEngineType, UnsupportedLanguageException,
+            throws IOException, UnsupportedLanguageException,
             ParserConfigurationException, SAXException, ExecutionException,
             InterruptedException, TestTimedOutException
     {
         setUpDir();
         createSourceFiles();
-        Language language = LanguageFactory.getLanguage(assignment.getCodeLanguage(), settings);
+        Language language = LanguageContext.getLanguage(assignment.getCodeLanguage(), settings);
         if (!assignment.runTestFiles().isEmpty()) {
-            Engine engine = EngineFactory.getEngine(EngineFactory.EngineType.RUN, solution);
-            engine.executeTests(result, assignment.runTestFiles(), language);
+            EngineCreator engineCreator = new RunEngineCreator();
+            engineCreator.execTests(solution, result, assignment.runTestFiles(), language);
         }
         if (!assignment.unitTestFiles().isEmpty()) {
-            Engine engine = EngineFactory.getEngine(EngineFactory.EngineType.UNIT, solution);
-            engine.executeTests(result, assignment.unitTestFiles(), language);
+            EngineCreator engineCreator = new UnitEngineCreator();
+            engineCreator.execTests(solution, result, assignment.unitTestFiles(), language);
         }
         tearDownDir();
     }
