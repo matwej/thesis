@@ -4,12 +4,9 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.Serializable;
 
 @Entity
-public class SourceFile extends ModuleFile<byte[]> implements Serializable {
-
-    private static final long serialVersionUID = 2L;
+public class SourceFile extends ModuleFile<byte[]> {
 
     @Column
     private String name;

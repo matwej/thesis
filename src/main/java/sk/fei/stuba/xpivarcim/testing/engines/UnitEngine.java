@@ -9,8 +9,6 @@ import sk.fei.stuba.xpivarcim.testing.support.TestUtils;
 
 import javax.xml.parsers.ParserConfigurationException;
 import java.io.IOException;
-import java.nio.file.*;
-import java.nio.file.attribute.BasicFileAttributes;
 import java.util.LinkedList;
 import java.util.Queue;
 import java.util.Set;

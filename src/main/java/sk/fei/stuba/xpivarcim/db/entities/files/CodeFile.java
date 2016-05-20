@@ -3,10 +3,9 @@ package sk.fei.stuba.xpivarcim.db.entities.files;
 import java.io.FileOutputStream;
 import java.io.IOException;
 
-public class CodeFile {
+public class CodeFile extends ModuleFile<String> {
 
     private String name;
-    private String content;
 
     public CodeFile() {
     }
@@ -24,9 +23,5 @@ public class CodeFile {
 
     public String getName() {
         return name;
-    }
-
-    public String getContent() {
-        return content;
     }
 }

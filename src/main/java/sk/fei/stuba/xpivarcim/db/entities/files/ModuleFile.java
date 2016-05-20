@@ -1,6 +1,5 @@
 package sk.fei.stuba.xpivarcim.db.entities.files;
 
-import org.springframework.data.jpa.domain.AbstractPersistable;
 import sk.fei.stuba.xpivarcim.db.entities.Assignment;
 
 import javax.persistence.Column;
@@ -9,7 +8,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.MappedSuperclass;
 
 @MappedSuperclass
-public abstract class ModuleFile<T> extends AbstractPersistable<Long> {
+public class ModuleFile<T> {
 
     @ManyToOne
     @JoinColumn(name = "assignment_id", nullable = false)
