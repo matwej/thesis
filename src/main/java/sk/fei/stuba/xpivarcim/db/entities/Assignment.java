@@ -12,9 +12,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 @Entity
-public class Assignment implements Serializable {
-
-    private static final long serialVersionUID = 1L;
+public class Assignment {
 
     @Id
     @Column(nullable = false)
@@ -30,12 +28,7 @@ public class Assignment implements Serializable {
     @Transient
     private int status;
 
-    public Assignment() {
-    }
-
-    public Assignment(long id) {
-        this.id = id;
-    }
+    public Assignment() {}
 
     public Assignment(long id, String codeLanguage, Date lastUpdated, Set<SourceFile> sourceFiles, Set<TestFile> testFiles, int status) {
         this.id = id;

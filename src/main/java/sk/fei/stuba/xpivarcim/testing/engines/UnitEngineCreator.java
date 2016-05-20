@@ -1,8 +1,6 @@
 package sk.fei.stuba.xpivarcim.testing.engines;
 
-import sk.fei.stuba.xpivarcim.consumer.CodeFile;
 import sk.fei.stuba.xpivarcim.consumer.Solution;
-import sk.fei.stuba.xpivarcim.support.Utils;
 import sk.fei.stuba.xpivarcim.testing.languages.Language;
 
 import java.io.IOException;
@@ -14,14 +12,8 @@ public class UnitEngineCreator extends EngineCreator {
     @Override
     protected Engine createEngine(Solution solution, Language language) throws IOException {
         prepareUnitFiles(workDir, language.getSettings().unitProtoDir + language.getUnitDirName());
-        createSolutionFiles(solution, language);
+        solution.createFiles(workDir+language.getUnitSolDir()+"/");
         return new UnitEngine(solution, language);
-    }
-
-    private void createSolutionFiles(Solution solution, Language language) throws IOException {
-        for (CodeFile file : solution.getSourceFiles()) {
-            Utils.createFile(workDir+language.getUnitSolDir()+"/", file.getName(), file.getContent().getBytes("UTF-8"));
-        }
     }
 
     private void prepareUnitFiles(String targetDir, String sourceDir) throws IOException {

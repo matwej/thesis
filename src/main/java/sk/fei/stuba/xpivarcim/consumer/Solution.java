@@ -1,5 +1,9 @@
 package sk.fei.stuba.xpivarcim.consumer;
 
+import sk.fei.stuba.xpivarcim.support.Utils;
+
+import java.io.IOException;
+import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -26,6 +30,12 @@ public class Solution {
             }
         }
         return out;
+    }
+
+    public void createFiles(String targetDir) throws IOException {
+        for(CodeFile file : sourceFiles) {
+            Utils.createFile(targetDir, file.getName(), file.getContent().getBytes("UTF-8"));
+        }
     }
 
     public long getId() {

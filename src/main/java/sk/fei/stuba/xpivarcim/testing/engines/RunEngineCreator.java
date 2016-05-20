@@ -11,13 +11,8 @@ public class RunEngineCreator extends EngineCreator {
 
     @Override
     protected Engine createEngine(Solution solution, Language language) throws IOException {
-        createSolutionFiles(solution);
+        solution.createFiles(workDir+"/");
         return new RunEngine(language);
     }
 
-    private void createSolutionFiles(Solution solution) throws IOException {
-        for (CodeFile file : solution.getSourceFiles()) {
-            Utils.createFile(workDir+"/",file.getName(), file.getContent().getBytes("UTF-8"));
-        }
-    }
 }
