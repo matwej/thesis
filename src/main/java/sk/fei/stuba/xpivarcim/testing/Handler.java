@@ -15,14 +15,12 @@ import sk.fei.stuba.xpivarcim.testing.engines.RunEngineCreator;
 import sk.fei.stuba.xpivarcim.testing.engines.UnitEngineCreator;
 import sk.fei.stuba.xpivarcim.testing.languages.Language;
 import sk.fei.stuba.xpivarcim.testing.languages.LanguageContext;
-import sk.fei.stuba.xpivarcim.testing.support.TestTimedOutException;
 import sk.fei.stuba.xpivarcim.testing.support.UnsupportedLanguageException;
 
 import javax.xml.parsers.ParserConfigurationException;
 import java.io.IOException;
 import java.nio.file.*;
 import java.nio.file.attribute.BasicFileAttributes;
-import java.text.ParseException;
 import java.util.concurrent.ExecutionException;
 
 import static java.nio.file.FileVisitResult.CONTINUE;
@@ -52,8 +50,7 @@ public class Handler {
             assembleAndRun();
             result.setStatus(StatusCode.OK.getValue());
         } catch (AssignmentResponseException |
-                UnsupportedLanguageException |
-                TestTimedOutException e) {
+                UnsupportedLanguageException e) {
             e.printStackTrace();
             result.setStatus(StatusCode.ERROR.getValue());
             result.appendMessage(e.getMessage());
@@ -77,7 +74,7 @@ public class Handler {
     private void assembleAndRun()
             throws IOException, UnsupportedLanguageException,
             ParserConfigurationException, SAXException, ExecutionException,
-            InterruptedException, TestTimedOutException {
+            InterruptedException {
         setUpDir();
         createSourceFiles();
         Language language = LanguageContext.getLanguage(assignment.getCodeLanguage(), settings);

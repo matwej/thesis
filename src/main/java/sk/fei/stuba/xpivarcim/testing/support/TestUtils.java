@@ -9,7 +9,8 @@ import java.util.concurrent.*;
 
 public class TestUtils {
 
-    public static String runTimeoutableCommands(final String workDir, final Queue<String> commands, int timeout, ExecutorService service) throws ExecutionException, InterruptedException, TestTimedOutException {
+    public static String runTimeoutableCommands(final String workDir, final Queue<String> commands, int timeout, ExecutorService service)
+            throws ExecutionException, InterruptedException, TimeoutException {
         Callable<String> run = new Callable<String>() {
             @Override
             public String call() throws Exception {
@@ -23,7 +24,7 @@ public class TestUtils {
             output = future.get(timeout, TimeUnit.SECONDS);
         } catch (TimeoutException e) {
             future.cancel(true);
-            throw new TestTimedOutException(timeout);
+            throw new TimeoutException();
         }
         return output;
     }
