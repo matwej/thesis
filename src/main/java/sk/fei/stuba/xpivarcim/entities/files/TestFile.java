@@ -5,9 +5,7 @@ import javax.persistence.Entity;
 import java.io.Serializable;
 
 @Entity
-public class TestFile extends ModuleFile<String> implements Serializable {
-
-    private static final long serialVersionUID = 3L;
+public class TestFile extends ModuleFile<String> {
 
     @Column
     private int index;
@@ -15,9 +13,10 @@ public class TestFile extends ModuleFile<String> implements Serializable {
     private String input;
     @Column
     private String output;
+    @Column
+    private int timeout;
 
-    public TestFile() {
-    }
+    public TestFile() {}
 
     public TestFile(int index, String content, String input, String output) {
         this.index = index;
@@ -43,9 +42,16 @@ public class TestFile extends ModuleFile<String> implements Serializable {
         return input;
     }
 
+    public int getTimeout() {
+        return timeout;
+    }
+
     public String getOutput() {
         return output;
     }
 
+    public void setTimeout(int timeout) {
+        this.timeout = timeout;
+    }
 
 }

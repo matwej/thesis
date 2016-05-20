@@ -47,9 +47,11 @@ public class Assignment implements Serializable {
     }
 
     public void setFiles() {
-        for (ModuleFile f : sourceFiles) {
-            f.setAssignment(this);
-        }
+        if (!(sourceFiles == null))
+            for (ModuleFile f : sourceFiles) {
+                f.setAssignment(this);
+            }
+        if (!(testFiles == null))
         for (ModuleFile f : testFiles) {
             f.setAssignment(this);
         }
@@ -57,15 +59,15 @@ public class Assignment implements Serializable {
 
     public Set<TestFile> runTestFiles() {
         Set<TestFile> output = new HashSet<>();
-        for(TestFile f: testFiles)
-            if(f.isRunTest()) output.add(f);
+        for (TestFile f : testFiles)
+            if (f.isRunTest()) output.add(f);
         return output;
     }
 
     public Set<TestFile> unitTestFiles() {
         Set<TestFile> output = new HashSet<>();
-        for(TestFile f: testFiles)
-            if(!f.isRunTest()) output.add(f);
+        for (TestFile f : testFiles)
+            if (!f.isRunTest()) output.add(f);
         return output;
     }
 

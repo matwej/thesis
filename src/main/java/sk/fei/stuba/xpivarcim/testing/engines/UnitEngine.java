@@ -30,7 +30,7 @@ class UnitEngine implements Engine {
         prepareUnitFiles(workDir, language.getSettings().unitProtoDir + language.getUnitDirName());
         language.createUnitTestFile(solution, testFiles);
         TestUtils.runCommands(workDir, prepareCommands(language));
-        language.mapUnitTestResults(solution, result);
+        language.mapUnitTestResults(workDir, result);
     }
 
     private Queue<String> prepareCommands(Language language) {

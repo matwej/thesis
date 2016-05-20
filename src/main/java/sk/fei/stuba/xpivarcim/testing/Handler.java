@@ -51,20 +51,21 @@ public class Handler {
             prepareAssignment();
             assembleAndRun();
             result.setStatus(StatusCode.OK.getValue());
-        } catch (ParseException |
-                AssignmentResponseException |
+        } catch (AssignmentResponseException |
                 UnsupportedLanguageException |
                 TestTimedOutException e) {
+            e.printStackTrace();
             result.setStatus(StatusCode.ERROR.getValue());
             result.appendMessage(e.getMessage());
         } catch (Exception e) {
+            e.printStackTrace();
             result.setStatus(StatusCode.UNEXPECTED_ERROR.getValue());
             result.appendMessage(e.getMessage());
         }
         producer.send("Result", result);
     }
 
-    private void prepareAssignment() throws ParseException, AssignmentResponseException {
+    private void prepareAssignment() throws AssignmentResponseException {
         assignment = assignmentRepository.findOne(solution.getAssignmentId());
         if (assignment == null)
             assignment = producer.downloadAssignment(solution.getAssignmentId());
@@ -76,8 +77,7 @@ public class Handler {
     private void assembleAndRun()
             throws IOException, UnsupportedLanguageException,
             ParserConfigurationException, SAXException, ExecutionException,
-            InterruptedException, TestTimedOutException
-    {
+            InterruptedException, TestTimedOutException {
         setUpDir();
         createSourceFiles();
         Language language = LanguageContext.getLanguage(assignment.getCodeLanguage(), settings);
@@ -93,9 +93,10 @@ public class Handler {
     }
 
     private void createSourceFiles() throws IOException {
-        for(SourceFile file : assignment.getSourceFiles()) {
-            file.create(dir.toString() + "/");
-        }
+        if (assignment.getSourceFiles() != null)
+            for (SourceFile file : assignment.getSourceFiles()) {
+                file.create(dir.toString() + "/");
+            }
     }
 
     private void setUpDir() throws IOException {

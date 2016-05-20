@@ -48,8 +48,8 @@ class Java implements Language {
     }
 
     @Override
-    public void mapUnitTestResults(Solution solution, Result result) throws IOException, ParserConfigurationException, SAXException {
-        InputStream xml = new FileInputStream(settings.opDir + solution.getId() + "/report/TEST-MainTest.xml");
+    public void mapUnitTestResults(String workDir, Result result) throws IOException, ParserConfigurationException, SAXException {
+        InputStream xml = new FileInputStream(workDir + "/report/TEST-MainTest.xml");
         DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
         DocumentBuilder documentBuilder = factory.newDocumentBuilder();
         Document doc = documentBuilder.parse(xml);

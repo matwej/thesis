@@ -47,7 +47,7 @@ public class Consumer {
     @RabbitListener(queues = "Assignment")
     public Assignment responseAssignment(AssignmentRequest req) {
         if (req.getId() == 404) // chyba
-            return new Assignment(4, "C", new Date(), null, null, 404);
+            return new Assignment(req.getId(), "C", new Date(), null, null, 404);
         /*
         {
             "id":15,
@@ -64,29 +64,21 @@ public class Consumer {
         }
          */
         if (req.getId() == 3) {
-            Set<SourceFile> sf = new HashSet<>();
-            sf.add(new SourceFile("vstup.txt", "1\n2\n3".getBytes()));
             Set<TestFile> tf = new HashSet<>();
-            tf.add(new TestFile(4, "omg nejake class {} () neriesim teraz", "2", "4\n"));
-            Assignment a =
-                    new Assignment(req.getId(), "JAVA", new Date(), sf, tf, 200);
-            a.setFiles();
-            return a;
+            TestFile f = new TestFile(4, "omg nejake class {} () neriesim teraz", "2", "4\n");
+            f.setTimeout(10);
+            tf.add(f);
+            return new Assignment(req.getId(), "JAVA", new Date(), null, tf, 200);
         }
         /*
             unit test java
             to co vyssie, len assignmentId:5
          */
         if (req.getId() == 5) {
-            Set<SourceFile> sf = new HashSet<>();
-            sf.add(new SourceFile("vstup.txt", "1\n2\n3".getBytes()));
             Set<TestFile> tf = new HashSet<>();
             tf.add(new TestFile(10, "int out = Unit.powTwo(3);\nassertEquals(9,out);", null, null));
             tf.add(new TestFile(11, "int out = Unit.powTwo(10);\nassertEquals(1000,out);", null, null));
-            Assignment a =
-                    new Assignment(req.getId(), "JAVA", new Date(), sf, tf, 200);
-            a.setFiles();
-            return a;
+            return new Assignment(req.getId(), "JAVA", new Date(), null, tf, 200);
         }
         /*
         {
@@ -107,14 +99,9 @@ public class Consumer {
         }
          */
         if (req.getId() == 99) {
-            Set<SourceFile> sf = new HashSet<>();
-            sf.add(new SourceFile("vstup.txt", "1\n2\n3".getBytes()));
             Set<TestFile> tf = new HashSet<>();
             tf.add(new TestFile(2, "omg nejake class {} () neriesim teraz", "4", "4 5 6 7 "));
-            Assignment a =
-                    new Assignment(req.getId(), "C", new Date(), sf, tf, 200);
-            a.setFiles();
-            return a;
+            return new Assignment(req.getId(), "C", new Date(), null, tf, 200);
         }
         /*
           {
@@ -132,15 +119,10 @@ public class Consumer {
         }
          */
         if (req.getId() == 199) {
-            Set<SourceFile> sf = new HashSet<>();
-            sf.add(new SourceFile("vstup.txt", "1\n2\n3".getBytes()));
             Set<TestFile> tf = new HashSet<>();
             tf.add(new TestFile(20, "fail_unless(hop(2,10) == 20, \"failed\");", null, null));
             tf.add(new TestFile(1500, "fail_unless(hop(500,3) == 1500, \"failed\");", null, null));
-            Assignment a =
-                    new Assignment(req.getId(), "C", new Date(), sf, tf, 200);
-            a.setFiles();
-            return a;
+            return new Assignment(req.getId(), "C", new Date(), null, tf, 200);
         }
         /*
         {
@@ -155,15 +137,10 @@ public class Consumer {
         }
         */
         if (req.getId() == 999) {
-            Set<SourceFile> sf = new HashSet<>();
-            sf.add(new SourceFile("vstup.txt", "1\n2\n3".getBytes()));
             Set<TestFile> tf = new HashSet<>();
             tf.add(new TestFile(5, "omg nejake class {} () neriesim teraz", "5", "*\n**\n***\n****\n*****\n"));
             tf.add(new TestFile(3, null, "3", "*\n**\n***\n"));
-            Assignment a =
-                    new Assignment(req.getId(), "C", new Date(), sf, tf, 200);
-            a.setFiles();
-            return a;
+            return new Assignment(req.getId(), "C", new Date(), null, tf, 200);
         }
         /* BUBBLE SORT java run aj unit test
             {
@@ -183,10 +160,7 @@ public class Consumer {
             Set<TestFile> tf = new HashSet<>();
             tf.add(new TestFile(1, null, null, "1\n10\n15\n22\n36\n47\n89\n"));
             tf.add(new TestFile(2, "Integer[] a=new Integer[]{5,2,4,1,3};Main.sort(a);assertArrayEquals(a,new Integer[]{1,2,3,4,5});", null, null));
-            Assignment a =
-                    new Assignment(req.getId(), "JAVA", new Date(), sf, tf, 200);
-            a.setFiles();
-            return a;
+            return new Assignment(req.getId(), "JAVA", new Date(), sf, tf, 200);
         }
         return null;
     }

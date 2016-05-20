@@ -47,8 +47,8 @@ class C implements Language {
     }
 
     @Override
-    public void mapUnitTestResults(Solution solution, Result result) throws IOException, ParserConfigurationException, SAXException {
-        InputStream xml = new FileInputStream(settings.opDir + solution.getId() + "/report.xml");
+    public void mapUnitTestResults(String workDir, Result result) throws IOException, ParserConfigurationException, SAXException {
+        InputStream xml = new FileInputStream(workDir + "/report.xml");
         DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
         DocumentBuilder documentBuilder = factory.newDocumentBuilder();
         Document doc = documentBuilder.parse(xml);

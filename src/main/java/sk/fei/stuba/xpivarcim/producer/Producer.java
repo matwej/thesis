@@ -5,8 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import sk.fei.stuba.xpivarcim.entities.Assignment;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 
 @Component
@@ -23,9 +22,11 @@ public class Producer {
         return producerTemplate.convertSendAndReceive(queueName, obj);
     }
 
-    public Assignment downloadAssignment(long id) throws ParseException, AssignmentResponseException {
+    public Assignment downloadAssignment(long id) throws AssignmentResponseException {
+        Calendar cal = Calendar.getInstance();
+        cal.set(1970,Calendar.JANUARY,1);
         AssignmentRequest request =
-                new AssignmentRequest(new SimpleDateFormat("dd/MM/yyyy").parse("01/01/1970"), id);
+                new AssignmentRequest(cal.getTime(), id);
         Assignment assignment = (Assignment) sendAndReceive("Assignment", request);
         if (assignment.getStatus() != StatusCode.OK.getValue())
             throw new AssignmentResponseException(assignment.getStatus());

@@ -11,7 +11,7 @@ public class RunEngineCreator extends EngineCreator {
     @Override
     protected Engine createEngine(Solution solution, Language language) throws IOException {
         createSolutionFiles(solution);
-        return new RunEngine(solution, language);
+        return new RunEngine(language);
     }
 
     private void createSolutionFiles(Solution solution) throws IOException {

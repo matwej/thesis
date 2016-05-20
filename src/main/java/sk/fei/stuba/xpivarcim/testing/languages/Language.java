@@ -16,7 +16,7 @@ public interface Language {
     Map<String, String> commandsMap = new HashMap<>();
 
     void createUnitTestFile(Solution solution, Set<TestFile> testFiles) throws IOException;
-    void mapUnitTestResults(Solution solution, Result result) throws IOException, ParserConfigurationException, SAXException;
+    void mapUnitTestResults(String workDir, Result result) throws IOException, ParserConfigurationException, SAXException;
     String getCommand(String key);
     String getUnitDirName();
     String getUnitSolDir();
