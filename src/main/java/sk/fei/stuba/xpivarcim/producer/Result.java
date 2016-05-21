@@ -1,6 +1,5 @@
 package sk.fei.stuba.xpivarcim.producer;
 
-import java.io.Serializable;
 import java.util.HashMap;
 import java.util.Map;
 

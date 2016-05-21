@@ -1,6 +1,5 @@
 package sk.fei.stuba.xpivarcim.db.entities.assignment;
 
-import org.springframework.data.jpa.domain.AbstractPersistable;
 import sk.fei.stuba.xpivarcim.db.entities.Assignment;
 
 import javax.persistence.*;

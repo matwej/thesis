@@ -23,7 +23,6 @@ import javax.xml.parsers.ParserConfigurationException;
 import java.io.IOException;
 import java.nio.file.*;
 import java.nio.file.attribute.BasicFileAttributes;
-import java.util.Set;
 import java.util.concurrent.ExecutionException;
 
 import static java.nio.file.FileVisitResult.CONTINUE;
@@ -77,9 +76,17 @@ public class Handler {
             ParserConfigurationException, SAXException, ExecutionException,
             InterruptedException {
         setUpDir();
+
         createSourceFiles();
+
         Language language = LanguageContext.getLanguage(assignment.getCodeLanguage(), settings);
 
+        run(language);
+
+        tearDownDir();
+    }
+
+    private void run(Language language) throws InterruptedException, ParserConfigurationException, SAXException, ExecutionException, IOException {
         if(assignment.isSaTest()) {
             EngineCreator engineCreator = new SAEngineCreator();
             engineCreator.execTests(null, solution, language, result);
@@ -92,8 +99,6 @@ public class Handler {
             EngineCreator engineCreator = new UnitEngineCreator();
             engineCreator.execTests(assignment.unitTestFiles(), solution, language, result);
         }
-
-        tearDownDir();
     }
 
     private void createSourceFiles() throws IOException {

@@ -1,17 +1,14 @@
 package sk.fei.stuba.xpivarcim.test.core.engines;
 
 import org.xml.sax.SAXException;
-import sk.fei.stuba.xpivarcim.db.entities.assignment.TestFile;
 import sk.fei.stuba.xpivarcim.producer.Result;
 import sk.fei.stuba.xpivarcim.support.Utils;
-import sk.fei.stuba.xpivarcim.test.core.engines.Engine;
 import sk.fei.stuba.xpivarcim.test.languages.Language;
 
 import javax.xml.parsers.ParserConfigurationException;
 import java.io.IOException;
 import java.util.LinkedList;
 import java.util.Queue;
-import java.util.Set;
 import java.util.concurrent.ExecutionException;
 
 public class SAEngine implements Engine {
