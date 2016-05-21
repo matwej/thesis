@@ -29,6 +29,7 @@ class Java implements Language {
         commandsMap.put("run", "java Main ");
         commandsMap.put("test_prep", ""); // no preparation needed
         commandsMap.put("test","gradle test");
+        commandsMap.put("sa", "gradle check");
     }
 
     @Override
@@ -61,6 +62,11 @@ class Java implements Language {
             int index = Integer.parseInt(testName.replaceAll("[\\D]", ""));
             result.addTest(index, !item.hasChildNodes());
         }
+    }
+
+    @Override
+    public void mapSATestResults(String workDir, Result result) {
+        // TODO dorobit
     }
 
     @Override

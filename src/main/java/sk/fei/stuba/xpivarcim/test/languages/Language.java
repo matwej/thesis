@@ -7,6 +7,7 @@ import sk.fei.stuba.xpivarcim.producer.Result;
 import sk.fei.stuba.xpivarcim.support.Settings;
 
 import javax.xml.parsers.ParserConfigurationException;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
@@ -17,6 +18,7 @@ public interface Language {
 
     void createUnitTestFile(Solution solution, Set<TestFile> testFiles) throws IOException;
     void mapUnitTestResults(String workDir, Result result) throws IOException, ParserConfigurationException, SAXException;
+    void mapSATestResults(String workDir, Result result) throws IOException, ParserConfigurationException, SAXException;
     String getCommand(String key);
     String getUnitDirName();
     String getUnitSolDir();

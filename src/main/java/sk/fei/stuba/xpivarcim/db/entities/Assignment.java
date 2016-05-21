@@ -24,18 +24,21 @@ public class Assignment {
     private Set<SourceFile> sourceFiles;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "assignment")
     private Set<TestFile> testFiles;
+    @Column
+    private boolean saTest;
     @Transient
     private int status;
 
     public Assignment() {}
 
-    public Assignment(long id, String codeLanguage, Date lastUpdated, Set<SourceFile> sourceFiles, Set<TestFile> testFiles, int status) {
+    public Assignment(long id, String codeLanguage, Date lastUpdated, Set<SourceFile> sourceFiles, Set<TestFile> testFiles, int status, boolean saTest) {
         this.id = id;
         this.codeLanguage = codeLanguage;
         this.lastUpdated = lastUpdated;
         this.sourceFiles = sourceFiles;
         this.testFiles = testFiles;
         this.status = status;
+        this.saTest = saTest;
     }
 
     public void setFiles() {
@@ -89,5 +92,9 @@ public class Assignment {
 
     public int getStatus() {
         return status;
+    }
+
+    public boolean isSaTest() {
+        return saTest;
     }
 }

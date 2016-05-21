@@ -1,19 +1,27 @@
-package sk.fei.stuba.xpivarcim.test.engines;
+package sk.fei.stuba.xpivarcim.test.core.factories;
 
 import sk.fei.stuba.xpivarcim.consumer.Solution;
+import sk.fei.stuba.xpivarcim.db.entities.assignment.TestFile;
+import sk.fei.stuba.xpivarcim.test.core.engines.Engine;
+import sk.fei.stuba.xpivarcim.test.core.engines.UnitEngine;
 import sk.fei.stuba.xpivarcim.test.languages.Language;
 
 import java.io.IOException;
 import java.nio.file.*;
 import java.nio.file.attribute.BasicFileAttributes;
+import java.util.Set;
 
 public class UnitEngineCreator extends EngineCreator {
 
     @Override
-    protected Engine createEngine(Solution solution, Language language) throws IOException {
+    protected Engine createEngine(Set<TestFile> testFiles, Solution solution, Language language) throws IOException {
         prepareUnitFiles(workDir, language.getSettings().unitProtoDir + language.getUnitDirName());
-        solution.createFiles(workDir+language.getUnitSolDir()+"/");
-        return new UnitEngine(solution, language);
+        return new UnitEngine(testFiles, solution, language);
+    }
+
+    @Override
+    protected String solutionFilesTargetDir(Language language) {
+        return workDir+language.getUnitSolDir()+"/";
     }
 
     private void prepareUnitFiles(String targetDir, String sourceDir) throws IOException {

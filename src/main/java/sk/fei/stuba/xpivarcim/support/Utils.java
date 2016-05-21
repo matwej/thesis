@@ -45,9 +45,12 @@ public class Utils {
     }
 
     public static void createFile(String targetDir, String name, byte[] content) throws IOException {
-        FileOutputStream outputStream = new FileOutputStream(targetDir + name);
-        outputStream.write(content);
-        outputStream.close();
+        File f = new File(targetDir + name);
+        if(!f.exists()) {
+            FileOutputStream outputStream = new FileOutputStream(f);
+            outputStream.write(content);
+            outputStream.close();
+        }
     }
 
     private static void createScriptFile(String name, Queue<String> commands) throws IOException {

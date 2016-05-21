@@ -11,9 +11,10 @@ import sk.fei.stuba.xpivarcim.producer.Result;
 import sk.fei.stuba.xpivarcim.producer.StatusCode;
 import sk.fei.stuba.xpivarcim.support.Settings;
 import sk.fei.stuba.xpivarcim.support.Utils;
-import sk.fei.stuba.xpivarcim.test.engines.EngineCreator;
-import sk.fei.stuba.xpivarcim.test.engines.RunEngineCreator;
-import sk.fei.stuba.xpivarcim.test.engines.UnitEngineCreator;
+import sk.fei.stuba.xpivarcim.test.core.factories.EngineCreator;
+import sk.fei.stuba.xpivarcim.test.core.factories.RunEngineCreator;
+import sk.fei.stuba.xpivarcim.test.core.factories.SAEngineCreator;
+import sk.fei.stuba.xpivarcim.test.core.factories.UnitEngineCreator;
 import sk.fei.stuba.xpivarcim.test.languages.Language;
 import sk.fei.stuba.xpivarcim.test.languages.LanguageContext;
 import sk.fei.stuba.xpivarcim.test.languages.UnsupportedLanguageException;
@@ -22,6 +23,7 @@ import javax.xml.parsers.ParserConfigurationException;
 import java.io.IOException;
 import java.nio.file.*;
 import java.nio.file.attribute.BasicFileAttributes;
+import java.util.Set;
 import java.util.concurrent.ExecutionException;
 
 import static java.nio.file.FileVisitResult.CONTINUE;
@@ -77,14 +79,20 @@ public class Handler {
         setUpDir();
         createSourceFiles();
         Language language = LanguageContext.getLanguage(assignment.getCodeLanguage(), settings);
+
+        if(assignment.isSaTest()) {
+            EngineCreator engineCreator = new SAEngineCreator();
+            engineCreator.execTests(null, solution, language, result);
+        }
         if (!assignment.runTestFiles().isEmpty()) {
             EngineCreator engineCreator = new RunEngineCreator();
-            engineCreator.execTests(solution, result, assignment.runTestFiles(), language);
+            engineCreator.execTests(assignment.runTestFiles(), solution, language, result);
         }
         if (!assignment.unitTestFiles().isEmpty()) {
             EngineCreator engineCreator = new UnitEngineCreator();
-            engineCreator.execTests(solution, result, assignment.unitTestFiles(), language);
+            engineCreator.execTests(assignment.unitTestFiles(), solution, language, result);
         }
+
         tearDownDir();
     }
 

@@ -4,20 +4,19 @@ import java.io.Serializable;
 import java.util.HashMap;
 import java.util.Map;
 
-public class Result implements Serializable {
-
-    private static final long serialVersionUID = 9L;
+public class Result {
 
     private long solutionId;
     private int status;
     private String message;
-    private Map tests;
+    private Map<Integer, Boolean> tests;
+    private boolean saTest;
 
     public Result() {}
 
     public Result(long solutionId) {
         this.solutionId = solutionId;
-        tests = new HashMap<Integer, Boolean>();
+        tests = new HashMap<>();
     }
 
     public void appendMessage(String message) {
@@ -34,6 +33,10 @@ public class Result implements Serializable {
         this.status = status;
     }
 
+    public void setSaTest(boolean saTest) {
+        this.saTest = saTest;
+    }
+
     public Map getTests() {
         return tests;
     }
@@ -48,5 +51,9 @@ public class Result implements Serializable {
 
     public String getMessage() {
         return message;
+    }
+
+    public boolean isSaTest() {
+        return saTest;
     }
 }

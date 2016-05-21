@@ -1,8 +1,9 @@
-package sk.fei.stuba.xpivarcim.test.engines;
+package sk.fei.stuba.xpivarcim.test.core.engines;
 
 import sk.fei.stuba.xpivarcim.db.entities.assignment.TestFile;
 import sk.fei.stuba.xpivarcim.producer.Result;
 import sk.fei.stuba.xpivarcim.support.Utils;
+import sk.fei.stuba.xpivarcim.test.core.engines.Engine;
 import sk.fei.stuba.xpivarcim.test.languages.Language;
 
 import java.io.IOException;
@@ -14,16 +15,18 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.TimeoutException;
 
-class RunEngine implements Engine {
+public class RunEngine implements Engine {
 
     private Language language;
+    private Set<TestFile> testFiles;
 
-    RunEngine(Language language) {
+    public RunEngine(Set<TestFile> testFiles, Language language) {
         this.language = language;
+        this.testFiles = testFiles;
     }
 
     @Override
-    public void executeTests(String workDir, Result result, Set<TestFile> testFiles) throws IOException, ExecutionException, InterruptedException {
+    public void executeTests(String workDir, Result result) throws IOException, ExecutionException, InterruptedException {
         ExecutorService service = Executors.newSingleThreadExecutor();
         for (TestFile f : testFiles) {
             Queue<String> commands = prepareCommands(f, language);
