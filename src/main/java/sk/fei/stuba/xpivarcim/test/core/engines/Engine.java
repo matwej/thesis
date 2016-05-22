@@ -8,5 +8,5 @@ import java.io.IOException;
 import java.util.concurrent.ExecutionException;
 
 public interface Engine {
-    void executeTests(String workDir, Result result) throws IOException, ParserConfigurationException, SAXException, ExecutionException, InterruptedException;
+    void executeTests(String workDir, Result result);
 }

@@ -16,7 +16,7 @@ public abstract class EngineCreator {
 
     protected String workDir;
 
-    public void execTests(Set<TestFile> testFiles, Solution solution, Language language, Result result) throws IOException, ParserConfigurationException, SAXException, ExecutionException, InterruptedException {
+    public void execTests(Set<TestFile> testFiles, Solution solution, Language language, Result result) throws IOException {
         workDir = language.getSettings().opDir + solution.getId();
         Engine engine = createEngine(testFiles, solution, language);
         solution.createFiles(solutionFilesTargetDir(language));

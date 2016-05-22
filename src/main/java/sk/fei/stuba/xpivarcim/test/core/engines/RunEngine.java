@@ -25,7 +25,7 @@ public class RunEngine implements Engine {
     }
 
     @Override
-    public void executeTests(String workDir, Result result) throws IOException, ExecutionException, InterruptedException {
+    public void executeTests(String workDir, Result result) {
         ExecutorService service = Executors.newSingleThreadExecutor();
         for (TestFile f : testFiles) {
             Queue<String> commands = prepareCommands(f, language);
@@ -33,7 +33,7 @@ public class RunEngine implements Engine {
                 int timeout = f.getTimeout() == 0 ? language.getSettings().runTimeout : f.getTimeout();
                 String output = Utils.runTimeoutableCommands(workDir, commands, timeout, service);
                 result.addTest(f.getIndex(),f.getOutput().equals(output));
-            } catch (TimeoutException e) {
+            } catch (Exception e) {
                 result.addTest(f.getIndex(),false);
             }
         }

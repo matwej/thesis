@@ -55,7 +55,7 @@ public class Handler {
                 UnsupportedLanguageException e) {
             result.setStatus(StatusCode.ERROR.getValue());
             result.appendMessage(e.getMessage());
-        } catch (Exception e) {
+        } catch (IOException e) {
             result.setStatus(StatusCode.UNEXPECTED_ERROR.getValue());
             result.appendMessage(e.getMessage());
         }
@@ -72,21 +72,15 @@ public class Handler {
     }
 
     private void assembleAndRun()
-            throws IOException, UnsupportedLanguageException,
-            ParserConfigurationException, SAXException, ExecutionException,
-            InterruptedException {
+            throws IOException, UnsupportedLanguageException {
         setUpDir();
-
         createSourceFiles();
-
         Language language = LanguageContext.getLanguage(assignment.getCodeLanguage(), settings);
-
         run(language);
-
         tearDownDir();
     }
 
-    private void run(Language language) throws InterruptedException, ParserConfigurationException, SAXException, ExecutionException, IOException {
+    private void run(Language language) throws IOException {
         if(assignment.isSaTest()) {
             EngineCreator engineCreator = new SAEngineCreator();
             engineCreator.execTests(null, solution, language, result);

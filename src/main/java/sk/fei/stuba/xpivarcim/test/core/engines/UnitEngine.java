@@ -26,10 +26,16 @@ public class UnitEngine implements Engine {
     }
 
     @Override
-    public void executeTests(String workDir, Result result) throws IOException, InterruptedException, ParserConfigurationException, SAXException {
-        language.createUnitTestFile(solution, testFiles);
-        Utils.runCommands(workDir, prepareCommands(language));
-        language.mapUnitTestResults(workDir, result);
+    public void executeTests(String workDir, Result result) {
+        try {
+            language.createUnitTestFile(solution, testFiles);
+            Utils.runCommands(workDir, prepareCommands(language));
+            language.mapUnitTestResults(workDir, result);
+        } catch (Exception e) {
+            for(TestFile testFile : testFiles) {
+                result.addTest(testFile.getIndex(),false);
+            }
+        }
     }
 
     private Queue<String> prepareCommands(Language language) {

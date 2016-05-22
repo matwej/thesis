@@ -21,9 +21,13 @@ public class SAEngine implements Engine {
     }
 
     @Override
-    public void executeTests(String workDir, Result result) throws IOException, ParserConfigurationException, SAXException, ExecutionException, InterruptedException {
-        Utils.runCommands(workDir, prepareCommands());
-        language.mapSATestResults(workDir, result);
+    public void executeTests(String workDir, Result result) {
+        try {
+            Utils.runCommands(workDir, prepareCommands());
+            language.mapSATestResults(workDir, result);
+        } catch (Exception e) {
+            result.setSaTest(false);
+        }
     }
 
     private Queue<String> prepareCommands() {
