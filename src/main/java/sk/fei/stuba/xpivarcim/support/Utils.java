@@ -4,6 +4,8 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.nio.file.*;
+import java.nio.file.attribute.BasicFileAttributes;
 import java.util.Queue;
 import java.util.Scanner;
 import java.util.concurrent.*;
@@ -46,11 +48,33 @@ public class Utils {
 
     public static void createFile(String targetDir, String name, byte[] content) throws IOException {
         File f = new File(targetDir + name);
-        if(!f.exists()) {
+        if (!f.exists()) {
             FileOutputStream outputStream = new FileOutputStream(f);
             outputStream.write(content);
             outputStream.close();
         }
+    }
+
+    public static void copyDirs(String targetDir, String sourceDir) throws IOException {
+        final Path sourcePath = Paths.get(sourceDir);
+        final Path targetPath = Paths.get(targetDir);
+        Files.walkFileTree(sourcePath, new SimpleFileVisitor<Path>() {
+            @Override
+            public FileVisitResult preVisitDirectory(final Path dir,
+                                                     final BasicFileAttributes attrs) throws IOException {
+                Files.createDirectories(targetPath.resolve(sourcePath
+                        .relativize(dir)));
+                return FileVisitResult.CONTINUE;
+            }
+
+            @Override
+            public FileVisitResult visitFile(final Path file,
+                                             final BasicFileAttributes attrs) throws IOException {
+                Files.copy(file,
+                        targetPath.resolve(sourcePath.relativize(file)));
+                return FileVisitResult.CONTINUE;
+            }
+        });
     }
 
     private static void createScriptFile(String name, Queue<String> commands) throws IOException {

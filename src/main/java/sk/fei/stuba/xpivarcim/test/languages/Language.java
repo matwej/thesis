@@ -20,6 +20,8 @@ public interface Language {
     void mapSATestResults(String workDir, Result result) throws IOException, ParserConfigurationException, SAXException;
     String getCommand(String key);
     String getUnitDirName();
+    String getSADirName();
     String getUnitSolDir();
+    String getSASolDir();
     Settings getSettings();
 }

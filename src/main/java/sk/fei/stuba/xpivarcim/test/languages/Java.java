@@ -13,10 +13,7 @@ import sk.fei.stuba.xpivarcim.support.Settings;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
+import java.io.*;
 import java.util.Set;
 
 class Java implements Language {
@@ -27,7 +24,6 @@ class Java implements Language {
         this.settings = settings;
         commandsMap.put("compile","javac *.java");
         commandsMap.put("run", "java Main ");
-        commandsMap.put("test_prep", ""); // no preparation needed
         commandsMap.put("test","gradle test");
         commandsMap.put("sa", "gradle check");
     }
@@ -65,7 +61,12 @@ class Java implements Language {
     }
 
     @Override
-    public void mapSATestResults(String workDir, Result result) {
+    public void mapSATestResults(String workDir, Result result) throws IOException, ParserConfigurationException, SAXException {
+        InputStream xml = new FileInputStream(workDir + "/report/main.xml");
+        DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
+        DocumentBuilder documentBuilder = factory.newDocumentBuilder();
+        Document doc = documentBuilder.parse(xml);
+        Element root = doc.getDocumentElement();
         // TODO dorobit
     }
 
@@ -80,7 +81,17 @@ class Java implements Language {
     }
 
     @Override
+    public String getSADirName() {
+        return settings.javaStaticDir;
+    }
+
+    @Override
     public String getUnitSolDir() {
+        return "/src/main/java";
+    }
+
+    @Override
+    public String getSASolDir() {
         return "/src/main/java";
     }
 

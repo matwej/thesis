@@ -34,7 +34,6 @@ public class UnitEngine implements Engine {
 
     private Queue<String> prepareCommands(Language language) {
         Queue<String> commands = new LinkedList<>();
-        commands.add(language.getCommand("test_prep"));
         commands.add(language.getCommand("test"));
         return commands;
     }

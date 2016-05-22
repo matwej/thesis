@@ -26,7 +26,6 @@ class C implements Language {
         this.settings = settings;
         commandsMap.put("compile", "gcc *.c -I. -o run");
         commandsMap.put("run", "./run ");
-        commandsMap.put("test_prep", ""); // no preparation needed
         commandsMap.put("test", "make");
         commandsMap.put("sa", "cppcheck . -q -x c --xml 2> sa_report.xml");
     }
@@ -85,7 +84,17 @@ class C implements Language {
     }
 
     @Override
+    public String getSADirName() {
+        return "csa";
+    }
+
+    @Override
     public String getUnitSolDir() {
+        return "";
+    }
+
+    @Override
+    public String getSASolDir() {
         return "";
     }
 
