@@ -13,7 +13,10 @@ import sk.fei.stuba.xpivarcim.support.Settings;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
-import java.io.*;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.Set;
 
 class Java implements Language {
@@ -67,7 +70,9 @@ class Java implements Language {
         DocumentBuilder documentBuilder = factory.newDocumentBuilder();
         Document doc = documentBuilder.parse(xml);
         Element root = doc.getDocumentElement();
-        // TODO dorobit
+        Node summary = root.getElementsByTagName("FindBugsSummary").item(0);
+        String bugsCount = summary.getAttributes().getNamedItem("total_bugs").getTextContent();
+        result.setSaTest("0".equals(bugsCount));
     }
 
     @Override

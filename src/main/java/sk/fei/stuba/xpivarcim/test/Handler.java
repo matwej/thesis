@@ -1,6 +1,5 @@
 package sk.fei.stuba.xpivarcim.test;
 
-import org.xml.sax.SAXException;
 import sk.fei.stuba.xpivarcim.consumer.Solution;
 import sk.fei.stuba.xpivarcim.db.entities.Assignment;
 import sk.fei.stuba.xpivarcim.db.entities.assignment.SourceFile;
@@ -19,11 +18,9 @@ import sk.fei.stuba.xpivarcim.test.languages.Language;
 import sk.fei.stuba.xpivarcim.test.languages.LanguageContext;
 import sk.fei.stuba.xpivarcim.test.languages.UnsupportedLanguageException;
 
-import javax.xml.parsers.ParserConfigurationException;
 import java.io.IOException;
 import java.nio.file.*;
 import java.nio.file.attribute.BasicFileAttributes;
-import java.util.concurrent.ExecutionException;
 
 import static java.nio.file.FileVisitResult.CONTINUE;
 

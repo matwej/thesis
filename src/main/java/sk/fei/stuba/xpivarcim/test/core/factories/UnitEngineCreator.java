@@ -8,8 +8,6 @@ import sk.fei.stuba.xpivarcim.test.core.engines.UnitEngine;
 import sk.fei.stuba.xpivarcim.test.languages.Language;
 
 import java.io.IOException;
-import java.nio.file.*;
-import java.nio.file.attribute.BasicFileAttributes;
 import java.util.Set;
 
 public class UnitEngineCreator extends EngineCreator {

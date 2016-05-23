@@ -69,7 +69,7 @@ class C implements Language {
         DocumentBuilder documentBuilder = factory.newDocumentBuilder();
         Document doc = documentBuilder.parse(xml);
         Element root = doc.getDocumentElement();
-        result.setSaTest(!root.hasChildNodes());
+        result.setSaTest(root.getElementsByTagName("error").getLength() == 0);
     }
 
 

@@ -5,14 +5,11 @@ import sk.fei.stuba.xpivarcim.producer.Result;
 import sk.fei.stuba.xpivarcim.support.Utils;
 import sk.fei.stuba.xpivarcim.test.languages.Language;
 
-import java.io.IOException;
 import java.util.LinkedList;
 import java.util.Queue;
 import java.util.Set;
-import java.util.concurrent.ExecutionException;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
-import java.util.concurrent.TimeoutException;
 
 public class RunEngine implements Engine {
 
