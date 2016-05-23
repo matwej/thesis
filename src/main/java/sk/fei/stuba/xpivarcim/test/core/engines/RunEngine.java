@@ -7,7 +7,6 @@ import sk.fei.stuba.xpivarcim.support.Utils;
 import sk.fei.stuba.xpivarcim.test.languages.Language;
 
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.LinkedList;

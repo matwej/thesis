@@ -2,22 +2,20 @@ package sk.fei.stuba.xpivarcim.test;
 
 import sk.fei.stuba.xpivarcim.consumer.Solution;
 import sk.fei.stuba.xpivarcim.db.entities.Assignment;
-import sk.fei.stuba.xpivarcim.db.entities.assignment.SourceFile;
 import sk.fei.stuba.xpivarcim.db.repos.AssignmentRepository;
 import sk.fei.stuba.xpivarcim.exceptions.AssignmentResponseException;
 import sk.fei.stuba.xpivarcim.exceptions.CompilationException;
+import sk.fei.stuba.xpivarcim.exceptions.UnsupportedLanguageException;
 import sk.fei.stuba.xpivarcim.producer.Producer;
 import sk.fei.stuba.xpivarcim.producer.Result;
 import sk.fei.stuba.xpivarcim.producer.StatusCode;
 import sk.fei.stuba.xpivarcim.support.Settings;
-import sk.fei.stuba.xpivarcim.support.Utils;
 import sk.fei.stuba.xpivarcim.test.core.factories.EngineCreator;
 import sk.fei.stuba.xpivarcim.test.core.factories.RunEngineCreator;
 import sk.fei.stuba.xpivarcim.test.core.factories.SAEngineCreator;
 import sk.fei.stuba.xpivarcim.test.core.factories.UnitEngineCreator;
 import sk.fei.stuba.xpivarcim.test.languages.Language;
 import sk.fei.stuba.xpivarcim.test.languages.LanguageContext;
-import sk.fei.stuba.xpivarcim.exceptions.UnsupportedLanguageException;
 
 import java.io.IOException;
 import java.nio.file.*;
