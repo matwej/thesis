@@ -42,7 +42,8 @@ public class RunEngine implements Engine {
             }
         }
         service.shutdown();
-        checkForError(workDir);
+        if(language.isCompiled())
+            checkForError(workDir);
     }
 
     private void checkForError(String workDir) throws CompilationException {

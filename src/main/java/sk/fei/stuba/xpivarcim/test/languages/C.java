@@ -103,4 +103,14 @@ class C implements Language {
         return settings;
     }
 
+    @Override
+    public boolean isCompiled() {
+        return true;
+    }
+
+    @Override
+    public String compilationErrorString() {
+        return "Error";
+    }
+
 }

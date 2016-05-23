@@ -74,7 +74,6 @@ public class Handler {
     private void assembleAndRun()
             throws IOException, UnsupportedLanguageException, TimeoutException, CompilationException {
         setUpDir();
-        createSourceFiles();
         Language language = LanguageContext.getLanguage(assignment.getCodeLanguage(), settings);
         run(language);
         tearDownDir();
@@ -83,23 +82,16 @@ public class Handler {
     private void run(Language language) throws IOException, TimeoutException, CompilationException {
         if(assignment.isSaTest()) {
             EngineCreator engineCreator = new SAEngineCreator();
-            engineCreator.execTests(null, solution, language, result);
+            engineCreator.execTests(assignment, solution, language, result);
         }
         if (!assignment.runTestFiles().isEmpty()) {
             EngineCreator engineCreator = new RunEngineCreator();
-            engineCreator.execTests(assignment.runTestFiles(), solution, language, result);
+            engineCreator.execTests(assignment, solution, language, result);
         }
         if (!assignment.unitTestFiles().isEmpty()) {
             EngineCreator engineCreator = new UnitEngineCreator();
-            engineCreator.execTests(assignment.unitTestFiles(), solution, language, result);
+            engineCreator.execTests(assignment, solution, language, result);
         }
-    }
-
-    private void createSourceFiles() throws IOException {
-        if (assignment.getSourceFiles() != null)
-            for (SourceFile file : assignment.getSourceFiles()) {
-                Utils.createFile(dir.toString() + "/", file.getName(), file.getContent());
-            }
     }
 
     private void setUpDir() throws IOException {

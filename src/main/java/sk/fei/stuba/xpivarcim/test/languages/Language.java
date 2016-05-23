@@ -17,11 +17,19 @@ public interface Language {
 
     void createUnitTestFile(Solution solution, Set<TestFile> testFiles) throws IOException;
     void mapUnitTestResults(String workDir, Result result) throws IOException, ParserConfigurationException, SAXException;
+
     void mapSATestResults(String workDir, Result result) throws IOException, ParserConfigurationException, SAXException;
+
     String getCommand(String key);
+
     String getUnitDirName();
-    String getSADirName();
     String getUnitSolDir();
+
     String getSASolDir();
+    String getSADirName();
+
     Settings getSettings();
+
+    boolean isCompiled();
+    String compilationErrorString();
 }

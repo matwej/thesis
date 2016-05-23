@@ -1,6 +1,8 @@
 package sk.fei.stuba.xpivarcim.test.core.factories;
 
 import sk.fei.stuba.xpivarcim.consumer.Solution;
+import sk.fei.stuba.xpivarcim.db.entities.Assignment;
+import sk.fei.stuba.xpivarcim.db.entities.assignment.SourceFile;
 import sk.fei.stuba.xpivarcim.db.entities.assignment.TestFile;
 import sk.fei.stuba.xpivarcim.test.core.engines.Engine;
 import sk.fei.stuba.xpivarcim.test.core.engines.RunEngine;
@@ -13,10 +15,10 @@ import java.util.Set;
 public class RunEngineCreator extends EngineCreator {
 
     @Override
-    protected Engine createEngine(Set<TestFile> testFiles, Solution solution, Language language) throws IOException {
+    protected Engine createEngine(Assignment assignment, Solution solution, Language language) throws IOException {
         workDir += "/runtest";
         new File(workDir).mkdir();
-        return new RunEngine(testFiles, language);
+        return new RunEngine(assignment.runTestFiles(), language);
     }
 
     @Override

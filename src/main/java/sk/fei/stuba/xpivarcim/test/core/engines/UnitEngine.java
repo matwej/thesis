@@ -2,12 +2,17 @@ package sk.fei.stuba.xpivarcim.test.core.engines;
 
 import sk.fei.stuba.xpivarcim.consumer.Solution;
 import sk.fei.stuba.xpivarcim.db.entities.assignment.TestFile;
+import sk.fei.stuba.xpivarcim.exceptions.CompilationException;
 import sk.fei.stuba.xpivarcim.producer.Result;
 import sk.fei.stuba.xpivarcim.support.Utils;
 import sk.fei.stuba.xpivarcim.test.languages.Language;
 
+import java.io.File;
+import java.io.FileReader;
+import java.io.IOException;
 import java.util.LinkedList;
 import java.util.Queue;
+import java.util.Scanner;
 import java.util.Set;
 
 public class UnitEngine implements Engine {
@@ -23,7 +28,7 @@ public class UnitEngine implements Engine {
     }
 
     @Override
-    public void executeTests(String workDir, Result result) {
+    public void executeTests(String workDir, Result result) throws CompilationException {
         try {
             language.createUnitTestFile(solution, testFiles);
             Utils.runCommands(workDir, prepareCommands(language));
@@ -31,11 +36,24 @@ public class UnitEngine implements Engine {
         } catch (Exception e) {
             setTestsAsFailed(result);
         }
-        checkForCompilationError();
+        if(language.isCompiled())
+            checkForCompilationError(workDir);
     }
 
-    private void checkForCompilationError() {
-
+    private void checkForCompilationError(String workDir) throws CompilationException {
+        File errors = new File(workDir + "/test_errors");
+        String out = "";
+        if(errors.exists()) {
+            try {
+                Scanner scanner = new Scanner(errors).useDelimiter("\\A");
+                if(scanner.hasNext()) {
+                   if(scanner.next().contains(language.compilationErrorString()))
+                       throw new CompilationException();
+                }
+            } catch (IOException e) {
+                // nevermind this
+            }
+        }
     }
 
     private void setTestsAsFailed(Result result) {
