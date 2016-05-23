@@ -13,7 +13,6 @@ public class SAEngine implements Engine {
 
     public SAEngine(Language language) {
         this.language = language;
-
     }
 
     @Override

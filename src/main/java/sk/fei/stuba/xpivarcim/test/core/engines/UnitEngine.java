@@ -29,9 +29,18 @@ public class UnitEngine implements Engine {
             Utils.runCommands(workDir, prepareCommands(language));
             language.mapUnitTestResults(workDir, result);
         } catch (Exception e) {
-            for(TestFile testFile : testFiles) {
-                result.addTest(testFile.getIndex(),false);
-            }
+            setTestsAsFailed(result);
+        }
+        checkForCompilationError();
+    }
+
+    private void checkForCompilationError() {
+
+    }
+
+    private void setTestsAsFailed(Result result) {
+        for(TestFile testFile : testFiles) {
+            result.addTest(testFile.getIndex(),false);
         }
     }
 

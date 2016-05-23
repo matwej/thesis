@@ -1,8 +1,8 @@
-package sk.fei.stuba.xpivarcim.test.languages;
+package sk.fei.stuba.xpivarcim.exceptions;
 
 public class UnsupportedLanguageException extends Exception {
 
-    UnsupportedLanguageException(String lang) {
+    public UnsupportedLanguageException(String lang) {
         super(lang + " is not supported. Supported Language keys are: C, JAVA");
     }
 

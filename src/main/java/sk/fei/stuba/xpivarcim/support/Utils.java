@@ -13,7 +13,7 @@ import java.util.concurrent.*;
 public class Utils {
 
     public static String runTimeoutableCommands(final String workDir, final Queue<String> commands, int timeout, ExecutorService service)
-            throws ExecutionException, InterruptedException, TimeoutException {
+            throws TimeoutException {
         Callable<String> run = new Callable<String>() {
             @Override
             public String call() throws Exception {
@@ -22,12 +22,14 @@ public class Utils {
         };
         RunnableFuture<String> future = new FutureTask<>(run);
         service.execute(future);
-        String output;
+        String output = "";
         try {
             output = future.get(timeout, TimeUnit.SECONDS);
         } catch (TimeoutException e) {
             future.cancel(true);
             throw new TimeoutException();
+        } catch (ExecutionException | InterruptedException e) {
+            future.cancel(true);
         }
         return output;
     }
@@ -37,6 +39,7 @@ public class Utils {
         String output = "";
         ProcessBuilder builder = new ProcessBuilder("/bin/sh", "runner.sh");
         builder.directory(new File(workDir));
+        builder.redirectError(new File(workDir+"/test_errors"));
         Process p = builder.start();
         p.waitFor();
         Scanner s = new Scanner(p.getInputStream()).useDelimiter("\\A");

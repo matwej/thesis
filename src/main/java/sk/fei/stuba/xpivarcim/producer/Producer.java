@@ -4,6 +4,7 @@ import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import sk.fei.stuba.xpivarcim.db.entities.Assignment;
+import sk.fei.stuba.xpivarcim.exceptions.AssignmentResponseException;
 
 import java.util.Calendar;
 import java.util.Date;
