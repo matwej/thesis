@@ -17,6 +17,7 @@
 ## Running
 - classic gradle run inside/outside IDE
 - gradle build and then java -jar build/libs/thesis.jar
+- webserver port: dev - 8080, prod - 8100
 
 ## Settings
 - profiles: dev, prod (-Dspring.profiles.active=)
@@ -26,7 +27,18 @@
 - directory with prototypes, default: `/opt/prototypes/`, change with `--general.prototypes_dir=`, or OS env var `TESTER_PROTO_DIR`
 - do not change prototypes dir names!!! (if yes, change code accordingly)
 
-## Operation
+## DB
+- default H2 database for internal purposes, on dev profile running console on `localhost:8080/h2-console`
+
+## Messaging
 - operating queues on default exchange of broker: Solution, Result, Assignment
+- on dev profile amqp details are:
+    - host: localhost
+    - username: guest
+    - password: guest
+- on prod profile amqp details are:
+    - host: __AMQP_HOST__
+    - username: OS env var __AMQP_USERNAME__
+    - password: OS env var __AMQP_PASSWORD__
 
 ## API
