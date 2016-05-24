@@ -17,7 +17,7 @@
 ## Running
 - classic gradle run inside/outside IDE
 - gradle build and then java -jar build/libs/thesis.jar
-- webserver port: dev - 8080, prod - 8100
+- webserver port: dev - 8080, prod - 8100, change with `--server.port=`
 
 ## Settings
 - profiles: dev, prod (-Dspring.profiles.active=)
