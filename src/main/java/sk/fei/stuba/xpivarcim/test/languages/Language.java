@@ -21,6 +21,7 @@ public interface Language {
     void mapSATestResults(String workDir, Result result) throws IOException, ParserConfigurationException, SAXException;
 
     String getCommand(String key);
+    void calibrateCommands(Solution solution);
 
     String getUnitDirName();
     String getUnitSolDir();

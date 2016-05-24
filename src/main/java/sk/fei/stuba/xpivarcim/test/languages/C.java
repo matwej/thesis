@@ -79,6 +79,11 @@ class C implements Language {
     }
 
     @Override
+    public void calibrateCommands(Solution solution) {
+        // nothing needed so far
+    }
+
+    @Override
     public String getUnitDirName() {
         return settings.cUnitDir;
     }

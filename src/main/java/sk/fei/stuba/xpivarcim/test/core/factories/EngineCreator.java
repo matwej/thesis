@@ -21,6 +21,7 @@ public abstract class EngineCreator {
         Engine engine = createEngine(assignment, solution, language);
         solution.createFiles(solutionFilesTargetDir(language));
         createSourceFiles(assignment, workDir);
+        language.calibrateCommands(solution);
         engine.executeTests(workDir, result);
     }
 

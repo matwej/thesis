@@ -60,7 +60,8 @@ public class RunEngine implements Engine {
 
     private Queue<String> prepareCommands(TestFile testFile, Language language) {
         Queue<String> commands = new LinkedList<>();
-        commands.add(language.getCommand("compile"));
+        if(language.isCompiled())
+            commands.add(language.getCommand("compile"));
         commands.add(language.getCommand("run") + testFile.safeInput());
         return commands;
     }

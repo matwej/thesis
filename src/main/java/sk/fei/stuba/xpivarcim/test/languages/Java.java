@@ -5,6 +5,7 @@ import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
+import sk.fei.stuba.xpivarcim.consumer.CodeFile;
 import sk.fei.stuba.xpivarcim.consumer.Solution;
 import sk.fei.stuba.xpivarcim.db.entities.assignment.TestFile;
 import sk.fei.stuba.xpivarcim.producer.Result;
@@ -26,7 +27,6 @@ class Java implements Language {
     Java(Settings settings) {
         this.settings = settings;
         commandsMap.put("compile","javac *.java");
-        commandsMap.put("run", "java Main ");
         commandsMap.put("test","gradle test");
         commandsMap.put("sa", "gradle check");
     }
@@ -78,6 +78,19 @@ class Java implements Language {
     @Override
     public String getCommand(String key) {
         return commandsMap.get(key);
+    }
+
+    @Override
+    public void calibrateCommands(Solution solution) {
+        // find class with main method
+        String className = "";
+        for(CodeFile file : solution.getSourceFiles()) {
+            if(file.getContent().contains("public static void main")) {
+                className = file.getName().replace(".java", "");
+                break;
+            }
+        }
+        commandsMap.put("run", "java " + className + " ");
     }
 
     @Override
