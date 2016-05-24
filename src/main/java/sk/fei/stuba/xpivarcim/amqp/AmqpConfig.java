@@ -4,17 +4,22 @@ import org.springframework.amqp.core.AmqpAdmin;
 import org.springframework.amqp.rabbit.connection.CachingConnectionFactory;
 import org.springframework.amqp.rabbit.connection.ConnectionFactory;
 import org.springframework.amqp.rabbit.core.RabbitAdmin;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import sk.fei.stuba.xpivarcim.support.AmqpSettings;
 
 @Configuration
 public class AmqpConfig {
 
+    @Autowired
+    AmqpSettings amqpSettings;
+
     @Bean
     public ConnectionFactory connectionFactory() {
-        CachingConnectionFactory connectionFactory = new CachingConnectionFactory("localhost");
-        connectionFactory.setUsername("guest");
-        connectionFactory.setPassword("guest");
+        CachingConnectionFactory connectionFactory = new CachingConnectionFactory(amqpSettings.getHost());
+        connectionFactory.setUsername(amqpSettings.getUsername());
+        connectionFactory.setPassword(amqpSettings.getPassword());
         return connectionFactory;
     }
 
