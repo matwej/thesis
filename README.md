@@ -15,9 +15,9 @@
 - unzip dir with prototypes (prototypes.zip) in desired path, where app user can read them
 
 ## Running
-- classic gradle run inside/outside IDE
-- gradle build and then java -jar build/libs/thesis.jar
-- webserver port: dev - 8080, prod - 8100, change with `--server.port=`
+- classic `gradle run` inside/outside IDE
+- java -jar thesis.jar (if not provided, *gradle build*)
+- webserver port on profiles: dev - 8080, prod - 8100, change with `--server.port=`
 
 ## Settings
 - profiles: dev, prod (-Dspring.profiles.active=)
@@ -29,16 +29,21 @@
 
 ## DB
 - default H2 database for internal purposes, on dev profile running console on `localhost:8080/h2-console`
+- console disabled on prod, shouldn't be needed
 
 ## Messaging
-- operating queues on default exchange of broker: Solution, Result, Assignment
+- operating queues on default exchange of broker: *Solution*, *Result*, *Assignment*
+- 5 concurrent threads consuming queues
 - on dev profile amqp details are:
     - host: localhost
     - username: guest
     - password: guest
 - on prod profile amqp details are:
-    - host: __AMQP_HOST__
+    - host: os env var __AMQP_HOST__
     - username: OS env var __AMQP_USERNAME__
     - password: OS env var __AMQP_PASSWORD__
 
 ## API
+
+## Scaling
+- if you want to run multiple modules on one machine, set with options these attrs: *server.port, general.operations_dir*
