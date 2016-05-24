@@ -32,7 +32,7 @@ public class RunEngine implements Engine {
         for (TestFile f : testFiles) {
             Queue<String> commands = prepareCommands(f, language);
             try {
-                int timeout = f.getTimeout() == 0 ? language.getSettings().runTimeout : f.getTimeout();
+                int timeout = f.getTimeout() == 0 ? language.getSettings().getRunTimeout() : f.getTimeout();
                 String output = Utils.runTimeoutableCommands(workDir, commands, timeout, service);
                 result.addTest(f.getIndex(), f.getOutput().equals(output));
             } catch (TimeoutException e) {

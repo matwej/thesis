@@ -32,7 +32,7 @@ class C implements Language {
 
     @Override
     public void createUnitTestFile(Solution solution, Set<TestFile> testFiles) throws IOException {
-        FileOutputStream ostream = new FileOutputStream(settings.opDir + solution.getId() + "/check_unit_test.check");
+        FileOutputStream ostream = new FileOutputStream(settings.getOperationsDir() + solution.getId() + "/check_unit_test.check");
         for (String headerFile : solution.filteredExtensionSourceFiles("h")) {
             ostream.write(("#include \"" + headerFile + "\"\n").getBytes());
         }
@@ -42,7 +42,7 @@ class C implements Language {
             ostream.write("\n".getBytes());
         }
         ostream.write("\n#main-pre\nsrunner_set_xml(sr,\"report.xml\");\n".getBytes());
-        ostream.write(("tcase_set_timeout(tc1_1," + settings.unitTimeout + ");\n").getBytes());
+        ostream.write(("tcase_set_timeout(tc1_1," + settings.getUnitTimeout() + ");\n").getBytes());
         ostream.close();
     }
 
@@ -85,7 +85,7 @@ class C implements Language {
 
     @Override
     public String getUnitDirName() {
-        return settings.cUnitDir;
+        return "cunit";
     }
 
     @Override

@@ -40,7 +40,7 @@ public class Handler {
         this.producer = producer;
         this.settings = settings;
         result = new Result(solution.getId());
-        dir = Paths.get(settings.opDir + String.valueOf(solution.getId()));
+        dir = Paths.get(settings.getOperationsDir() + String.valueOf(solution.getId()));
     }
 
     public void test() {
