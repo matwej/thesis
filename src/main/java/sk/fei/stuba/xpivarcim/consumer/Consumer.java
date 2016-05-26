@@ -35,7 +35,7 @@ public class Consumer {
     @RabbitListener(bindings = @QueueBinding(
             value = @Queue(value = "Solution", durable = "true"),
             exchange = @Exchange(value = "auto.exch"),
-            key = "orderRoutingKey")
+            key = "Solution")
     )
     public void processSolution(Solution solution) throws IOException {
         Handler handler = new Handler(solution, assignmentRepository, producer, settings);
