@@ -1,4 +1,4 @@
-package sk.fei.stuba.xpivarcim.support;
+package sk.fei.stuba.xpivarcim.amqp;
 
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
