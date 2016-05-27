@@ -29,6 +29,8 @@ public class Producer {
         AssignmentRequest request =
                 new AssignmentRequest(cal.getTime(), id);
         Assignment assignment = (Assignment) sendAndReceive("Assignment", request);
+        if (assignment == null)
+            throw new AssignmentResponseException(404);
         if (assignment.getStatus() != StatusCode.OK.getValue())
             throw new AssignmentResponseException(assignment.getStatus());
         assignment.setFiles();

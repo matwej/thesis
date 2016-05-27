@@ -1,6 +1,8 @@
 package sk.fei.stuba.xpivarcim.consumer;
 
 import org.springframework.amqp.core.AcknowledgeMode;
+import org.springframework.amqp.core.AmqpAdmin;
+import org.springframework.amqp.core.Queue;
 import org.springframework.amqp.rabbit.annotation.EnableRabbit;
 import org.springframework.amqp.rabbit.annotation.RabbitListenerConfigurer;
 import org.springframework.amqp.rabbit.config.SimpleRabbitListenerContainerFactory;
@@ -20,6 +22,9 @@ public class ConsumerConfig implements RabbitListenerConfigurer {
     @Autowired
     ConnectionFactory connectionFactory;
 
+    @Autowired
+    AmqpAdmin amqpAdmin;
+
     @Bean
     public MappingJackson2MessageConverter jackson2Converter() {
         final MappingJackson2MessageConverter converter = new MappingJackson2MessageConverter();
@@ -28,6 +33,7 @@ public class ConsumerConfig implements RabbitListenerConfigurer {
 
     @Bean
     public SimpleRabbitListenerContainerFactory rabbitListenerContainerFactory() {
+        amqpAdmin.declareQueue(new Queue("Solution",true));
         SimpleRabbitListenerContainerFactory factory = new SimpleRabbitListenerContainerFactory();
         factory.setConnectionFactory(connectionFactory);
         factory.setMessageConverter(new Jackson2JsonMessageConverter());
