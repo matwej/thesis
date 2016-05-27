@@ -2,11 +2,13 @@ package sk.fei.stuba.xpivarcim.db.entities.assignment;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.validation.constraints.NotNull;
 
 @Entity
 public class TestFile extends AssignmentFile<String> {
 
     @Column
+    @NotNull
     private int index;
     @Column
     private String input;
