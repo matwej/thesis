@@ -22,15 +22,7 @@ public class Producer {
     }
 
     public Object sendAndReceive(String queueName, Object obj) {
-        Object o = producerTemplate.convertSendAndReceive(queueName, obj);
-        ObjectMapper mapper = new ObjectMapper();
-        try {
-            String s = mapper.writeValueAsString(o);
-            System.out.println(s);
-        } catch (JsonProcessingException e) {
-            e.printStackTrace();
-        }
-        return o;
+        return producerTemplate.convertSendAndReceive(queueName, obj);
     }
 
     public Assignment downloadAssignment(long id) throws AssignmentResponseException {
