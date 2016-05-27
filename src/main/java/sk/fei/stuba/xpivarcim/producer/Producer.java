@@ -1,5 +1,7 @@
 package sk.fei.stuba.xpivarcim.producer;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -20,7 +22,15 @@ public class Producer {
     }
 
     public Object sendAndReceive(String queueName, Object obj) {
-        return producerTemplate.convertSendAndReceive(queueName, obj);
+        Object o = producerTemplate.convertSendAndReceive(queueName, obj);
+        ObjectMapper mapper = new ObjectMapper();
+        try {
+            String s = mapper.writeValueAsString(o);
+            System.out.println(s);
+        } catch (JsonProcessingException e) {
+            e.printStackTrace();
+        }
+        return o;
     }
 
     public Assignment downloadAssignment(long id) throws AssignmentResponseException {
