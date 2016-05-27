@@ -29,7 +29,7 @@ public class UnitEngine implements Engine {
     @Override
     public void executeTests(String workDir, Result result) throws CompilationException {
         try {
-            language.createUnitTestFile(solution, testFiles);
+            language.createUnitTestFile(workDir, solution, testFiles);
             Utils.runCommands(workDir, prepareCommands(language));
             language.mapUnitTestResults(workDir, result);
         } catch (Exception e) {

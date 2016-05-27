@@ -27,7 +27,7 @@ public class RunEngine implements Engine {
     }
 
     @Override
-    public void executeTests(String workDir, Result result) throws TimeoutException, CompilationException {
+    public void executeTests(String workDir, Result result) throws CompilationException {
         ExecutorService service = Executors.newSingleThreadExecutor();
         for (TestFile f : testFiles) {
             Queue<String> commands = prepareCommands(f, language);
@@ -37,7 +37,6 @@ public class RunEngine implements Engine {
                 result.addTest(f.getIndex(), f.getOutput().equals(output));
             } catch (TimeoutException e) {
                 result.addTest(f.getIndex(),false);
-                throw new TimeoutException();
             }
         }
         service.shutdown();
@@ -62,7 +61,7 @@ public class RunEngine implements Engine {
         Queue<String> commands = new LinkedList<>();
         if(language.isCompiled())
             commands.add(language.getCommand("compile"));
-        commands.add(language.getCommand("run") + testFile.safeInput());
+        commands.add(language.getCommand("run") + "\"" + testFile.safeInput() + "\"");
         return commands;
     }
 

@@ -16,7 +16,7 @@ public abstract class EngineCreator {
 
     protected String workDir;
 
-    public void execTests(Assignment assignment, Solution solution, Language language, Result result) throws IOException, TimeoutException, CompilationException {
+    public void execTests(Assignment assignment, Solution solution, Language language, Result result) throws IOException, CompilationException {
         workDir = language.getSettings().getOperationsDir() + solution.getSolutionId();
         Engine engine = createEngine(assignment, solution, language);
         solution.createFiles(solutionFilesTargetDir(language));

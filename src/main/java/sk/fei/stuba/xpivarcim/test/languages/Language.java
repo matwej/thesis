@@ -15,7 +15,7 @@ import java.util.Set;
 public interface Language {
     Map<String, String> commandsMap = new HashMap<>();
 
-    void createUnitTestFile(Solution solution, Set<TestFile> testFiles) throws IOException;
+    void createUnitTestFile(String workDir, Solution solution, Set<TestFile> testFiles) throws IOException;
     void mapUnitTestResults(String workDir, Result result) throws IOException, ParserConfigurationException, SAXException;
 
     void mapSATestResults(String workDir, Result result) throws IOException, ParserConfigurationException, SAXException;

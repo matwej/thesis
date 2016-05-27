@@ -13,6 +13,7 @@ public class SAEngineCreator extends EngineCreator {
 
     @Override
     protected Engine createEngine(Assignment assignment, Solution solution, Language language) throws IOException {
+        workDir += "/satest";
         Utils.copyDirs(workDir, language.getSettings().getPrototypesDir() + language.getSADirName());
         return new SAEngine(language);
     }

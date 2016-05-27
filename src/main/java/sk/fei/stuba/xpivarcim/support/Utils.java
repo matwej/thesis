@@ -82,6 +82,7 @@ public class Utils {
 
     private static void createScriptFile(String name, Queue<String> commands) throws IOException {
         File tmp = new File(name);
+        if(tmp.exists()) tmp.delete();
         FileWriter writer = new FileWriter(tmp);
         writer.write("#!/bin/sh\n");
         for (String command : commands) {

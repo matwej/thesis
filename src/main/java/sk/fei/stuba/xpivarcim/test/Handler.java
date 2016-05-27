@@ -50,8 +50,7 @@ public class Handler {
             result.setStatus(StatusCode.OK.getValue());
         } catch (AssignmentResponseException |
                 UnsupportedLanguageException |
-                CompilationException |
-                TimeoutException e) {
+                CompilationException e) {
             result.setStatus(StatusCode.ERROR.getValue());
             result.setMessage(e.getMessage());
         } catch (IOException e) {
@@ -70,14 +69,14 @@ public class Handler {
     }
 
     private void assembleAndRun()
-            throws IOException, UnsupportedLanguageException, TimeoutException, CompilationException {
+            throws IOException, UnsupportedLanguageException, CompilationException {
         setUpDir();
         Language language = LanguageContext.getLanguage(assignment.getCodeLanguage(), settings);
         run(language);
         tearDownDir();
     }
 
-    private void run(Language language) throws IOException, TimeoutException, CompilationException {
+    private void run(Language language) throws IOException, CompilationException {
         if(assignment.isSaTest()) {
             EngineCreator engineCreator = new SAEngineCreator();
             engineCreator.execTests(assignment, solution, language, result);
