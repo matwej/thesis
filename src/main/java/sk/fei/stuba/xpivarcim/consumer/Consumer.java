@@ -50,7 +50,7 @@ public class Consumer {
             return new Assignment(req.getId(), "C", new Date(), null, null, 404, false);
         /*
         {
-            "id":15,
+            "solutionId":15,
             "assignmentId":3,
             "sourceFiles":[
                 {

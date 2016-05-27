@@ -32,7 +32,7 @@ class C implements Language {
 
     @Override
     public void createUnitTestFile(Solution solution, Set<TestFile> testFiles) throws IOException {
-        FileOutputStream ostream = new FileOutputStream(settings.getOperationsDir() + solution.getId() + "/check_unit_test.check");
+        FileOutputStream ostream = new FileOutputStream(settings.getOperationsDir() + solution.getSolutionId() + "/check_unit_test.check");
         for (String headerFile : solution.filteredExtensionSourceFiles("h")) {
             ostream.write(("#include \"" + headerFile + "\"\n").getBytes());
         }

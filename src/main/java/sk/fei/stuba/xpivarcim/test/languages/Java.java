@@ -33,7 +33,7 @@ class Java implements Language {
 
     @Override
     public void createUnitTestFile(Solution solution, Set<TestFile> testFiles) throws IOException {
-        FileOutputStream ostream = new FileOutputStream(settings.getOperationsDir() + solution.getId() + "/src/test/java/MainTest.java");
+        FileOutputStream ostream = new FileOutputStream(settings.getOperationsDir() + solution.getSolutionId() + "/src/test/java/MainTest.java");
         ostream.write("import static org.junit.Assert.*;\n".getBytes());
         ostream.write("import org.junit.*;\n".getBytes());
         ostream.write("public class MainTest {\n".getBytes());

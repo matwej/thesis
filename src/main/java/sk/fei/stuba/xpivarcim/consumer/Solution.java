@@ -8,15 +8,15 @@ import java.util.List;
 
 public class Solution {
 
-    private long id;
+    private long solutionId;
     private long assignmentId;
     private CodeFile[] sourceFiles;
 
     public Solution() {
     }
 
-    public Solution(long id, long assignmentId, CodeFile[] sourceFiles) {
-        this.id = id;
+    public Solution(long solutionId, long assignmentId, CodeFile[] sourceFiles) {
+        this.solutionId = solutionId;
         this.assignmentId = assignmentId;
         this.sourceFiles = sourceFiles;
     }
@@ -37,8 +37,8 @@ public class Solution {
         }
     }
 
-    public long getId() {
-        return id;
+    public long getSolutionId() {
+        return solutionId;
     }
 
     public long getAssignmentId() {

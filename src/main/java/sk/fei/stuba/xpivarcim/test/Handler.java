@@ -39,8 +39,8 @@ public class Handler {
         this.assignmentRepository = assignmentRepository;
         this.producer = producer;
         this.settings = settings;
-        result = new Result(solution.getId());
-        dir = Paths.get(settings.getOperationsDir() + String.valueOf(solution.getId()));
+        result = new Result(solution.getSolutionId());
+        dir = Paths.get(settings.getOperationsDir() + String.valueOf(solution.getSolutionId()));
     }
 
     public void test() {
