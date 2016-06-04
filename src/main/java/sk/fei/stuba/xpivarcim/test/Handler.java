@@ -1,14 +1,14 @@
 package sk.fei.stuba.xpivarcim.test;
 
+import org.springframework.amqp.rabbit.core.RabbitTemplate;
+import org.springframework.context.ApplicationContext;
 import sk.fei.stuba.xpivarcim.consumer.Solution;
 import sk.fei.stuba.xpivarcim.db.entities.Assignment;
 import sk.fei.stuba.xpivarcim.db.repos.AssignmentRepository;
-import sk.fei.stuba.xpivarcim.exceptions.AssignmentResponseException;
+import sk.fei.stuba.xpivarcim.exceptions.MessagingResponseException;
 import sk.fei.stuba.xpivarcim.exceptions.CompilationException;
 import sk.fei.stuba.xpivarcim.exceptions.UnsupportedLanguageException;
-import sk.fei.stuba.xpivarcim.producer.Producer;
-import sk.fei.stuba.xpivarcim.producer.Result;
-import sk.fei.stuba.xpivarcim.producer.StatusCode;
+import sk.fei.stuba.xpivarcim.producer.*;
 import sk.fei.stuba.xpivarcim.support.Settings;
 import sk.fei.stuba.xpivarcim.test.core.factories.EngineCreator;
 import sk.fei.stuba.xpivarcim.test.core.factories.RunEngineCreator;
@@ -20,7 +20,6 @@ import sk.fei.stuba.xpivarcim.test.languages.LanguageContext;
 import java.io.IOException;
 import java.nio.file.*;
 import java.nio.file.attribute.BasicFileAttributes;
-import java.util.concurrent.TimeoutException;
 
 import static java.nio.file.FileVisitResult.CONTINUE;
 
@@ -29,16 +28,18 @@ public class Handler {
     private Solution solution;
     private Assignment assignment;
     private AssignmentRepository assignmentRepository;
+    private ApplicationContext applicationContext;
     private Producer producer;
     private Result result;
     private Settings settings;
     private Path dir;
 
-    public Handler(Solution solution, AssignmentRepository assignmentRepository, Producer producer, Settings settings) {
+    public Handler(Solution solution, AssignmentRepository assignmentRepository, ApplicationContext applicationContext, Settings settings, Producer producer) {
         this.solution = solution;
         this.assignmentRepository = assignmentRepository;
-        this.producer = producer;
+        this.applicationContext = applicationContext;
         this.settings = settings;
+        this.producer = producer;
         result = new Result(solution.getSolutionId());
         dir = Paths.get(settings.getOperationsDir() + String.valueOf(solution.getSolutionId()));
     }
@@ -48,7 +49,7 @@ public class Handler {
             prepareAssignment();
             assembleAndRun();
             result.setStatus(StatusCode.OK.getValue());
-        } catch (AssignmentResponseException |
+        } catch (MessagingResponseException |
                 UnsupportedLanguageException |
                 CompilationException e) {
             result.setStatus(StatusCode.ERROR.getValue());
@@ -56,15 +57,16 @@ public class Handler {
         } catch (IOException e) {
             result.setStatus(StatusCode.UNEXPECTED_ERROR.getValue());
         }
-        producer.send("Result", result);
+        ResultProducer resultProducer = (ResultProducer) applicationContext.getBean("resultProducer");
+        resultProducer.send(result);
     }
 
-    private void prepareAssignment() throws AssignmentResponseException {
+    private void prepareAssignment() throws MessagingResponseException {
         assignment = assignmentRepository.findOne(solution.getAssignmentId());
         if (assignment == null)
-            assignment = producer.downloadAssignment(solution.getAssignmentId());
+            assignment = (Assignment) producer.download(solution.getAssignmentId());
         else
-            assignment = producer.updateAssignment(assignment);
+            assignment = (Assignment) producer.update(assignment);
         assignmentRepository.save(assignment);
     }
 
@@ -77,16 +79,17 @@ public class Handler {
     }
 
     private void run(Language language) throws IOException, CompilationException {
+        EngineCreator engineCreator;
         if(assignment.isSaTest()) {
-            EngineCreator engineCreator = new SAEngineCreator();
+            engineCreator = new SAEngineCreator();
             engineCreator.execTests(assignment, solution, language, result);
         }
         if (!assignment.runTestFiles().isEmpty()) {
-            EngineCreator engineCreator = new RunEngineCreator();
+            engineCreator = new RunEngineCreator();
             engineCreator.execTests(assignment, solution, language, result);
         }
         if (!assignment.unitTestFiles().isEmpty()) {
-            EngineCreator engineCreator = new UnitEngineCreator();
+            engineCreator = new UnitEngineCreator();
             engineCreator.execTests(assignment, solution, language, result);
         }
     }
