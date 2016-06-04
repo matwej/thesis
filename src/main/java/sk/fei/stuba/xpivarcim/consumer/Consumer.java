@@ -10,8 +10,10 @@ import org.springframework.stereotype.Component;
 import sk.fei.stuba.xpivarcim.consumer.messages.Solution;
 import sk.fei.stuba.xpivarcim.db.repos.AssignmentRepository;
 import sk.fei.stuba.xpivarcim.producer.strategies.AssignmentProducer;
+import sk.fei.stuba.xpivarcim.producer.strategies.ResultProducer;
 import sk.fei.stuba.xpivarcim.support.Settings;
-import sk.fei.stuba.xpivarcim.test.Handler;
+import sk.fei.stuba.xpivarcim.test.AssignmentHandler;
+import sk.fei.stuba.xpivarcim.test.SolutionHandler;
 
 import java.io.IOException;
 
@@ -19,13 +21,10 @@ import java.io.IOException;
 public class Consumer {
 
     @Autowired
-    ApplicationContext applicationContext;
+    AssignmentHandler assignmentHandler;
 
     @Autowired
-    AssignmentProducer assignmentProducer;
-
-    @Autowired
-    AssignmentRepository assignmentRepository;
+    ResultProducer resultProducer;
 
     @Autowired
     Settings settings;
@@ -36,7 +35,7 @@ public class Consumer {
             key = "Solution")
     )
     public void processSolution(Solution solution) throws IOException {
-        Handler handler = new Handler(solution, assignmentRepository, applicationContext, settings, assignmentProducer);
+        SolutionHandler handler = new SolutionHandler(solution, settings, resultProducer, assignmentHandler);
         handler.test();
     }
 }

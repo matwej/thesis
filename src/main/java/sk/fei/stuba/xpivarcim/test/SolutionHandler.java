@@ -25,31 +25,28 @@ import java.nio.file.attribute.BasicFileAttributes;
 
 import static java.nio.file.FileVisitResult.CONTINUE;
 
-public class Handler {
+public class SolutionHandler {
 
     private Solution solution;
-    private Assignment assignment;
-    private AssignmentRepository assignmentRepository;
-    private ApplicationContext applicationContext;
     private Producer producer;
+    private AssignmentHandler assignmentHandler;
     private Result result;
     private Settings settings;
     private Path dir;
 
-    public Handler(Solution solution, AssignmentRepository assignmentRepository, ApplicationContext applicationContext, Settings settings, Producer producer) {
+    public SolutionHandler(Solution solution, Settings settings, Producer producer, AssignmentHandler assignmentHandler) {
         this.solution = solution;
-        this.assignmentRepository = assignmentRepository;
-        this.applicationContext = applicationContext;
         this.settings = settings;
         this.producer = producer;
+        this.assignmentHandler = assignmentHandler;
         result = new Result(solution.getSolutionId());
         dir = Paths.get(settings.getOperationsDir() + String.valueOf(solution.getSolutionId()));
     }
 
     public void test() {
         try {
-            prepareAssignment();
-            assembleAndRun();
+            Assignment assignment = assignmentHandler.prepareAssignment(solution);
+            assembleAndRun(assignment);
             result.setStatus(StatusCode.OK.getValue());
         } catch (MessagingResponseException |
                 UnsupportedLanguageException |
@@ -59,28 +56,18 @@ public class Handler {
         } catch (IOException e) {
             result.setStatus(StatusCode.UNEXPECTED_ERROR.getValue());
         }
-        ResultProducer resultProducer = (ResultProducer) applicationContext.getBean("resultProducer");
-        resultProducer.send(result);
+        producer.send(result);
     }
 
-    private void prepareAssignment() throws MessagingResponseException {
-        assignment = assignmentRepository.findOne(solution.getAssignmentId());
-        if (assignment == null)
-            assignment = (Assignment) producer.download(solution.getAssignmentId());
-        else
-            assignment = (Assignment) producer.update(assignment);
-        assignmentRepository.save(assignment);
-    }
-
-    private void assembleAndRun()
+    private void assembleAndRun(Assignment assignment)
             throws IOException, UnsupportedLanguageException, CompilationException {
         setUpDir();
         Language language = LanguageContext.getLanguage(assignment.getCodeLanguage(), settings);
-        run(language);
+        run(assignment, language);
         tearDownDir();
     }
 
-    private void run(Language language) throws IOException, CompilationException {
+    private void run(Assignment assignment, Language language) throws IOException, CompilationException {
         EngineCreator engineCreator;
         if(assignment.isSaTest()) {
             engineCreator = new SAEngineCreator();
