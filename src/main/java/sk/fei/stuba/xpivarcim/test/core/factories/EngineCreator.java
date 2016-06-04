@@ -1,16 +1,15 @@
 package sk.fei.stuba.xpivarcim.test.core.factories;
 
-import sk.fei.stuba.xpivarcim.consumer.Solution;
+import sk.fei.stuba.xpivarcim.consumer.messages.Solution;
 import sk.fei.stuba.xpivarcim.db.entities.Assignment;
 import sk.fei.stuba.xpivarcim.db.entities.assignment.SourceFile;
 import sk.fei.stuba.xpivarcim.exceptions.CompilationException;
-import sk.fei.stuba.xpivarcim.producer.Result;
+import sk.fei.stuba.xpivarcim.producer.messages.Result;
 import sk.fei.stuba.xpivarcim.support.Utils;
 import sk.fei.stuba.xpivarcim.test.core.engines.Engine;
 import sk.fei.stuba.xpivarcim.test.languages.Language;
 
 import java.io.IOException;
-import java.util.concurrent.TimeoutException;
 
 public abstract class EngineCreator {
 

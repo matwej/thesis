@@ -2,7 +2,7 @@ package sk.fei.stuba.xpivarcim.test.core.engines;
 
 import sk.fei.stuba.xpivarcim.db.entities.assignment.TestFile;
 import sk.fei.stuba.xpivarcim.exceptions.CompilationException;
-import sk.fei.stuba.xpivarcim.producer.Result;
+import sk.fei.stuba.xpivarcim.producer.messages.Result;
 import sk.fei.stuba.xpivarcim.support.Utils;
 import sk.fei.stuba.xpivarcim.test.languages.Language;
 

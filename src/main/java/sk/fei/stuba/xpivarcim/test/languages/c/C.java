@@ -1,15 +1,14 @@
-package sk.fei.stuba.xpivarcim.test.languages;
+package sk.fei.stuba.xpivarcim.test.languages.c;
 
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
-import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
-import sk.fei.stuba.xpivarcim.consumer.CodeFile;
-import sk.fei.stuba.xpivarcim.consumer.Solution;
+import sk.fei.stuba.xpivarcim.consumer.messages.Solution;
 import sk.fei.stuba.xpivarcim.db.entities.assignment.TestFile;
-import sk.fei.stuba.xpivarcim.producer.Result;
+import sk.fei.stuba.xpivarcim.producer.messages.Result;
 import sk.fei.stuba.xpivarcim.support.Settings;
+import sk.fei.stuba.xpivarcim.test.languages.Language;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
@@ -20,49 +19,49 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.Set;
 
-class Java implements Language {
+public class C implements Language {
 
     private Settings settings;
 
-    Java(Settings settings) {
+    public C(Settings settings) {
         this.settings = settings;
-        commandsMap.put("compile","javac *.java");
-        commandsMap.put("test","gradle test");
-        commandsMap.put("sa", "gradle check");
+        commandsMap.put("compile", "gcc *.c -I. -o run");
+        commandsMap.put("run", "./run ");
+        commandsMap.put("test", "make");
+        commandsMap.put("sa", "cppcheck . -q -x c --xml 2> sa_report.xml");
     }
 
     @Override
     public void createUnitTestFile(String workDir, Solution solution, Set<TestFile> testFiles) throws IOException {
-        new JavaUnitTestFile(settings, testFiles).create(new FileOutputStream(workDir + "/src/test/java/MainTest.java"));
+        new CUnitTestFile(settings, solution, testFiles).create(new FileOutputStream(workDir + "/check_unit_test.check"));
     }
 
     @Override
     public void mapUnitTestResults(String workDir, Result result) throws IOException, ParserConfigurationException, SAXException {
-        InputStream xml = new FileInputStream(workDir + "/report/TEST-MainTest.xml");
+        InputStream xml = new FileInputStream(workDir + "/report.xml");
         DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
         DocumentBuilder documentBuilder = factory.newDocumentBuilder();
         Document doc = documentBuilder.parse(xml);
         Element root = doc.getDocumentElement();
-        NodeList testcases = root.getElementsByTagName("testcase");
-        for(int i=0;i<testcases.getLength();i++) {
-            Node item = testcases.item(i);
-            String testName = item.getAttributes().getNamedItem("name").getTextContent();
+        NodeList testCases = root.getElementsByTagName("test");
+        for (int i = 0; i < testCases.getLength(); i++) {
+            Element item = (Element) testCases.item(i);
+            String testName = item.getElementsByTagName("id").item(0).getTextContent();
             int index = Integer.parseInt(testName.replaceAll("[\\D]", ""));
-            result.addTest(index, !item.hasChildNodes());
+            result.addTest(index, item.getAttribute("result").equals("success"));
         }
     }
 
     @Override
     public void mapSATestResults(String workDir, Result result) throws IOException, ParserConfigurationException, SAXException {
-        InputStream xml = new FileInputStream(workDir + "/report/main.xml");
+        InputStream xml = new FileInputStream(workDir + "/sa_report.xml");
         DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
         DocumentBuilder documentBuilder = factory.newDocumentBuilder();
         Document doc = documentBuilder.parse(xml);
         Element root = doc.getDocumentElement();
-        Node summary = root.getElementsByTagName("FindBugsSummary").item(0);
-        String bugsCount = summary.getAttributes().getNamedItem("total_bugs").getTextContent();
-        result.setSaTest("0".equals(bugsCount));
+        result.setSaTest(root.getElementsByTagName("error").getLength() == 0);
     }
+
 
     @Override
     public String getCommand(String key) {
@@ -71,35 +70,27 @@ class Java implements Language {
 
     @Override
     public void calibrateCommands(Solution solution) {
-        // find class with main method
-        String className = "";
-        for(CodeFile file : solution.getSourceFiles()) {
-            if(file.getContent().contains("public static void main")) {
-                className = file.getName().replace(".java", "");
-                break;
-            }
-        }
-        commandsMap.put("run", "java " + className + " ");
+        // nothing needed so far
     }
 
     @Override
     public String getUnitDirName() {
-        return "javaunit";
+        return "cunit";
     }
 
     @Override
     public String getSADirName() {
-        return "javasa";
+        return "csa";
     }
 
     @Override
     public String getUnitSolDir() {
-        return "/src/main/java";
+        return "";
     }
 
     @Override
     public String getSASolDir() {
-        return "/src/main/java";
+        return "";
     }
 
     @Override
@@ -114,6 +105,7 @@ class Java implements Language {
 
     @Override
     public String compilationErrorString() {
-        return "Compilation failed";
+        return "Error";
     }
+
 }

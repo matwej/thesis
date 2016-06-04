@@ -1,10 +1,10 @@
-package sk.fei.stuba.xpivarcim.producer;
+package sk.fei.stuba.xpivarcim.producer.strategies;
 
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import sk.fei.stuba.xpivarcim.db.entities.Assignment;
 import sk.fei.stuba.xpivarcim.exceptions.MessagingResponseException;
+import sk.fei.stuba.xpivarcim.producer.messages.Result;
 
 @Service
 public class ResultProducer implements Producer<Result> {

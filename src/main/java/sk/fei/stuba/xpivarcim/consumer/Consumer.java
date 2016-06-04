@@ -7,8 +7,9 @@ import org.springframework.amqp.rabbit.annotation.RabbitListener;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.stereotype.Component;
+import sk.fei.stuba.xpivarcim.consumer.messages.Solution;
 import sk.fei.stuba.xpivarcim.db.repos.AssignmentRepository;
-import sk.fei.stuba.xpivarcim.producer.AssignmentProducer;
+import sk.fei.stuba.xpivarcim.producer.strategies.AssignmentProducer;
 import sk.fei.stuba.xpivarcim.support.Settings;
 import sk.fei.stuba.xpivarcim.test.Handler;
 

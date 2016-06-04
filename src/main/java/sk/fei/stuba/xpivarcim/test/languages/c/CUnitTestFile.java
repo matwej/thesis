@@ -1,8 +1,9 @@
-package sk.fei.stuba.xpivarcim.test.languages;
+package sk.fei.stuba.xpivarcim.test.languages.c;
 
-import sk.fei.stuba.xpivarcim.consumer.Solution;
+import sk.fei.stuba.xpivarcim.consumer.messages.Solution;
 import sk.fei.stuba.xpivarcim.db.entities.assignment.TestFile;
 import sk.fei.stuba.xpivarcim.support.Settings;
+import sk.fei.stuba.xpivarcim.test.languages.UnitTestFile;
 
 import java.io.FileOutputStream;
 import java.io.IOException;

@@ -1,14 +1,16 @@
 package sk.fei.stuba.xpivarcim.test;
 
-import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.context.ApplicationContext;
-import sk.fei.stuba.xpivarcim.consumer.Solution;
+import sk.fei.stuba.xpivarcim.consumer.messages.Solution;
 import sk.fei.stuba.xpivarcim.db.entities.Assignment;
 import sk.fei.stuba.xpivarcim.db.repos.AssignmentRepository;
-import sk.fei.stuba.xpivarcim.exceptions.MessagingResponseException;
 import sk.fei.stuba.xpivarcim.exceptions.CompilationException;
+import sk.fei.stuba.xpivarcim.exceptions.MessagingResponseException;
 import sk.fei.stuba.xpivarcim.exceptions.UnsupportedLanguageException;
-import sk.fei.stuba.xpivarcim.producer.*;
+import sk.fei.stuba.xpivarcim.producer.messages.Result;
+import sk.fei.stuba.xpivarcim.producer.messages.StatusCode;
+import sk.fei.stuba.xpivarcim.producer.strategies.Producer;
+import sk.fei.stuba.xpivarcim.producer.strategies.ResultProducer;
 import sk.fei.stuba.xpivarcim.support.Settings;
 import sk.fei.stuba.xpivarcim.test.core.factories.EngineCreator;
 import sk.fei.stuba.xpivarcim.test.core.factories.RunEngineCreator;

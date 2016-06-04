@@ -1,9 +1,9 @@
-package sk.fei.stuba.xpivarcim.test.languages;
+package sk.fei.stuba.xpivarcim.test.languages.java;
 
 import sk.fei.stuba.xpivarcim.db.entities.assignment.TestFile;
 import sk.fei.stuba.xpivarcim.support.Settings;
+import sk.fei.stuba.xpivarcim.test.languages.UnitTestFile;
 
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.Set;

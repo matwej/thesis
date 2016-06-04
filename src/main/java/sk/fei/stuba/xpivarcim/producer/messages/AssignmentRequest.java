@@ -1,4 +1,4 @@
-package sk.fei.stuba.xpivarcim.producer;
+package sk.fei.stuba.xpivarcim.producer.messages;
 
 import java.util.Date;
 

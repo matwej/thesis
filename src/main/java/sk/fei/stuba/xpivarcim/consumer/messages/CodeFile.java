@@ -1,4 +1,4 @@
-package sk.fei.stuba.xpivarcim.consumer;
+package sk.fei.stuba.xpivarcim.consumer.messages;
 
 public class CodeFile {
 

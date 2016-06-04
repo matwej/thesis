@@ -1,9 +1,9 @@
 package sk.fei.stuba.xpivarcim.test.languages;
 
 import org.xml.sax.SAXException;
-import sk.fei.stuba.xpivarcim.consumer.Solution;
+import sk.fei.stuba.xpivarcim.consumer.messages.Solution;
 import sk.fei.stuba.xpivarcim.db.entities.assignment.TestFile;
-import sk.fei.stuba.xpivarcim.producer.Result;
+import sk.fei.stuba.xpivarcim.producer.messages.Result;
 import sk.fei.stuba.xpivarcim.support.Settings;
 
 import javax.xml.parsers.ParserConfigurationException;

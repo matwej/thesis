@@ -1,6 +1,6 @@
 package sk.fei.stuba.xpivarcim.test.core.factories;
 
-import sk.fei.stuba.xpivarcim.consumer.Solution;
+import sk.fei.stuba.xpivarcim.consumer.messages.Solution;
 import sk.fei.stuba.xpivarcim.db.entities.Assignment;
 import sk.fei.stuba.xpivarcim.test.core.engines.Engine;
 import sk.fei.stuba.xpivarcim.test.core.engines.RunEngine;

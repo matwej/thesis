@@ -1,4 +1,4 @@
-package sk.fei.stuba.xpivarcim.consumer;
+package sk.fei.stuba.xpivarcim.consumer.messages;
 
 import sk.fei.stuba.xpivarcim.support.Utils;
 
