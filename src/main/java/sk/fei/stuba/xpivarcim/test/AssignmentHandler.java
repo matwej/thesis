@@ -7,7 +7,6 @@ import sk.fei.stuba.xpivarcim.db.entities.Assignment;
 import sk.fei.stuba.xpivarcim.db.repos.AssignmentRepository;
 import sk.fei.stuba.xpivarcim.exceptions.MessagingResponseException;
 import sk.fei.stuba.xpivarcim.producer.strategies.AssignmentProducer;
-import sk.fei.stuba.xpivarcim.producer.strategies.Producer;
 
 @Service
 public class AssignmentHandler {
