@@ -32,18 +32,7 @@ class C implements Language {
 
     @Override
     public void createUnitTestFile(String workDir, Solution solution, Set<TestFile> testFiles) throws IOException {
-        FileOutputStream ostream = new FileOutputStream(workDir + "/check_unit_test.check");
-        for (String headerFile : solution.filteredExtensionSourceFiles("h")) {
-            ostream.write(("#include \"" + headerFile + "\"\n").getBytes());
-        }
-        for (TestFile testFile : testFiles) {
-            ostream.write(("\n#test _" + testFile.getIndex() + "\n").getBytes());
-            ostream.write(testFile.getContent().getBytes());
-            ostream.write("\n".getBytes());
-        }
-        ostream.write("\n#main-pre\nsrunner_set_xml(sr,\"report.xml\");\n".getBytes());
-        ostream.write(("tcase_set_timeout(tc1_1," + settings.getUnitTimeout() + ");\n").getBytes());
-        ostream.close();
+        new CUnitTestFile(settings, solution, testFiles).create(new FileOutputStream(workDir + "/check_unit_test.check"));
     }
 
     @Override

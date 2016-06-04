@@ -33,18 +33,7 @@ class Java implements Language {
 
     @Override
     public void createUnitTestFile(String workDir, Solution solution, Set<TestFile> testFiles) throws IOException {
-        FileOutputStream ostream = new FileOutputStream(workDir + "/src/test/java/MainTest.java");
-        ostream.write("import static org.junit.Assert.*;\n".getBytes());
-        ostream.write("import org.junit.*;\n".getBytes());
-        ostream.write("public class MainTest {\n".getBytes());
-        for(TestFile testFile : testFiles) {
-            ostream.write(("@Test(timeout="+String.valueOf(settings.getUnitTimeoutMilis())+")\n").getBytes());
-            ostream.write(("public void test" + String.valueOf(testFile.getIndex()) + "() throws Exception {\n").getBytes());
-            ostream.write(testFile.getContent().getBytes());
-            ostream.write("\n}".getBytes());
-        }
-        ostream.write("}".getBytes());
-        ostream.close();
+        new JavaUnitTestFile(settings, testFiles).create(new FileOutputStream(workDir + "/src/test/java/MainTest.java"));
     }
 
     @Override
