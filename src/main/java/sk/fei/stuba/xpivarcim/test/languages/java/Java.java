@@ -3,7 +3,6 @@ package sk.fei.stuba.xpivarcim.test.languages.java;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
-import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
 import sk.fei.stuba.xpivarcim.consumer.messages.CodeFile;
 import sk.fei.stuba.xpivarcim.consumer.messages.Solution;
@@ -39,18 +38,7 @@ public class Java implements Language {
 
     @Override
     public void mapUnitTestResults(String workDir, Result result) throws IOException, ParserConfigurationException, SAXException {
-        InputStream xml = new FileInputStream(workDir + "/report/TEST-MainTest.xml");
-        DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
-        DocumentBuilder documentBuilder = factory.newDocumentBuilder();
-        Document doc = documentBuilder.parse(xml);
-        Element root = doc.getDocumentElement();
-        NodeList testcases = root.getElementsByTagName("testcase");
-        for(int i=0;i<testcases.getLength();i++) {
-            Node item = testcases.item(i);
-            String testName = item.getAttributes().getNamedItem("name").getTextContent();
-            int index = Integer.parseInt(testName.replaceAll("[\\D]", ""));
-            result.addTest(index, !item.hasChildNodes());
-        }
+        new JavaUnitTestResults().map(workDir, result);
     }
 
     @Override

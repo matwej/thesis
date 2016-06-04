@@ -2,7 +2,6 @@ package sk.fei.stuba.xpivarcim.test.languages.c;
 
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
-import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
 import sk.fei.stuba.xpivarcim.consumer.messages.Solution;
 import sk.fei.stuba.xpivarcim.db.entities.assignment.TestFile;
@@ -38,18 +37,7 @@ public class C implements Language {
 
     @Override
     public void mapUnitTestResults(String workDir, Result result) throws IOException, ParserConfigurationException, SAXException {
-        InputStream xml = new FileInputStream(workDir + "/report.xml");
-        DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
-        DocumentBuilder documentBuilder = factory.newDocumentBuilder();
-        Document doc = documentBuilder.parse(xml);
-        Element root = doc.getDocumentElement();
-        NodeList testCases = root.getElementsByTagName("test");
-        for (int i = 0; i < testCases.getLength(); i++) {
-            Element item = (Element) testCases.item(i);
-            String testName = item.getElementsByTagName("id").item(0).getTextContent();
-            int index = Integer.parseInt(testName.replaceAll("[\\D]", ""));
-            result.addTest(index, item.getAttribute("result").equals("success"));
-        }
+        new CUnitTestResults().map(workDir, result);
     }
 
     @Override
@@ -107,5 +95,4 @@ public class C implements Language {
     public String compilationErrorString() {
         return "Error";
     }
-
 }
