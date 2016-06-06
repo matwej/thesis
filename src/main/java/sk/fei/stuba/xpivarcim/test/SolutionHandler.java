@@ -83,7 +83,7 @@ public class SolutionHandler {
     private void setUpDir() throws IOException {
         if (dir.toFile().exists())
             tearDownDir();
-        Files.createDirectory(dir, Settings.ATTRS);
+        Files.createDirectories(dir, Settings.ATTRS);
     }
 
     private void tearDownDir() throws IOException {
